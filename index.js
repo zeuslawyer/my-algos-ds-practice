@@ -3,5 +3,7 @@ console.log('logging...', test());
 
 exports.ALL = {
   test: require('./problems/test'),
-  reverseString: require('./problems/reverseString')
+  reverseString: require('./problems/reverseString'),
+  binary: require('./problems/binarySearch')
+
 };
