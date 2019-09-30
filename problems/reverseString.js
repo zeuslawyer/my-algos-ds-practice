@@ -10,3 +10,4 @@ module.exports = str => {
 
   return resArr.join('');
 };
+
