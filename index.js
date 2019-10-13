@@ -1,7 +1,7 @@
 const test = require('./problems/test');
 console.log('logging...', test());
 
-exports.ALL = {
+exports.algos = {
   test: require('./problems/test'),
   reverseString: require('./problems/reverseString'),
   binary: require('./problems/binarySearch'),
@@ -11,5 +11,10 @@ exports.ALL = {
   selSort: require('./problems/selectionSort.js'),
   insertionSort: require('./problems/insertionSort.js'),
   mergeSortedArrays: require('./problems/mergeSortedArrays.js'),
-  mergeSort : require('./problems/mergeSort.js')
+  mergeSort: require('./problems/mergeSort.js')
+};
+
+exports.structures = {
+  singleNode: require('./problems/datastructures/singlyLinkedList/Node'),
+  singleLinkedList: require('./problems/datastructures/singlyLinkedList/LinkedList')
 };
