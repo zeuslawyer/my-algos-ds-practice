@@ -134,4 +134,15 @@ describe.only('singly linked list', () => {
     expect(list.head.data).to.be.equal('two');
     expect(list.tail.data).to.be.equal('and more extra');
   });
+
+  it('reverses a linked list', () => {
+    list = new SingleLinkedList()
+      .push('one')
+      .push('two')
+      .push('three');
+
+    let reversed = list.reverse();
+    expect(reversed.head).to.be.equal(list.tail);
+    expect(list.get(1)).to.be.equal(reversed.get(1));
+  });
 });

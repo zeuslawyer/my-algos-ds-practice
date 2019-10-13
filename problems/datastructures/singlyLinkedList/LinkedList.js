@@ -106,19 +106,36 @@ class SingleLinkedList {
   }
 
   remove(index) {
-    if (index < 0 || index >= this.length) return new RangeError('Index out of bounds')
-
+    if (index < 0 || index >= this.length)
+      return new RangeError('Index out of bounds');
     // remove tail
-    if (index === this.length-1) return this.pop()
+    if (index === this.length - 1) return this.pop();
     // remove  head
-    if (index === 0) return this.shift()
+    if (index === 0) return this.shift();
 
-    let prev = this.get(index - 1)
-    let removed = prev.next
-    let next = prev.next.next
-    prev.next = next
-    this.length--
-    return removed
+    let prev = this.get(index - 1);
+    let removed = prev.next;
+    let next = prev.next.next;
+    prev.next = next;
+    this.length--;
+    return removed;
+  }
+
+  reverse() {
+    let current = this.head;
+    this.head = this.tail;
+    this.tail = this.head;
+
+    let prev = null;
+    let next;
+
+    for (let i = 0; i < this.length; i++) {
+      next = current.next;
+      current.next = prev;
+      prev = current;
+      current = next;
+    }
+    return this;
   }
 }
 
