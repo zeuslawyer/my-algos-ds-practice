@@ -7,7 +7,7 @@ const {
   SingleLinkedList
 } = require('../problems/datastructures/singlyLinkedList/LinkedList');
 
-describe.only('singly linked list', () => {
+describe('singly linked list', () => {
   let list;
   let node;
   it('test for new LinkedList ', () => {

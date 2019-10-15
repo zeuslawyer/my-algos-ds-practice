@@ -11,7 +11,8 @@ exports.algos = {
   selSort: require('./problems/selectionSort.js'),
   insertionSort: require('./problems/insertionSort.js'),
   mergeSortedArrays: require('./problems/mergeSortedArrays.js'),
-  mergeSort: require('./problems/mergeSort.js')
+  mergeSort: require('./problems/mergeSort.js'),
+  qsort: require('./problems/quickSort')
 };
 
 exports.structures = {
