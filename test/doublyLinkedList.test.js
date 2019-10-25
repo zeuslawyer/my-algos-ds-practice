@@ -5,7 +5,7 @@ const {
   LinkedList
 } = require('../problems/datastructures/doublyLinkedList/DoublyLinkedList');
 
-describe.only('doubly linked list', () => {
+describe('doubly linked list', () => {
   let list;
   let node;
   it.only('test for new LinkedList ', () => {

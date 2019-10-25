@@ -2,13 +2,6 @@ const expect = require('chai').expect;
 
 const { algos } = require('../index');
 
-const {
-  LinkedListNode
-} = require('../problems/datastructures/singlyLinkedList/Node');
-const {
-  SingleLinkedList
-} = require('../problems/datastructures/singlyLinkedList/LinkedList');
-
 describe('algorithms ', () => {
   it('should log OK', () => {
     expect(algos.test()).to.equal('OK');
@@ -151,4 +144,3 @@ describe('merge sort >', () => {
     expect(algos.mergeSort(unsorted)).to.eql(sorted);
   });
 });
-
