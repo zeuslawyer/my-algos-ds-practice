@@ -4,7 +4,6 @@ function mergeSort(arr) {
   // base case, arr is of 1
   if (arr.length === 1) return arr;
 
-
   // recursively mergesort each half of the array
   let mid = Math.floor(arr.length / 2);
   let left = mergeSort(arr.slice(0, mid)); // up to mid

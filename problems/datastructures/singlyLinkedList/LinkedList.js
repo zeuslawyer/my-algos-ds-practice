@@ -31,9 +31,11 @@ class SingleLinkedList {
     }
 
     let current = this.head;
+    //traverse to n-1 node
     while (current.next.next) {
       current = current.next;
     }
+    
     current.next = null;
     this.tail = current;
     this.length--;
