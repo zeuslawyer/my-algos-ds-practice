@@ -51,4 +51,6 @@ stack.push('first').push('second').push('third')
 stack.pop()
 // stack.pop()
 // stack.pop()
-// console.log(stack)
+
+console.log(stack)
+
