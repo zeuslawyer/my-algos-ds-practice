@@ -121,6 +121,7 @@ class BST {
     }
   }
 
+  // with loop
   $find(val) {
     if (!this.root) return false;
     if (val === this.root.data) return true;
@@ -149,101 +150,102 @@ class BST {
       }
     }
 
-    return true;
   }
 
-  BFS(){
-    
-    let q = [this.root]  // FIFO - pop(remove from len-1) + unshift(insert at position 0)
-    let traversed = []
+  BFS() {
+    let q = [this.root]; // FIFO - pop(remove from len-1) + unshift(insert at position 0)
+    let traversed = [];
 
-    while(q.length > 0) {
-      let current = q.pop()
-      traversed.push(current.data)
-      if (current.left) q.unshift(current.left)
-      if (current.right) q.unshift(current.right)
+    while (q.length > 0) {
+      let current = q.pop();
+      traversed.push(current.data);
+      if (current.left) q.unshift(current.left);
+      if (current.right) q.unshift(current.right);
     }
-    return traversed
+    return traversed;
   }
 
   // start at root and end at leafs, left first, right second
-  dfsPreOrder(){
-    let traversed = []
+  dfsPreOrder() {
+    let traversed = [];
 
-    function traverse(node){
+    function traverse(node) {
       // store its value
-      traversed.push(node.data)
+      traversed.push(node.data);
 
       // traverse left
-      if(node.left) traverse(node.left)
+      if (node.left) traverse(node.left);
       // traverse right
-      if(node.right) traverse(node.right)
+      if (node.right) traverse(node.right);
 
-      return traversed
+      return traversed;
     }
 
-    traverse(this.root)
-    return traversed
+    traverse(this.root);
+    return traversed;
   }
 
   // start at end (leafs) and do the root lsat, left first, right second
-  dfsPostOrder(){
-    let traversed = []
+  dfsPostOrder() {
+    let traversed = [];
 
-    function traverse(node){
+    function traverse(node) {
       // travel left
-      if(node.left) traverse(node.left)
+      if (node.left) traverse(node.left);
       // travel right
-      if(node.right) traverse(node.right)
+      if (node.right) traverse(node.right);
 
-      traversed.push(node.data)
+      traversed.push(node.data);
     }
 
-    traverse(this.root)
-    return traversed
+    traverse(this.root);
+    return traversed;
   }
 
   // leafs first. travel all the way down the left most leaf, then push the node into storage, then traverse all the way down the right most leaf
-  dfsInOrder(){
-    let traversed = []
+  dfsInOrder() {
+    let traversed = [];
 
-    function traverse(node){
+    function traverse(node) {
       // travel to left most leaf
-      if(node.left) traverse(node.left)
+      if (node.left) traverse(node.left);
       // if no more left, store val
-      traversed.push(node.data)
+      traversed.push(node.data);
 
       // traverse right all the way to right most leaf
-      if(node.right) traverse(node.right)
+      if (node.right) traverse(node.right);
     }
 
-    traverse(this.root)
-    return traversed
+    traverse(this.root);
+    return traversed;
   }
-
 }
 
-module.exports = {BST};
+module.exports = { BST };
 
-let tree = new BST()
-let data = [0,-5, 5, -3, 3, 6, -6]
-data.forEach(num=> tree.insert(num))
+let tree = new BST();
+let data = [0, -5, 5, -3, 3, 6, -6];
+data.forEach(num => tree.insert(num));
 // console.log(tree.root)
 
 // tree.insert(0).insert(-5).insert(5).insert(-3).insert(3).insert(6).insert(-6)
-let bfs =  tree.BFS()
-console.log(bfs)
+let bfs = tree.BFS();
+console.log(bfs);
 
-let dfsPreOrder = tree.dfsPreOrder()
+let dfsPreOrder = tree.dfsPreOrder();
 
-console.log(dfsPreOrder)
+console.log(dfsPreOrder);
 
-let dfsPostOrder = tree.dfsPostOrder()
-console.log(dfsPostOrder)
+let dfsPostOrder = tree.dfsPostOrder();
+console.log(dfsPostOrder);
 
-let dfsInOrder = tree.dfsInOrder()
-console.log(dfsInOrder)
-
+let dfsInOrder = tree.dfsInOrder();
+console.log(dfsInOrder);
 
 // this explains the names - think of "order" as being the location of the root node.
-console.log('Index of 0 in each: ', dfsPreOrder.indexOf(0), dfsPostOrder.indexOf(0), dfsInOrder.indexOf(0))
+console.log(
+  'Index of 0 in each: ',
+  dfsPreOrder.indexOf(0),
+  dfsPostOrder.indexOf(0),
+  dfsInOrder.indexOf(0)
+);
