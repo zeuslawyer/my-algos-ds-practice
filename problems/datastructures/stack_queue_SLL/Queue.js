@@ -9,7 +9,7 @@ class qNode {
 // FIFO
 class Q {
   constructor() {
-    this.head = null; // top of queue (for constant time retrieval)
+    this.head = null; // head of queue (for constant time retrieval)
     this.tail = null; // bottom - all new entrants
     this.size = 0;
   }
