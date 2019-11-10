@@ -56,7 +56,6 @@ class Graph {
 
   // BFS - queue
   BFS(startingVertex) {
-    
     let result = [];
     let visited = {};
     let q = [startingVertex]; // FIFO pop, unshift
@@ -66,19 +65,21 @@ class Graph {
     while (q.length) {
       // console.log("Q:  ", q)
       let current = q.pop();
-      visited[current] = true
-      result.push(current)
 
-      let neighbours = this.adjacencyArray[current]
-      neighbours.forEach(neighbour=>{
-        if(!visited[neighbour]) {
-          visited[neighbour] = true
-          q.unshift(neighbour)}
-      })
-      
+      // mark as visited as soon as popped
+      visited[current] = true;
+      result.push(current);
+
+      // visit neighbours
+      let neighbours = this.adjacencyArray[current];
+      neighbours.forEach(neighbour => {
+        if (!visited[neighbour]) {
+          visited[neighbour] = true;
+          q.unshift(neighbour);
+        }
+      });
     }
-    return result
-
+    return result;
   }
 
   // recursive
@@ -89,12 +90,17 @@ class Graph {
     if (!this.adjacencyArray[startingVertex]) return [];
 
     function visit(vertex) {
+      // console.log('visiting');
       if (!visited[vertex]) {
         visited[vertex] = true;
         result.push(vertex);
         let neighbours = adjacencyArray[vertex];
 
-        neighbours.forEach(n => visit(n));
+        neighbours.forEach(neighbour => {
+          if (!visited[neighbour]) {
+            visit(neighbour);
+          }
+        });
       }
     }
 
@@ -111,15 +117,23 @@ class Graph {
     if (!this.adjacencyArray[startingVertex]) return result;
 
     while (stack.length) {
+      console.log(stack);
       let current = stack.pop();
 
-      if (!visited[current]) {
-        visited[current] = true;
-        result.push(current);
+      // mark as visited
+      visited[current] = true;
+      result.push(current);
 
-        let neighbours = this.adjacencyArray[current];
-        neighbours.forEach(n => stack.push(n));
-      }
+      // visit each neighbour
+      let neighbours = this.adjacencyArray[current];
+      neighbours.forEach(n => {
+        if (!visited[n]) {
+          // mark visited
+          visited[n] = true;
+          // push on to stack
+          stack.push(n);
+        }
+      });
     }
 
     return result;
@@ -161,6 +175,6 @@ g2.DFSRecursive('Agg');
 
 // console.log(g2.dfsStack('A')); // [ 'A', 'C', 'E', 'F', 'D', 'B' ]
 
-// console.log(g2.DFSRecursive("A")) // [ 'A', 'B', 'D', 'E', 'C', 'F' ]
+console.log(g2.DFSRecursive('A')); // [ 'A', 'B', 'D', 'E', 'C', 'F' ]
 
-console.log(g2.BFS('A')); // [ 'A', 'B', 'C', 'D', 'E', 'F' ]
+// console.log(g2.BFS('A')); // [ 'A', 'B', 'C', 'D', 'E', 'F' ]

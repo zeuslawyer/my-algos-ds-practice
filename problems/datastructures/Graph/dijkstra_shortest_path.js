@@ -136,15 +136,20 @@ class WGraph {
     let result = [];
     let visited = {};
     let adjacencyMap = this.adjacencyMap;
+
     function visit(nodeName) {
-      if (!visited[nodeName]) {
-        visited[nodeName] = true;
-        result.push(nodeName);
-        let neighbours = adjacencyMap[nodeName];
-        neighbours.forEach(neighbour => {
+      // console.log('visiting');
+      // mark visited
+      visited[nodeName] = true;
+      result.push(nodeName);
+
+      // visit neighbours
+      let neighbours = adjacencyMap[nodeName];
+      neighbours.forEach(neighbour => {
+        if (!visited[neighbour.vertex]) {
           visit(neighbour.vertex);
-        });
-      }
+        }
+      });
     }
 
     visit(entry);
@@ -158,20 +163,23 @@ class WGraph {
     let stack = [entry]; // pop, push
 
     while (stack.length > 0) {
-      console.log(stack)
+      console.log(stack);
       let current = stack.pop();
-      
 
-      if (!traversed[current]) {
-        traversed[current] = true;
-        result.push(current);
+      // mark as visited
+      traversed[current] = true;
+      result.push(current);
 
-        let neighbours = this.adjacencyMap[current];
-
-        neighbours.forEach(n => {
-          stack.push(n.vertex);
-        });
-      }
+      // visit each neighbour
+      let neighbours = this.adjacencyMap[current];
+      neighbours.forEach(neighbour => {
+        if (!traversed[neighbour.vertex]) {
+          // mark as visited
+          traversed[neighbour.vertex] = true;
+          // add to stack
+          stack.push(neighbour.vertex);
+        }
+      });
     }
     return result;
   }
@@ -214,6 +222,6 @@ graph2.addEdge('D', 'E');
 graph2.addEdge('D', 'F');
 graph2.addEdge('E', 'F');
 
-// console.log(graph2.BFS('A'));  // [ 'A', 'B', 'C', 'D', 'E', 'F' ]
-// console.log(graph2.DFS_recursive('A'));  // [ 'A', 'B', 'D', 'E', 'C', 'F' ]
-console.log(graph2.DFS_stack('A'));  // [ 'A', 'C', 'E', 'F', 'D', 'B' ]
+console.log(graph2.BFS('A'));  // [ 'A', 'B', 'C', 'D', 'E', 'F' ]
+// console.log(graph2.DFS_recursive('A')); // [ 'A', 'B', 'D', 'E', 'C', 'F' ]
+// console.log(graph2.DFS_stack('A')); // [ 'A', 'C', 'E', 'F', 'D', 'B' ]
