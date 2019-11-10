@@ -50,97 +50,79 @@ class Graph {
     return true;
   }
 
-  findConnections(v){
-    return this.adjacencyArray[v]
+  findConnections(v) {
+    return this.adjacencyArray[v];
   }
 
   // BFS - queue
-  bfs(startingVertex) {
-    let q = [startingVertex]; // unshift, pop
-    let results = [];
+  BFS(startingVertex) {
+    
+    let result = [];
     let visited = {};
-    visited[startingVertex] = true;
+    let q = [startingVertex]; // FIFO pop, unshift
+
+    if (!this.adjacencyArray[startingVertex]) return result;
 
     while (q.length) {
-      let vertex = q.pop();
-      results.push(vertex);
+      // console.log("Q:  ", q)
+      let current = q.pop();
+      visited[current] = true
+      result.push(current)
 
-      // loop over its connections
-      let edges = this.adjacencyArray[vertex];
-      edges.forEach(edge => {
-        if (!visited[edge]) {
-          // mark as visited
-          visited[edge] = true;
-          // add to queue
-          q.unshift(edge);
-        }
-      });
+      let neighbours = this.adjacencyArray[current]
+      neighbours.forEach(neighbour=>{
+        if(!visited[neighbour]) {
+          visited[neighbour] = true
+          q.unshift(neighbour)}
+      })
+      
     }
+    return result
 
-    return results;
   }
 
   // recursive
   DFSRecursive(startingVertex) {
-    // setup
-    let results = [];
+    let result = [];
     let visited = {};
-    let adjacencyArray = this.adjacencyArray; // so that inner function 'this' is not undefined
+    let adjacencyArray = this.adjacencyArray;
+    if (!this.adjacencyArray[startingVertex]) return [];
 
-    // recursive helper function
     function visit(vertex) {
-      // base case + error handling- not in graph
-      if (!adjacencyArray[vertex]) return null;
+      if (!visited[vertex]) {
+        visited[vertex] = true;
+        result.push(vertex);
+        let neighbours = adjacencyArray[vertex];
 
-      // mark visited
-      visited[vertex] = true;
-      // add to results
-      results.push(vertex);
-
-      let edges = adjacencyArray[vertex];
-      // loop over its edges (connections)
-      edges.forEach(edge => {
-        if (!visited[edge]) {
-          return visit(edge);
-        }
-      });
+        neighbours.forEach(n => visit(n));
+      }
     }
 
-    // recurse
     visit(startingVertex);
-
-    return results;
+    return result;
   }
 
   // iterative with stack
   dfsStack(startingVertex) {
-    if (!this.adjacencyArray[startingVertex]) return null;
-
-    // setup
-    let results = [];
+    let result = [];
     let visited = {};
-    let stack = [startingVertex];
-    // mark visited
-    visited[startingVertex] = true;
+    let stack = [startingVertex]; // LIFO push, pop
 
-    // visit each vertex
+    if (!this.adjacencyArray[startingVertex]) return result;
+
     while (stack.length) {
-      let v = stack.pop();
-      results.push(v);
+      let current = stack.pop();
 
-      // loop over the edges for v
-      let edges = this.adjacencyArray[v];
-      edges.forEach(edge => {
-        if (!visited[edge]) {
-          // mark visited
-          visited[edge] = true;
-          // push on to stack
-          stack.push(edge);
-        }
-      });
+      if (!visited[current]) {
+        visited[current] = true;
+        result.push(current);
+
+        let neighbours = this.adjacencyArray[current];
+        neighbours.forEach(n => stack.push(n));
+      }
     }
 
-    return results;
+    return result;
   }
 }
 
@@ -177,8 +159,8 @@ g2.DFSRecursive('Agg');
 // g.DFSRecursive("Arnie")
 // g
 
-console.log(g2.dfsStack('A')); // [ 'A', 'C', 'E', 'F', 'D', 'B' ]
+// console.log(g2.dfsStack('A')); // [ 'A', 'C', 'E', 'F', 'D', 'B' ]
 
-// g2.DFSRecursive("A") // [ 'A', 'B', 'D', 'E', 'C', 'F' ]
+// console.log(g2.DFSRecursive("A")) // [ 'A', 'B', 'D', 'E', 'C', 'F' ]
 
-// g2.bfs("A")
+console.log(g2.BFS('A')); // [ 'A', 'B', 'C', 'D', 'E', 'F' ]
