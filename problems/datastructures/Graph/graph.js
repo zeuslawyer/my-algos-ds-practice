@@ -75,7 +75,7 @@ class Graph {
       neighbours.forEach(neighbour => {
         if (!visited[neighbour]) {
           visited[neighbour] = true;
-          q.unshift(neighbour);
+          q.unshift(neighbour); // add unvisited neighbiours to queue
         }
       });
     }
@@ -87,21 +87,21 @@ class Graph {
     let result = [];
     let visited = {};
     let adjacencyArray = this.adjacencyArray;
-    if (!this.adjacencyArray[startingVertex]) return [];
+    if (!this.adjacencyArray[startingVertex]) return result;
 
     function visit(vertex) {
-      // console.log('visiting');
-      if (!visited[vertex]) {
-        visited[vertex] = true;
-        result.push(vertex);
-        let neighbours = adjacencyArray[vertex];
+      console.log('visiting');
+      // mark as visited
+      visited[vertex] = true;
+      result.push(vertex);
 
-        neighbours.forEach(neighbour => {
-          if (!visited[neighbour]) {
-            visit(neighbour);
-          }
-        });
-      }
+      // visit neighbours
+      let neighbours = adjacencyArray[vertex];
+      neighbours.forEach(neighbour => {
+        if (!visited[neighbour]) {
+          visit(neighbour);
+        }
+      });
     }
 
     visit(startingVertex);
