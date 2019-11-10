@@ -151,6 +151,7 @@ class BST {
     }
   }
 
+  // BFS - queue
   BFS() {
     let q = [this.root]; // FIFO - pop(remove from len-1) + unshift(insert at position 0)
     let traversed = [];

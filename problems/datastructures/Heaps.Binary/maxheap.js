@@ -61,7 +61,7 @@ class MaxBinHeap {
     return this;
   }
 
-  // extract root
+  // extract root + sinkdown
   extractMax() {
     // edge case - heap of 1 or less element
     if (this.values.length === 0) return undefined;
@@ -79,7 +79,7 @@ class MaxBinHeap {
   }
 
   getParentIndex(childInd) {
-    if (childInd < 1) return false;
+    if (childInd < 1) return -1;
     return Math.floor((childInd - 1) / 2);
   }
 
@@ -97,6 +97,7 @@ class MaxBinHeap {
     ];
   }
 
+  // sink smaller value
   sinkDown(index = 0) {
     // start at root by default
     let swapIndex; // index of node to swap with
@@ -138,7 +139,7 @@ class MaxBinHeap {
 
 // ========= RUNNING ===========
 
-testHeap = [100, 88, 78, 76, 64, 41, 22, 70, 60, 55, 12];
+var testHeap = [100, 88, 78, 76, 64, 41, 22, 70, 60, 55, 12];
 
 let heap = new MaxBinHeap();
 heap
