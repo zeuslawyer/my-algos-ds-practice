@@ -48,7 +48,7 @@ class WGraph {
 
   shortestPath(start, end) {
     let distances = {};
-    let Q = new PQ();
+    let Q = new PQ(); // priority queue
     let previousVertexMap = {};
     let path = [];
 
