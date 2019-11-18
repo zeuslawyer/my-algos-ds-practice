@@ -2,12 +2,12 @@
 class Graph {
   constructor() {
     // the graph, using the adjacency list implementation
-    this.adjacencyArray = {};
+    this.adjList = {};
   }
 
   addVertex(v) {
     // check doesnt exist so no accidental over writing of node data
-    if (!this.adjacencyArray[v]) this.adjacencyArray[v] = [];
+    if (!this.adjList[v]) this.adjList[v] = [];
     return this;
   }
 
@@ -15,43 +15,43 @@ class Graph {
   // if its a directed graph then add edge from v1 to v2
   addEdge(v1, v2) {
     // for v1 add v2 as connection
-    if (!this.adjacencyArray[v1]) this.addVertex(v1);
-    this.adjacencyArray[v1].push(v2);
+    if (!this.adjList[v1]) this.addVertex(v1);
+    this.adjList[v1].push(v2);
 
     // since its undirected....for v2 add v1 as connection
-    if (!this.adjacencyArray[v2]) this.addVertex(v2);
-    this.adjacencyArray[v2].push(v1);
+    if (!this.adjList[v2]) this.addVertex(v2);
+    this.adjList[v2].push(v1);
 
     // to add weights:
   }
 
   removeEdge(v1, v2) {
-    if (!this.adjacencyArray[v1] || !this.adjacencyArray[v2]) return false;
+    if (!this.adjList[v1] || !this.adjList[v2]) return false;
 
     // reassign the connections by filtering out the other
-    this.adjacencyArray[v1] = this.adjacencyArray[v1].filter(el => el !== v2);
+    this.adjList[v1] = this.adjList[v1].filter(el => el !== v2);
 
     // only if its undirected/bidirectional, do the reverse
-    this.adjacencyArray[v2] = this.adjacencyArray[v2].filter(el => el !== v1);
+    this.adjList[v2] = this.adjList[v2].filter(el => el !== v1);
     return true;
   }
 
   removeVertex(v) {
-    if (!this.adjacencyArray[v]) return false;
+    if (!this.adjList[v]) return false;
     // find and remove all edges for V
-    let edges = this.adjacencyArray[v];
+    let edges = this.adjList[v];
     for (let i = 0; i < edges.length; i++) {
       // console.log('removing edges between', v, 'and', edges[i])
       this.removeEdge(v, edges[i]);
     }
 
-    // remove the vertex from the adjacencyArray {or set it to null}
-    delete this.adjacencyArray[v];
+    // remove the vertex from the adjList {or set it to null}
+    delete this.adjList[v];
     return true;
   }
 
   findConnections(v) {
-    return this.adjacencyArray[v];
+    return this.adjList[v];
   }
 
   // BFS - queue
@@ -60,7 +60,7 @@ class Graph {
     let visited = {};
     let q = [startingVertex]; // FIFO pop, unshift
 
-    if (!this.adjacencyArray[startingVertex]) return result;
+    if (!this.adjList[startingVertex]) return result;
 
     while (q.length) {
       // console.log("Q:  ", q)
@@ -71,7 +71,7 @@ class Graph {
       result.push(current);
 
       // visit neighbours
-      let neighbours = this.adjacencyArray[current];
+      let neighbours = this.adjList[current];
       neighbours.forEach(neighbour => {
         if (!visited[neighbour]) {
           visited[neighbour] = true;
@@ -82,21 +82,22 @@ class Graph {
     return result;
   }
 
-  // recursive
-  DFSRecursive(startingVertex) {
+  // recursive with a starting point
+  __DFSRecursive(startingVertex) {
     let result = [];
     let visited = {};
-    let adjacencyArray = this.adjacencyArray;
-    if (!this.adjacencyArray[startingVertex]) return result;
+    let adjList = this.adjList;
+
+    if (!this.adjList[startingVertex]) return result;
 
     function visit(vertex) {
-      console.log('visiting');
+      console.log('visiting', vertex);
       // mark as visited
       visited[vertex] = true;
       result.push(vertex);
 
       // visit neighbours
-      let neighbours = adjacencyArray[vertex];
+      let neighbours = adjList[vertex];
       neighbours.forEach(neighbour => {
         if (!visited[neighbour]) {
           visit(neighbour);
@@ -108,13 +109,42 @@ class Graph {
     return result;
   }
 
+  // recursive no starting point
+  DFSRecursive() {
+    let visited = {};
+    let result = [];
+    let adjList = this.adjList;
+
+    for (let vert in adjList) {
+      if (!visited[vert]) {
+        visit(vert);
+      }
+    }
+
+    function visit(v) {
+      if (!visited[v]) {
+        visited[v] = true;
+
+        result.push(v);
+
+        // visit neighbours
+        let neighbours = adjList[v];
+        neighbours.forEach(n => {
+          visit(n);
+        });
+      }
+    }
+
+    return result;
+  }
+
   // iterative with stack
   dfsStack(startingVertex) {
     let result = [];
     let visited = {};
     let stack = [startingVertex]; // LIFO push, pop
 
-    if (!this.adjacencyArray[startingVertex]) return result;
+    if (!this.adjList[startingVertex]) return result;
 
     while (stack.length) {
       console.log(stack);
@@ -125,7 +155,7 @@ class Graph {
       result.push(current);
 
       // visit each neighbour
-      let neighbours = this.adjacencyArray[current];
+      let neighbours = this.adjList[current];
       neighbours.forEach(n => {
         if (!visited[n]) {
           // mark visited
@@ -153,7 +183,7 @@ g.removeEdge('TORNADO', 'Maria');
 g.addEdge('Rowena', 'Maria');
 
 g.removeVertex('Zubin');
-g.adjacencyArray;
+g.adjList;
 
 // create graph for DFS
 let g2 = new Graph();
@@ -169,12 +199,13 @@ g2.addEdge('C', 'E');
 g2.addEdge('D', 'E');
 g2.addEdge('D', 'F');
 g2.addEdge('E', 'F');
-g2.DFSRecursive('Agg');
+g2.__DFSRecursive('Agg');
 // g.DFSRecursive("Arnie")
 // g
 
 // console.log(g2.dfsStack('A')); // [ 'A', 'C', 'E', 'F', 'D', 'B' ]
 
-console.log(g2.DFSRecursive('A')); // [ 'A', 'B', 'D', 'E', 'C', 'F' ]
+console.log(g2.__DFSRecursive('A')); // [ 'A', 'B', 'D', 'E', 'C', 'F' ]
+console.log(g2.DFSRecursive()); // [ 'A', 'B', 'D', 'E', 'C', 'F' ]
 
 // console.log(g2.BFS('A')); // [ 'A', 'B', 'C', 'D', 'E', 'F' ]

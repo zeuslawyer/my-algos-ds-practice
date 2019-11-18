@@ -16,8 +16,7 @@ function twoSum(nums, target) {
     // not found
     if (p2 <= p1) return -1
     
-
-    // overshpt => decrease needed
+    // overshot => decrease needed
     if (nums[p1] + nums[p2] > target) {
       p2--
     } else if (nums[p1] + nums[p2] < target) {
@@ -26,7 +25,7 @@ function twoSum(nums, target) {
     }
   }
 
-  return [p1 + 1, p2 + 1]
+  return [p1 + 1, p2 + 1]  // non zero indexed
 
 }
 
@@ -35,7 +34,7 @@ function __twoSum(nums, target){
   let p2=nums.length-1
 
   while(p1<p2){
-    if(nums[p1]+ nums[p2]=== target ) return [p1+1, p2+1]
+    if(nums[p1]+ nums[p2]=== target ) return [p1+1, p2+1]  // non zero indexed
 
     if(nums[p1] + nums[p2] < target) p1++  //undershot, increase
     if(nums[p1] + nums[p2] > target) p2-- // overshot, decrease
