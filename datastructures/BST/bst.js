@@ -76,7 +76,7 @@ class BST {
         } else {
           // no RHS, so insert here
           current.right = newNode;
-          // return current.right
+          return this;
         }
       } else {
         // traverse left
@@ -85,7 +85,7 @@ class BST {
         } else {
           // no LHS so insert here
           current.left = newNode;
-          // return current.left
+          return this;
         }
       }
     }
@@ -226,21 +226,21 @@ module.exports = { BST };
 let tree = new BST();
 let data = [0, -5, 5, -3, 3, 6, -6];
 data.forEach(num => tree.insert(num));
-// console.log(tree.root)
+console.log('tree', tree.root);
 
 // tree.insert(0).insert(-5).insert(5).insert(-3).insert(3).insert(6).insert(-6)
 let bfs = tree.BFS();
-console.log(bfs);
+console.log('BFS', bfs);
 
 let dfsPreOrder = tree.dfsPreOrder();
 
-console.log(dfsPreOrder);
+console.log('pre prder', dfsPreOrder);
 
 let dfsPostOrder = tree.dfsPostOrder();
-console.log(dfsPostOrder);
+console.log('post order', dfsPostOrder);
 
 let dfsInOrder = tree.dfsInOrder();
-console.log(dfsInOrder);
+console.log('in order', dfsInOrder);
 
 // this explains the names - think of "order" as being the location of the root node.
 console.log(
