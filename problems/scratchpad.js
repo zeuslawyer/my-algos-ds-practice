@@ -1,246 +1,172 @@
-class bstNode {
-  constructor(data, left, right) {
-    this.data = data;
-    this.left = null;
-    this.right = null;
+class heapNode {
+  constructor(val, priority) {
+    this.data = val;
+    this.priority = priority || null;
   }
 }
 
-class BST {
+class pQ {
   constructor() {
-    this.root = null;
+    this.data = [];
   }
 
-  insert(val) {
-    let node = new bstNode(val);
-    if (!this.root) {
-      this.root = node;
-      return this;
-    }
+  enQrecurse(val, priority) {
+    let node = new heapNode(val, priority);
+    this.data.push(node);
 
-    let current = this.root;
-    while (current.data) {
-      if (node.data === current.data) return this;
-      if (node.data < current.data) {
-        if (current.left) {
-          current = current.left;
-        } else {
-          current.left = node;
-          return;
-        }
-      } else {
-        if (current.right) {
-          current = current.right;
-        } else {
-          current.right = node;
-          return;
-        }
+    if (this.data.length === 1) return this;
+
+    // this.bubbleUp(this.data.length - 1);
+    _bubbleUp(this.data.length - 1, this.data);
+
+    function _bubbleUp(childInd, values) {
+      let parentInd = Math.floor((childInd - 1) / 2);
+
+      // base case child < parent
+      if (values[childInd] <= values[parentInd]) return;
+
+      // else swap if child is > parent, recursively
+      while (values[childInd] > values[parentInd]) {
+        // console.log(`swapping child at index ${childInd}`, values[childInd], `with parent at index ${parentInd}`, values[parentInd]);
+        [values[childInd], values[parentInd]] = [
+          values[parentInd],
+          values[childInd]
+        ];
+        _bubbleUp(parentInd, values);
       }
     }
     return this;
   }
+  bubbleUp(ind) {
+    let parentInd = this.getParent(ind);
 
-  insertRec(val) {
-    let newNode = new bstNode(val);
+    if (this.data[ind].priority >= this.data[parentInd].priority) return;
 
-    if (!this.root) {
-      this.root = newNode;
-      return this;
-    }
-
-    insert(this.root);
-
-    function insert(current) {
-      if (newNode.data === current.data) return this;
-
-      if (newNode.data > current.data) {
-        if (current.right) {
-          insert(current.right);
-        } else {
-          current.right = newNode;
-          return this;
-        }
-      }
-
-      if (newNode.data < current.data) {
-        if (current.left) {
-          insert(current.left);
-        } else {
-          current.left = newNode;
-          return this;
-        }
-      }
+    while (this.data[ind].priority < this.data[parentInd].priority) {
+      console.log(this.data);
+      this.swap_Nodes(ind, parentInd);
+      this.bubbleUp(parentInd);
     }
   }
 
-  find(val) {
-    if (!this.root) return false;
-    if (this.root.data === val) return true;
+  enQ(val, priority) {
+    let newNode = new heapNode(val, priority);
+    this.data.push(newNode);
 
-    let current = this.root;
-    while (current) {
-      if (val === current.data) return true;
+    if (this.data.length === 1) return this;
 
-      if (val > current.data) {
-        if (current.right) {
-          current = current.right;
-        } else {
-          return false;
-        }
-      }
+    // reorder
+    let insertedInd = this.data.length - 1;
+    let parentInd = this.getParent(insertedInd);
 
-      if (val < current.data) {
-        if (current.left) {
-          current = current.left;
-        } else {
-          return false;
-        }
-      }
-    }
-  }
+    while (
+      insertedInd > 0 &&
+      this.data[insertedInd].priority < this.data[parentInd].priority
+    ) {
+      let temp = this.data[parentInd];
+      this.data[parentInd] = this.data[insertedInd];
+      this.data[insertedInd] = temp;
 
-  findRec(val) {
-    if (!this.root) return false;
-    if (this.root.data === val) return true;
-
-    let current = this.root;
-    function find(val) {
-      if (current.data === val) return true;
-      if (val < current.data) {
-        if (current.left) {
-          current = current.left;
-          return find(val);
-        } else {
-          return false;
-        }
-      }
-      if (val > current.data) {
-        if (current.right) {
-          current = current.right;
-          return find(val);
-        } else {
-          return false;
-        }
-      }
+      insertedInd = parentInd;
+      parentInd = this.getParent(insertedInd);
     }
 
-    return find(val);
+    return this
   }
 
-  remove(val) {
-    f;
-    if (!this.root) return null;
+  deQrecurse() {
+    if (this.data.length === 0) return false;
+    if (this.data.length === 1) {
+      return this.data.pop();
+    }
 
-    let result;
-    let current = this.root;
-    let parent = null;
+    this.swap_Nodes(0, this.data.length - 1);
+    let res = this.data.pop();
 
-    function traverseAndRemove(start, parent) {
-      let current = start;
-      while (current) {
-        if (val === current.data) {
-          result = current.data;
-          current = null;
-          return result;
+    this.sinkdown();
+
+    return res;
+  }
+
+  sinkdown() {
+    let index = 0;
+    let leftChild = 2 * index + 1;
+    let rightChild = 2 * index + 2;
+  }
+
+  deQ() {
+    if (this.data.length === 0) return false;
+    if (this.data.length === 1) {
+      return this.data.pop();
+    }
+
+    this.swap_Nodes(0, this.data.length - 1);
+
+    let res = this.data.pop(); // remove item from heap
+
+    // sinkdown
+    let index = 0;
+    while (index < this.data.length) {
+      console.log('running');
+      // let [leftInd, rightInd] = this.getChildren(index);
+      let leftInd = 2 * index + 1;
+      let rightInd = 2 * index + 2;
+
+      if (this.data[leftInd] && this.data[rightInd]) {
+        let swapInd =
+          this.data[leftInd].priority < this.data[rightInd].priority
+            ? leftInd
+            : rightInd;
+        if (this.data[index].priority > this.data[swapInd].priority) {
+          this.swap_Nodes(swapInd, index);
+          index = swapInd;
         }
-
-        if (val < current.data) {
-          if (current.left) {
-            current = current.left;
-          } else {
-            return null;
-          }
-        }
-
-        if (val > current.data) {
-          if (current.right) {
-            current = current.right;
-          } else {
-            return null;
-          }
+      } else if (!this.data[leftInd]) {
+        // nothing further to do
+        break;
+      } else if (!this.data[rightInd]) {
+        let swapInd = leftInd;
+        if (this.data[index].priority > this.data[swapInd].priority) {
+          this.swap_Nodes(swapInd, index);
+          index = swapInd;
         }
       }
     }
+
+    return res;
   }
 
-  bfs() {
-    let traversed = [];
-    if (!this.root) return traversed;
-
-    let Q = [this.root];
-
-    while (Q.length) {
-      let current = Q.pop();
-      traversed.push(current.data);
-      if (current.left) Q.unshift(current.left);
-      if (current.right) Q.unshift(current.right);
-    }
-
-    return traversed;
+  getParent(index) {
+    if (index < 1) return -1;
+    return Math.floor((index - 1) / 2);
   }
 
-  dfsPreOrder() {
-    let traversed = [];
-    if (!this.root) return traversed;
-
-    visit(this.root);
-
-    function visit(node) {
-      traversed.push(node.data);
-      if (node.left) visit(node.left);
-      if (node.right) visit(node.right);
-    }
-
-    return traversed;
+  getChildren(index) {
+    let first = 2 * index + 1;
+    let second = 2 * index + 2;
+    return [first, second];
   }
 
-  dfsPostOrder() {
-    let traversed = [];
-    if (!this.root) return traversed;
-
-    function visit(node) {
-      if (node.left) visit(node.left);
-      if (node.right) visit(node.right);
-      traversed.push(node.data);
-    }
-
-    visit(this.root);
-    return traversed;
+  swap_Nodes(ind1, ind2) {
+    // console.log('swapping')
+    let temp = this.data[ind1];
+    this.data[ind1] = this.data[ind2];
+    this.data[ind2] = temp;
   }
 }
 
-function dfsInOrder(bst) {
-  let current = bst.root;
-  let traversed = [];
-  if (!current) return traversed;
+let t = new pQ();
+t.enQ('skydiving', 1);
+t.enQ('pushups', 5);
+t.enQ('TWD', 1);
 
-  function visit(node) {
-    if (node.left) visit(node.left);
-    traversed.push(node.data);
-    if (node.right) visit(node.right);
-  }
+// console.log('popped', t.deQ());
+// console.log('popped', t.deQ());
+// console.log('popped', t.deQ());
 
-  visit(current);
-  return traversed;
-}
-let t = new BST();
-t.insert(10);
-t.insertRec(3);
-t.insert(15);
-t.insert(6);
-t.insert(1);
-t.insert(12);
-t.insert(20);
-// console.log(t.root);
+t.enQrecurse('cooking', 4);
+t.enQrecurse('cycling', 3);
+// t.enQ('sleeping', 2);
 
-// console.log(t.findRec(15));
-
-// console.log(t.bfs()); // [ 10, 3, 15, 1, 6, 12, 20 ]
-
-// console.log(t.dfsPreOrder()); //[ 10, 3, 1, 6, 15, 12, 20 ]
-// console.log('in order', dfsInOrder(t)); // [ 1, 3, 6, 10, 12, 15, 20 ]
-
-// console.log('post order', t.dfsPostOrder()); // [ 1, 6, 3, 12, 20, 15, 10 ]
-
-console.log('removing 6', t.remove(6));
-console.log('new tree:', t.root);
+console.log(t.data);
+// console.log('popped', t.deQ());
