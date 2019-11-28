@@ -11,7 +11,7 @@ class BST {
     this.root = null;
   }
 
-  // with a while loop
+  // with a while loop - time complexty O Log n, space comp O(1)
   $insert(val) {
     let newNode = new bstNode(val);
     if (!this.root) {
@@ -47,14 +47,9 @@ class BST {
         }
       }
     }
-
-    // let home = insertIntoBST(newNode, this.root)
-    // console.log('home: ', home)
-
-    // return this
   }
 
-  // insert with recursion
+  // insert with recursion -  - time complexty O Log n, space comp O(Log n) -> recursion stack takes space
   insert(val) {
     let newNode = new bstNode(val);
     if (!this.root) {
@@ -95,7 +90,7 @@ class BST {
     return this;
   }
 
-  // recursively
+  // recursively - time complexty O Log n, space comp O(Log n) -> recursion stack takes space
   find(val, node = this.root) {
     if (!node) return false;
     if (node.data === val) return true;
@@ -121,7 +116,7 @@ class BST {
     }
   }
 
-  // with loop
+  // with loop -  - time complexty O Log n, space comp O(1)
   $find(val) {
     if (!this.root) return false;
     if (val === this.root.data) return true;
