@@ -1,51 +1,31 @@
-function $findThreeLargestNumbers(array) {
-  array = array.sort((a, b) => a - b);
-  return array.slice(array.length - 3);
-}
+/**
+ * Caesar Cipher Encryptor
+Given a non-empty string of lowercase letters and a non-negative integer value representing a key, write a function that returns a new string obtained by
+shifting every letter in the input string by k positions in the alphabet, where k is the key. Note that letters should "wrap" around the alphabet; in other words,
+the letter "z" shifted by 1 returns the letter "a".
 
-function findThreeLargestNumbers(array) {
-  let res = [null, null, null];
-  // let res = Array.from(new Array(3), () => null);
-  for (let num of array) {
-    if (!res[2] || num > res[2]) {
-      insertAndShift(res, num, 2);
-    } else if (!res[1] || num > res[1]) {
-      // res[1] = num
-      insertAndShift(res, num, 1);
-    } else if (!res[0] || num > res[0]) {
-      // res[0]= num
-      insertAndShift(res, num, 0);
+Sample input:"xyz", 2
+Sample output:"zab"
+ */
+
+function caesarCipherEncryptor(string, key) {
+  let maxCode = 'z'.charCodeAt(0);
+  let minCode = 'a'.charCodeAt(0) - 1;
+  let res = '';
+
+  for (const char of string) {
+    let newCode = char.charCodeAt(0) + (key % 26);
+    if (newCode > maxCode) {
+      newCode = minCode + (newCode % maxCode);
     }
+    res += String.fromCharCode(newCode);
   }
+
   return res;
 }
 
-function insertAndShift(arr, num, insertIndex) {
-  console.log('before', num, arr);
-  for (let i = 0; i <= insertIndex; i++) {
-    if (i === insertIndex) {
-      arr[i] = num;
-    } else {
-      arr[i] = arr[i + 1];
-    }
-  }
-
-  console.log('after', num, arr);
-}
-
-// let t = findThreeLargestNumbers([4, 2, 6, 5, 3]);
-// let t = findThreeLargestNumbers([7, 8, 3, 11, 43, 55]);
-let t = findThreeLargestNumbers([
-  -1,
-  -2,
-  -3,
-  -7,
-  -17,
-  -27,
-  -18,
-  -541,
-  -8,
-  -7,
-  7
-]);
+// let t = caesarCipherEncryptor('abc', 52);
+// let t = caesarCipherEncryptor('abc', 57);
+// let t = caesarCipherEncryptor('xyz', 2); //zab
+let t = caesarCipherEncryptor('xyz', 5); //cde
 console.log(t);
