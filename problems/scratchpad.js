@@ -1,31 +1,37 @@
-/**
- * Caesar Cipher Encryptor
-Given a non-empty string of lowercase letters and a non-negative integer value representing a key, write a function that returns a new string obtained by
-shifting every letter in the input string by k positions in the alphabet, where k is the key. Note that letters should "wrap" around the alphabet; in other words,
-the letter "z" shifted by 1 returns the letter "a".
+function arrayOfArrayProducts(arr) {
+  let left = []
+  let right = []
 
-Sample input:"xyz", 2
-Sample output:"zab"
- */
-
-function caesarCipherEncryptor(string, key) {
-  let maxCode = 'z'.charCodeAt(0);
-  let minCode = 'a'.charCodeAt(0) - 1;
-  let res = '';
-
-  for (const char of string) {
-    let newCode = char.charCodeAt(0) + (key % 26);
-    if (newCode > maxCode) {
-      newCode = minCode + (newCode % maxCode);
-    }
-    res += String.fromCharCode(newCode);
+ // construct left table
+ for (let i = 0; i < arr.length; i++) {
+  if (i === 0) {
+    left[i] = 1
+  } else {
+    left[i] = arr[i - 1] * left[i - 1]
   }
-
-  return res;
 }
 
-// let t = caesarCipherEncryptor('abc', 52);
-// let t = caesarCipherEncryptor('abc', 57);
-// let t = caesarCipherEncryptor('xyz', 2); //zab
-let t = caesarCipherEncryptor('xyz', 5); //cde
-console.log(t);
+  // construct right table
+  for (let j = arr.length - 1; j >= 0; j--) {
+    if (j === arr.length - 1) {
+      right[j] = 1
+    } else {
+      right[j] = arr[j + 1] * right[j + 1]
+    }
+  }
+  console.log('arr', arr)
+  console.log('left', left)
+  console.log('right', right)
+
+
+  let res = []
+  for(let c=0; c< arr.length; c++){
+    res.push(left[c] * right[c])
+  }
+  return res
+
+}
+
+let t = arrayOfArrayProducts([8, 10, 2]);
+
+console.log('answer', t)
