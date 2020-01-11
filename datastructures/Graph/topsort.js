@@ -70,7 +70,7 @@ class DiGraph {
       stack.push(n);
     }
 
-    // visit all nodes
+    // visit all nodes to fill up the stack
     for (let node in this.adjList) {
       if (!visited[node]) {
         visit(node);
@@ -170,4 +170,5 @@ dgCyc.addDirectedEdge('C', 'D');
 dgCyc.addDirectedEdge('D', 'B');
 
 // console.log(dgCyc.topSort());
-console.log(dg.kahnsTopSort());
+// console.log(dg.kahnsTopSort());
+

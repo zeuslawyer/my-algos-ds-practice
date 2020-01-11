@@ -54,14 +54,15 @@ function courseTaker(numCourses, prereqs) {
 
   if (sorted.length === numCourses) return sorted;
   // else
-  return false;
+  return false; // is cyclical
 }
 
 let result = courseTaker(4, [
   [0, 1],
   [0, 2],
   [1, 3],
-  [2, 3]
+  [2, 3],
+  [2, 4]
 ]);
 
 let fail = courseTaker(2, [

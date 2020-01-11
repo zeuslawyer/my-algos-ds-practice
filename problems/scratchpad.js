@@ -1,34 +1,102 @@
-let str = 'abaxyzzyxf';
+// function courseTaker(numCourses, prereqs) {
+//   let graph = {};
+//   let inDegrees = {};
+//   let ordered = [];
+//   let Q = []; // unshift, pop
 
-var longestPalindrome = function(str) {
-  let longestPal = str[0];
+//   for (let [course, dep] of prereqs) {
+//     // construct graph
+//     if (!graph[dep]) graph[dep] = [];
+//     if (!graph[course]) graph[course] = [];
+//     graph[dep].push(course);
 
-  for (let i = 1; i < str.length; i++) {
-    let oddPal = getLongestPalFrom(str, i - 1, i + 1);
-    let evenPal = getLongestPalFrom(str, i - 1, i);
-    let longer = oddPal.length > evenPal.length ? oddPal : evenPal;
+//     // construct inDegrees
+//     if (!inDegrees[course]) inDegrees[course] = 0;
+//     if (!inDegrees[dep]) inDegrees[dep] = 0;
+//     inDegrees[course]++;
+//   }
 
-    longestPal = longestPal.length > longer.length ? longestPal : longer;
-  }
+//   // assemble Q, find a node with 0 inDegrees
+//   for (let node in inDegrees) {
+//     if (inDegrees[node] === 0) Q.unshift(node);
+//   }
 
-  return longestPal;
-};
+//   while (Q.length > 0) {
+//     // start visiting
+//     let current = Q.pop();
+//     ordered.push(current);
 
-function getLongestPalFrom(str, leftInd, rightInd) {
-  while (leftInd >= 0 && rightInd < str.length) {
-    if (str[leftInd] !== str[rightInd]) {
-      break;
-    }
+//     let neighbours = graph[current];
+//     neighbours.forEach(n => {
+//       inDegrees[n]--;
+//       if (inDegrees[n] === 0) Q.unshift(n);
+//     });
+//   }
 
-    // else, expand outwards
-    leftInd -= 1;
-    rightInd += 1;
-  }
+//   if (ordered.length === numCourses) return ordered;
+//   return 'cyclical graph';
+// }
 
-  // when while loop breaks...
-  return str.slice(leftInd + 1, rightInd); // do not include indexes that are not ===
-}
+// let OK = courseTaker(5, [
+//   [0, 1],
+//   [0, 2],
+//   [1, 3],
+//   [2, 3],
+//   [2, 4]
+// ]);
 
-let res = longestPalindrome(str);
+// let notOK = courseTaker(2, [
+//   [0, 1],
+//   [1, 0]
+// ]);
 
-console.log('answer:  ', res);
+// console.log(OK);
+// // console.log(notOK);
+
+// function courseTakerDFS(numCourses, prereqs) {
+//   let graph = {};
+//   let visited = {};
+//   let ordered = [];
+//   let stack = []; // pop, push
+
+//   for (let [course, dep] of prereqs) {
+//     // construct graph
+//     if (!graph[dep]) graph[dep] = [];
+//     if (!graph[course]) graph[course] = [];
+//     graph[dep].push(course);
+//   }
+
+//   for (let node in graph) {
+//     if (!visited[node]) visit(node);
+//   }
+
+//   // helper function - DFS
+//   function visit(node) {
+//     visited[node] = true;
+//     let neighbours = graph[node];
+
+//     neighbours.forEach(n => {
+//       if (!visited[n]) visit[n];
+//     });
+
+//     // after visiting, add it from call stack to sorted
+//     stack.push(node);
+//   }
+
+//   while(stack.length >  0) {
+//     let current =  stack.pop()
+//     ordered.push(+current)
+//   }
+
+//   return ordered;
+// }
+
+// let withStack = courseTakerDFS(5, [
+//   [0, 1],
+//   [0, 2],
+//   [1, 3],
+//   [2, 3],
+//   [2, 4]
+// ]);
+
+// console.log('DFS', withStack);
