@@ -9,16 +9,16 @@ module.exports = function(arr1, arr2) {
   while (p1 < arr1.length && p2 < arr2.length) {
     // edge case if values at p1 and p2 are equal
 
-    if(arr1[p1] === arr2[p2]) {
+    if (arr1[p1] === arr2[p2]) {
       res.push(arr1[p1]);
       // pop both off
       p1++;
-      p2++
+      p2++;
     } else if (arr1[p1] < arr2[p2]) {
       res.push(arr1[p1]);
       // pop it off
       p1++;
-    } else  {
+    } else {
       res.push(arr2[p2]);
       // pop it off
       p2++;
@@ -29,7 +29,6 @@ module.exports = function(arr1, arr2) {
   while (p1 < arr1.length) {
     res.push(arr1[p1]);
     p1++;
-
   }
   while (p2 < arr2.length) {
     res.push(arr2[p2]);
