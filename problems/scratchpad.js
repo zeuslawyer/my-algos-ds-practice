@@ -1,32 +1,24 @@
-const input = [8, 10, 2];
+const inp1 = [2, 3, -2, 4]; // 6
 
-function arrOfProd(arr) {
-  const res = [],
-    left = [],
-    right = [];
+var maxProductKadane = function(arr) {
+  let maxSoFar = arr[0];
+  let minSoFar = arr[0];
+  let maxProd = arr[0];
 
-  for (let i = 0; i < arr.length; i++) {
-    if (i === 0) {
-      left[i] = 1;
-    } else {
-      left[i] = arr[i - 1] * left[i - 1];
-    }
+  for (let i = 1; i < arr.length; i++) {
+    let current = arr[i];
+    let currentMin = minSoFar;
+    let currentMax = maxSoFar;
+
+    minSoFar = Math.min(current, currentMin * current, maxSoFar * current);
+
+    maxSoFar = Math.max(current, currentMin * current, currentMax * current);
+
+    maxProd = Math.max(maxProd, maxSoFar);
   }
 
-  for (let i = arr.length - 1; i >= 0; i--) {
-    if (i === arr.length - 1) {
-      right[i] = 1;
-    } else {
-      right[i] = arr[i + 1] * right[i + 1];
-    }
-  }
+  return maxProd;
+};
 
-  for (let i = 0; i < arr.length; i++) {
-    res[i] = left[i] * right[i];
-  }
-
-  return res;
-}
-
-let ans = arrOfProd(input);
+const ans = maxProductKadane(inp1);
 console.log(ans);

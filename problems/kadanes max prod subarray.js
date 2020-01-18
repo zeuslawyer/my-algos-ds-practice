@@ -8,32 +8,32 @@
  * https://leetcode.com/problems/maximum-product-subarray
  * https://leetcode.com/problems/maximum-product-subarray/discuss/416395/JavaScript-Solution-w-Explanation
  */
-function maxProdTillCurrentuctSubArray(arr) {
+/**
+ * @param {number[]} arr
+ * @return {number}
+ */
+var KadaneMaxProduct = function(arr) {
+  let currentMax = arr[0];
+  let currentMin = arr[0];
   let maxProd = arr[0];
-  let maxProdTillCurrent = arr[0];
-  let minProdTillCurrent = arr[0];
 
+  /**
+   * The tricky part of this problem is that negative numbers exist in the input array. 
+   * This causes situations where the smallest previous product (a negative number) can become the largest 
+   * product if the next number in line is also a negative number.
+   */
   for (let i = 1; i < arr.length; i++) {
-    let currentMin = minProdTillCurrent;
-    let currentMax = maxProdTillCurrent;
-    let currentNum = arr[i];
+    let current = arr[i];
+    let prevMax = currentMax;
+    let prevMin = currentMin;
 
-    minProdTillCurrent = Math.min(
-      currentNum,
-      currentNum * currentMax,
-      currentNum * currentMin
-    );
-    maxProdTillCurrent = Math.max(
-      currentNum,
-      currentNum * currentMax,
-      currentNum * currentMin
-    );
+    currentMax = Math.max(current, current * prevMax, current * prevMin);
+    currentMin = Math.min(current, current * prevMax, current * prevMin);
 
-    maxProd = Math.max(maxProd, maxProdTillCurrent);
+    maxProd = Math.max(maxProd, currentMax);
   }
 
   return maxProd;
-}
-
-let maxProd = maxProdTillCurrentuctSubArray([2, 3, -2, 4]);
+};
+let maxProd = KadaneMaxProduct([2, 3, -2, 4]);
 console.log('res', maxProd);

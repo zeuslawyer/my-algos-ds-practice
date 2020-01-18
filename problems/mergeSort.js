@@ -7,10 +7,10 @@ function mergeSort(arr) {
   // recursively mergesort each half of the array
   let mid = Math.floor(arr.length / 2);
 
-  let leftUnsorted = arr.slice(0, mid);
-  let rightUnsorted = arr.slice(mid);
-  let left = mergeSort(leftUnsorted); // up to mid
-  let right = mergeSort(rightUnsorted); // mid onward
+  let left = arr.slice(0, mid);
+  let right = arr.slice(mid);
+  left = mergeSort(left); // up to mid
+  right = mergeSort(right); // mid onward
 
   //left and right will eventually be single element arrays as per base case, so stitch them together
 
