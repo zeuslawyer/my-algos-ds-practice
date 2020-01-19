@@ -221,7 +221,7 @@ module.exports = { BST };
 let tree = new BST();
 let data = [0, -5, 5, -3, 3, 6, -6];
 data.forEach(num => tree.insert(num));
-console.log('tree', tree.root);
+// console.log('tree', tree.root);
 
 // tree.insert(0).insert(-5).insert(5).insert(-3).insert(3).insert(6).insert(-6)
 let bfs = tree.BFS();

@@ -89,3 +89,27 @@ function getNeighbours(rowInd, colInd, matrix, visited) {
 
   return neighbours;
 }
+
+function $getNeighbours(r, c, grid) {
+  let neighbours = [];
+  // first and last rows
+  if (r > 0) {
+    let top = [r - 1, c];
+    neighbours.push(top);
+  }
+  if (r < grid.length - 1) {
+    let bottom = [r + 1, c];
+    neighbours.push(bottom);
+  }
+  // left and right cols
+  if (c > 0) {
+    let left = [r, c - 1];
+    neighbours.push(left);
+  }
+  if (c < grid[0].length - 1) {
+    let right = [r, c + 1];
+    neighbours.push(right);
+  }
+
+  return neighbours;
+}
