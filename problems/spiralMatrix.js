@@ -2,41 +2,41 @@
 
 function generate(N) {
   let res = Array.from(Array(4), () => []);
-  let firstRow = 0,
-    lastRow = N - 1;
-  let firstCol = 0,
-    lastCol = N - 1;
+  let rowStart = 0,
+    rowEnd = N - 1;
+  let colStart = 0,
+    colEnd = N - 1;
 
   let value = 1; // inserted val
 
-  while (firstRow <= lastRow && firstCol <= lastCol) {
+  while (rowStart <= rowEnd && colStart <= colEnd) {
     // fill in first row
-    for (let i = firstCol; i <= lastCol; i++) {
-      res[firstRow][i] = value;
+    for (let i = colStart; i <= colEnd; i++) {
+      res[rowStart][i] = value;
       ++value;
     }
-    firstRow++;
+    rowStart++;
 
     // fill in RHS column
-    for (let i = firstRow; i <= lastRow; i++) {
-      res[i][lastCol] = value;
+    for (let i = rowStart; i <= rowEnd; i++) {
+      res[i][colEnd] = value;
       ++value;
     }
-    lastCol--;
+    colEnd--;
 
     // fill in bottom row
-    for (let i = lastCol; i >= firstCol; i--) {
-      res[lastRow][i] = value;
+    for (let i = colEnd; i >= colStart; i--) {
+      res[rowEnd][i] = value;
       ++value;
     }
-    lastRow--;
+    rowEnd--;
 
     // fill in lHS Col
-    for (let i = lastRow; i >= firstRow; i--) {
-      res[i][firstCol] = value;
+    for (let i = rowEnd; i >= rowStart; i--) {
+      res[i][colStart] = value;
       ++value;
     }
-    firstCol++;
+    colStart++;
   }
 
   return res;
