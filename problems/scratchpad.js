@@ -1,50 +1,23 @@
+const grid = [
+  [1, 1, 0, 0, 0],
+  [1, 1, 0, 0, 0],
+  [0, 0, 1, 0, 0],
+  [0, 0, 1, 0, 0],
+  [0, 0, 0, 1, 1]
+]; // ans 3 islands
 
+var numIslands = function(grid) {
+  let rows = grid.length;
+  let cols = grid[0].length;
+  let count = 0;
+  let visited = Array.from(grid, () => Array(cols).fill(false));
 
-
-function v1(){
-  let rows = 5
-  let cols = 3
-  let grid = []
-  
-  for (var i = 0; i < rows; i++) {
-      grid[i] = new Array(cols).fill(0)
-  }
-  
-  for(let i=0; i<rows; i++){
-    for(let j=0; j<cols;j++){
-      if(i===0 || j === 0){
-        grid[i][j] =  1
-      }  else {
-        grid[i][j] =  grid[i-1][j] + grid[i][j-1]
-      }
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      visited[row][col] = count++;
     }
   }
-  
-  
-  console.log(grid)
-  
-}
+  console.log('visited', visited, rows, cols);
+};
 
-function v2(){
-  let rows = 5
-  let cols = 3
-  let grid = []
-
-  for(let i =0 ;i< rows; i++){
-    grid.push(new Array(cols).fill(0))
-  }
-  for(let i=0; i<rows; i++){
-    for(let j=0; j<cols;j++){
-      if(i===0 || j === 0){
-        grid[i][j] =  1
-      }  else {
-        grid[i][j] =  grid[i-1][j] + grid[i][j-1]
-      }
-    }
-  }
-
-  console.log(grid)
-
-}
-
-console.log(v2())
+console.log('DFS', numIslands(grid));

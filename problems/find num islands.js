@@ -1,4 +1,4 @@
-const grid = [
+const grid2 = [
   [1, 1, 0, 0, 0],
   [1, 1, 0, 0, 0],
   [0, 0, 1, 0, 0],
@@ -6,81 +6,126 @@ const grid = [
   [0, 0, 0, 1, 1]
 ]; // ans 3 islands
 
-var numIslands = function(grid) {
-  let islands = 0;
-  let res = [];
-  // no need for visited, as you only visit 1s
+const grid1 = [
+  [1, 1, 1, 1, 0],
+  [1, 1, 0, 1, 0],
+  [1, 1, 0, 0, 0],
+  [0, 0, 0, 0, 0]
+]; // ans 1
 
-  for (let r = 0; r < grid.length; r++) {
-    for (let c = 0; c < grid[0].length; c++) {
-      if (+grid[r][c] === 1) {
-        islands++;
-        traverse(r, c, grid, res);
+const grid = [
+  [1, 1, 0, 0, 0],
+  [1, 1, 0, 0, 0],
+  [0, 0, 1, 0, 0],
+  [0, 0, 0, 1, 1]
+];
+// ans 3
+
+var numIslandsDFS = function(grid) {
+  if (!grid.length) return 0;
+
+  let rows = grid.length;
+  let cols = grid[0].length;
+
+  let islandCount = 0;
+
+  let visited = Array.from(grid, () => Array(cols).fill(false));
+
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      if (grid[row][col] === 1 && !visited[row][col]) {
+        ++islandCount;
+        traverseIslandDFS(row, col, grid, visited);
       }
     }
   }
 
-  return { islands, res };
+  return islandCount;
 };
 
-// as traverse occurs, mark nodes as 0
-function traverse(row, col, grid, res) {
-  let len = 0;
-  // BFS - add all islands to Q
-  let Q = [[row, col]];
-  while (Q.length > 0) {
-    let [r, c] = Q.pop();
+var numIslandsBFS = function(grid) {
+  let rows = grid.length;
+  let cols = grid[0].length;
 
-    // add to length if its still 1
-    console.log('look, some are not 1', grid[r][c]);
-    if (+grid[r][c] === 1) len++;
+  let islandCount = 0;
 
-    // mark this as 0
-    grid[r][c] = 0;
-    let neighbours = getNeighbours(r, c, grid);
-    //add each neighbour to the Q
-    neighbours.forEach(neighbour => {
-      let [r, c] = neighbour;
-      if (+grid[r][c] === 1) {
-        Q.unshift(neighbour); // add it to Q only if its a 1
+  let visited = Array.from(grid, () => Array(cols).fill(false));
+
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      if (grid[row][col] === 1 && !visited[row][col]) {
+        ++islandCount;
+        traverseIslandsBFS(row, col, grid, visited);
       }
-    });
+    }
   }
-  if (len > 0) res.push(len);
+
+  return islandCount;
+};
+
+console.log('DFS', numIslandsDFS(grid));
+console.log('BFS', numIslandsBFS(grid));
+
+function traverseIslandDFS(row, col, grid, visited) {
+  visited[row][col] = true;
+
+  let neighbours = findValidNeighbours(row, col, grid, visited);
+  neighbours.forEach(neigh => {
+    let [r, c] = neigh;
+    if (!visited[r][c] && grid[r][c] === 1) {
+      traverseIslandDFS(r, c, grid, visited);
+    }
+  });
+
+  return;
 }
 
-function getNeighbours(r, c, grid) {
-  let neighbours = [];
-  // first and last rows
-  if (r > 0) {
-    let top = [r - 1, c];
-    neighbours.push(top);
+function traverseIslandsBFS(row, col, grid, visited) {
+  let Q = [[row, col]]; // unshift, pop
+
+  while (Q.length > 0) {
+    let [r, c] = Q.pop();
+    if (!visited[r][c]) {
+      visited[r][c] = true;
+
+      let neighbours = findValidNeighbours(r, c, grid, visited);
+      neighbours.forEach(n => {
+        let [nr, nc] = n;
+        if (!visited[nr][nc]) {
+          Q.push(n);
+        }
+      });
+    }
   }
-  if (r < grid.length - 1) {
-    let bottom = [r + 1, c];
-    neighbours.push(bottom);
+}
+
+function findValidNeighbours(row, col, grid, visited) {
+  let neighbours = []; // array of r,c pairs
+
+  // top and bottom
+  if (row - 1 >= 0 && grid[row - 1][col] === 1 && !visited[row - 1][col]) {
+    neighbours.push([row - 1, col]);
   }
-  // left and right cols
-  if (c > 0) {
-    let left = [r, c - 1];
-    neighbours.push(left);
+
+  if (
+    row + 1 < grid.length &&
+    grid[row + 1][col] === 1 &&
+    !visited[row + 1][col]
+  ) {
+    neighbours.push([row + 1, col]);
   }
-  if (c < grid[0].length - 1) {
-    let right = [r, c + 1];
-    neighbours.push(right);
+
+  // left and right
+  if (col - 1 >= 0 && grid[row][col - 1] === 1 && !visited[row][col - 1]) {
+    neighbours.push([row, col - 1]);
+  }
+  if (
+    col + 1 < grid[0].length &&
+    grid[row][col + 1] === 1 &&
+    !visited[row][col + 1]
+  ) {
+    neighbours.push([row, col + 1]);
   }
 
   return neighbours;
 }
-
-// let ans = numIslands(grid);
-// console.log(ans);
-
-let testCase = [
-  ['1', '1', '1', '1', '0'],
-  ['1', '1', '0', '1', '0'],
-  ['1', '1', '0', '0', '0'],
-  ['0', '0', '0', '0', '0']
-]; // ans is 1
-
-console.log('testCase', numIslands(testCase));
