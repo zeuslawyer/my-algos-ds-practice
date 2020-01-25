@@ -17,7 +17,8 @@ function riverSizes(grid) {
   return sizes;
 }
 
-function traverseDFS(row, col, grid, visited, sizes, length = 0) {
+function traverseDFS(row, col, grid, visited, sizes) {
+  length = 0;
   let stack = [[row, col]];
 
   while (stack.length > 0) {
@@ -81,5 +82,5 @@ let g1 = [
   [0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1],
   [1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0],
   [1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1]
-];
+]; // ans sorted [ 1, 1, 2, 2, 5, 21 ]
 console.log(riverSizes(g1).sort((a, b) => a - b));
