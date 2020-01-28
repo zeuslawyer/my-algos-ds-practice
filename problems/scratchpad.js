@@ -1,35 +1,64 @@
-// pramp decryption
-// step1:  convert to Ascii
-// step 2:  add +1 if index 0 ...OR... add updated value of prev index
-// step 3:  subtract 26 until within range
+/**
+ * Write a function that takes in two strings and returns the minimum number of edit operations that need to be performed
+ * on the first string to obtain the second string. There are three edit operations: insertion of a character, deletion of a character,
+ * and substitution of a character for another.
+ *
+ * INTUITION:
+ *-create a table that includes an empty string at the start of each string
+ *- fill in the top row 0 and the left most col 0
+ *- compare each letter to the other. If equal you add 1 to the northwest value in table.  if NOT equal you add 1 to the min of (north, west and nortwest)
+ *-  return last cell in table
+ */
 
-// encryption formula e[ind] = d[ind] + step2[ind] - 26*m
-// decryption formula :   d[ind] = e[ind] - step2[ind] + 26*m
+let str1 = 'abc';
+let str2 = 'yabd';
 
-// step 2 formula :  step2[i+1] = step2[i] + ascii(i)
+// ans 2
 
-function decrypt(word) {
-  let decrypted = '';
-  let step2Val = 1;
-  let a = 'a'.charCodeAt(0);
+function levenshteinDistance(str1, str2) {
+  // insert blank char at start of each
+  str1 = ' ' + str1;
+  str2 = ' ' + str2;
 
-  for (let i = 0; i < word.length; i++) {
-    let charCode = word.charCodeAt(i); // step 1
+  let rows = str1.length;
+  let cols = str2.length;
 
-    charCode = charCode - step2Val; // step 2
+  // create a table with intialized vals in 0th row and 0th col
+  let edits = Array.from(Array(rows), () => Array(cols));
 
-    while (charCode < a) {
-      charCode += 26; // step 3: bring within range of a-z
-    }
-
-    decrypted += String.fromCharCode(charCode);
-
-    // update value of step 2 for next iteration
-    step2Val = step2Val + charCode;
+  for (let i = 0; i < rows; i++) {
+    edits[i][0] = i;
+  }
+  for (let j = 0; j < cols; j++) {
+    edits[0][j] = j;
   }
 
-  return decrypted;
+  for (let row = 1; row < rows; row++) {
+    for (let col = 1; col < cols; col++) {
+      let inputChar = str1[row];
+      let targetChar = str2[col];
+
+      if (inputChar === targetChar) {
+        // get northwest value
+        edits[row][col] = edits[row - 1][col - 1];
+      } else {
+        // get min of north, west and northwest
+        edits[row][col] =
+          1 +
+          Math.min(
+            edits[row - 1][col],
+            edits[row][col - 1],
+            edits[row - 1][col - 1]
+          );
+      }
+    }
+  }
+
+  console.log(edits);
+
+  return edits[rows - 1][cols - 1];
 }
 
-let ans = decrypt('dnotq');
+let ans = levenshteinDistance('yacb', 'abc');
+// let ans = levenshteinDistance(str1, str2);
 console.log(ans);
