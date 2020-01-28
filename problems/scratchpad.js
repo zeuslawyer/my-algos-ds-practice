@@ -1,35 +1,35 @@
-// # given a DAG, return all possible paths from vertex 0 to vertex N-1.
-//The graph  is represented as an adjacency list
-// #  answer is 5:
-// # [[0,4],[0,3,4],[0,1,3,4],[0,1,2,3,4],[0,1,4]]
+// pramp decryption
+// step1:  convert to Ascii
+// step 2:  add +1 if index 0 ...OR... add updated value of prev index
+// step 3:  subtract 26 until within range
 
-// https://leetcode.com/problems/all-paths-from-source-to-target/discuss/380900/JavaScript-DFS-Solution
+// encryption formula e[ind] = d[ind] + step2[ind] - 26*m
+// decryption formula :   d[ind] = e[ind] - step2[ind] + 26*m
 
-const input = [[4, 3, 1], [3, 2, 4], [3], [4], []];
+// step 2 formula :  step2[i+1] = step2[i] + ascii(i)
 
-function numberOfPaths(graph) {
-  let res = [];
-  let startVertex = 0;
-  let path = [startVertex];
+function decrypt(word) {
+  let decrypted = '';
+  let step2Val = 1;
+  let a = 'a'.charCodeAt(0);
 
-  travel(graph, startVertex);
+  for (let i = 0; i < word.length; i++) {
+    let charCode = word.charCodeAt(i); // step 1
 
-  function travel(graph, vertex) {
-    if (vertex === graph.length - 1) {
-      // base condition
-      res.push(path.slice(0)); // same as pushing path, but behaviour is different!
-      return;
-    } else {
-      let neighbours = graph[vertex];
-      for (const v of neighbours) {
-        path.push(v);
-        travel(graph, v);
-        path.pop();
-      }
+    charCode = charCode - step2Val; // step 2
+
+    while (charCode < a) {
+      charCode += 26; // step 3: bring within range of a-z
     }
+
+    decrypted += String.fromCharCode(charCode);
+
+    // update value of step 2 for next iteration
+    step2Val = step2Val + charCode;
   }
 
-  return res;
+  return decrypted;
 }
 
-console.log(numberOfPaths(input));
+let ans = decrypt('dnotq');
+console.log(ans);
