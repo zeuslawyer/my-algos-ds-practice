@@ -1,2 +1,2 @@
 # NODE MODULES EVERYWHERE
-node_modules/
+*node_modules/

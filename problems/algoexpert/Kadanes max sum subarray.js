@@ -16,15 +16,15 @@
 
 // time complexity O(N)
 function maxSubArray(arr) {
-  let sumSoFar = arr[0];
+  let maxSumInArrSoFar = arr[0];
   let maxSum = arr[0];
 
   for (let i = 1; i < arr.length; i++) {
     let current = arr[i];
-    sumSoFar = Math.max(current, current + sumSoFar);
+    maxSumInArrSoFar = Math.max(current, current + maxSumInArrSoFar);
 
     // update max sum pointer
-    maxSum = Math.max(maxSum, sumSoFar);
+    maxSum = Math.max(maxSum, maxSumInArrSoFar);
   }
   return maxSum;
 }
