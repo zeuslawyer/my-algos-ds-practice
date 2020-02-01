@@ -10,10 +10,10 @@ function reverseWords(arr) {
 
   for (let i = 0; i < arr.length; i++) {
     // finding spaces, and a word startInd index is stored => lastInd of word
-    if (arr[i] === '  ') {
+    if (arr[i] === '  ' || arr[i] === ' ') {
       // console.log('found a space at',  i)
       if (wordsStartInd >= 0) {
-        // console.log('fgoing to reverse starting from ',  wordsStartInd)
+        // console.log('going to reverse starting from ',  wordsStartInd)
         reverseSegment(arr, wordsStartInd, i - 1);
         wordsStartInd = undefined;
       }
@@ -90,4 +90,4 @@ let WORDARRAY = [
 
 let input2 = [' ', ' '];
 
-console.log(reverseWords(WORDARRAY));
+console.log(reverseWords(['a', ' ', ' ', 'b']));
