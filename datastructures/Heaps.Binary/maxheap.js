@@ -107,7 +107,7 @@ class MaxBinHeap {
       const [leftChildInd, rightChildInd] = this.getChildrenIndexes(index);
       console.log('while loop count: ', ++count);
 
-      // if both children exist, then swap with the HIGHER of them, if needed
+      // if both children exist, then swap with the HIGHER of them, since its MAX heap
       if (this.values[leftChildInd] && this.values[rightChildInd]) {
         // get index of greater of the two children
         swapIndex =
@@ -117,8 +117,9 @@ class MaxBinHeap {
         console.log(swapIndex, 'ONE');
 
         // compare node and swap with greater of two children
-        if (this.values[index] < this.values[swapIndex])
+        if (this.values[index] < this.values[swapIndex]) {
           this.swapValues(index, swapIndex);
+        }
       } else if (!this.values[leftChildInd]) {
         // as heaps are always filled left first, then right, if this block evaluates, it means no children to swap with
         console.log(swapIndex, 'TWO, breaking');
