@@ -59,4 +59,5 @@ function levenshteinDistance(str1, str2) {
   return edits[rows - 1][cols - 1];
 }
 
-levenshteinDistance(str1, str2);
+let res = levenshteinDistance(str1, str2);
+console.log('result: ', res);
