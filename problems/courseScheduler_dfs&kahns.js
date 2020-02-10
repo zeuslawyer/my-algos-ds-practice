@@ -53,7 +53,7 @@ let notOK = courseTakerKahns(2, [
 ]);
 
 // console.log('Kahns',OK);'
-console.log('Kahns',notOK);
+console.log('Kahns', notOK);
 
 function courseTakerDFS(numCourses, prereqs) {
   let graph = {};
@@ -85,13 +85,13 @@ function courseTakerDFS(numCourses, prereqs) {
     stack.push(node);
   }
 
-  while(stack.length >  0) {
-    let current =  stack.pop()
-    ordered.push(current)
+  while (stack.length > 0) {
+    let current = stack.pop();
+    ordered.push(current);
   }
 
-  if(stack.length === numCourses) return ordered
-  return 'cyclical'
+  if (stack.length === numCourses) return ordered;
+  return 'cyclical';
 }
 
 let withStack = courseTakerDFS(5, [
@@ -106,6 +106,5 @@ let withStackCyc = courseTakerDFS(2, [
   [0, 1],
   [1, 0]
 ]);
-
 
 console.log('DFS', withStackCyc);

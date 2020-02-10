@@ -1,17 +1,14 @@
 module.exports = function(arr) {
 
   for(let i=1; i<arr.length; i++) {
-      let current = arr[i]
-      let j = i-1
+     for(let i = 0; i  < arr.length; i++){
+       let j = 1
 
-      // check immediate left, and if < sel val, shift it to the right
-      while( arr[j]  > current && j >=0) {
-        // shift it to right
-        arr[j+1] = arr[j]
-        // replace arr[j]
-        arr[j] = current
+       while(j>0 && arr[j] < arr[j-1]) { // compare j with elem on its left and swap if <
+        [arr[j], arr[j-1]] = [arr[j-1], arr[j]]
         j--
-      }
+       } 
+     }
   }
   
   return arr
@@ -35,7 +32,6 @@ function insertionSort(arr) {
 
 
 // alternative
-
 
 function insertionSort2(arr) {
   for (let i = 0; i < arr.length; i++) {
