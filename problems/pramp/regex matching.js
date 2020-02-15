@@ -24,11 +24,11 @@ function isMatch(s, p) {
     for (let c = 1; c < p.length; c++) {
       // RULE 1: == or pat=="."
       if (s[r] === p[c] || p[c] === '.') {
-        dp[r][c] = dp[r - 1][c - 1]; // northwest
+        dp[r][c] = dp[r - 1][c - 1]; // northwest (effectively cancels out and moves to prev match status)
 
         // RULE 2: pat ==="*"
       } else if (p[c] === '*') {
-        // RULE 2A : 0 occurence of the pat before *, => go 2 left
+        // RULE 2A : 0 occurrence of the pat before *, => go 2 left
         dp[r][c] = dp[r][c - 2];
 
         //RULE 2B:  but update if pat before the * == char OR ".", => 1 occurence of pat before *
