@@ -36,4 +36,3 @@ def getNextIndex(idx, arr):
 
 print(hasSingleCycle([1, 2, 3, 4, -2, 3, 7, 8, -26]))
 
-
