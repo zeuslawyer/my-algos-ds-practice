@@ -11,13 +11,13 @@ class PQ {
   }
   enque(node) {
     this.nodes.push(node);
-    this.nodes.sort((a, b) => a.distance - b.distance); // distance from start
+    this.nodes.sort((a, b) => a.distanceFromStart - b.distanceFromStart); // distance from start
     return this;
   }
 
   deque() {
     const res = this.nodes.shift();
-    this.nodes.sort((a, b) => a.distance - b.distance);
+    this.nodes.sort((a, b) => a.distanceFromStart - b.distanceFromStart);
     return res;
   }
 }
@@ -55,7 +55,7 @@ class WGraph {
     // initialise the tables with the vertices as keys
     for (let vertex in this.adjacencyMap) {
       distanceFromStart[vertex] = vertex === start ? 0 : Infinity; // only entry has known distance to itself = 0
-      Q.enque({ vertex: vertex, distance: distanceFromStart[vertex] }); // distance here is distance from start
+      Q.enque({ vertex: vertex, distanceFromStart: distanceFromStart[vertex] }); // distance here is distance from start
       prevVertexOf[vertex] = null; // set each of these to null
     }
 
@@ -80,7 +80,7 @@ class WGraph {
       // visit each neighbour and update tables
       let neighbours = this.adjacencyMap[current.vertex];
       neighbours.forEach(neighbour => {
-        let calculatedDistanceToStart = current.distance + neighbour.distance;
+        let calculatedDistanceToStart = current.distanceFromStart + neighbour.distance;
 
         // update tables if new distance lower than existing
         if (calculatedDistanceToStart < distanceFromStart[neighbour.vertex]) {
@@ -88,7 +88,7 @@ class WGraph {
           prevVertexOf[neighbour.vertex] = current.vertex; // show new route via the current node to this neighbour
           Q.enque({
             vertex: neighbour.vertex,
-            distance: calculatedDistanceToStart
+            distanceFromStart: calculatedDistanceToStart
           }); // put neighbour into queue, with an updated distance that is not Infinite
         }
       });
