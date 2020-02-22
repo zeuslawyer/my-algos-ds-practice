@@ -49,6 +49,7 @@ var lowestCommonAncestor = function(root, p, q) {
 };
 
 //FOR BINARY SEARCH TREES, OPTIMISE BY AVOIDING NEEDLESS RECURSSION BY CHECKING ValUES
+// https://www.youtube.com/watch?v=kulWKd3BUcI&t=103s
 var lowestCommonAncestorBST = function(root, p, q) {
   if (!root) return;
 
