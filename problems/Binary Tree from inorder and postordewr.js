@@ -12,7 +12,6 @@
  * @param {number[]} postorder
  * @return {TreeNode}
  */
-let counter = 0;
 function TreeNode(val) {
   this.val = val;
   this.left = this.right = null;
@@ -21,7 +20,7 @@ function TreeNode(val) {
 
 var buildTree = function(inOrder, postOrder) {
   function helper(start, end) {
-    if (start > end) return null;
+    if (start > end) return ;
 
     const val = postOrder.pop();
     console.log(val, start, end);
