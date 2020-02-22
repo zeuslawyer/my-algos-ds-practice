@@ -1,6 +1,8 @@
 // Input: S = "ababcbacadefegdehijhklij"
 // Output: [9,7,8]
 
+// https://www.youtube.com/watch?v=ED4ateJu86I
+
 /**
  * @param {string} S
  * @return {number[]}
@@ -15,7 +17,7 @@ var partitionLabels = function(S) {
     lastIndexes[char] = i
   }
 
-  // iterate over loop and extend last index to include subsequent letters
+  // iterate over string and extend last index to include subsequent letters
   //use while loop as you can set iterator value
   let i = 0
   while(i<len){
