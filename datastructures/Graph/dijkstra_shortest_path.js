@@ -50,7 +50,7 @@ class WGraph {
     let distanceFromStart = {};
     let Q = new PQ(); // priority queue
     let prevVertexOf = {};
-    let path = [];
+    let result = [];
 
     // initialise the tables with the vertices as keys
     for (let vertex in this.adjacencyMap) {
@@ -61,31 +61,31 @@ class WGraph {
 
     // visit each from Q. Always pops minimum distance
     while (Q.nodes.length > 0) {
-      let current = Q.deque();
+      let node = Q.deque();
 
       // handle found
-      if (end === current.vertex) {
+      if (end === node.vertex) {
           // and to path, in proper sequence
-          path.unshift(end)
+          result.unshift(end)
           let prev = prevVertexOf[end]
 
           while(prev){
-            path.unshift(prev) // insert into start of array, so that it builds path in order
+            result.unshift(prev) // insert into start of array, so that it builds path in order
             prev = prevVertexOf[prev]
           }
   
-        return path;
+        return result;
       }
 
       // visit each neighbour and update tables
-      let neighbours = this.adjacencyMap[current.vertex];
+      let neighbours = this.adjacencyMap[node.vertex];
       neighbours.forEach(neighbour => {
-        let calculatedDistanceToStart = current.distanceFromStart + neighbour.distance;
+        let calculatedDistanceToStart = node.distanceFromStart + neighbour.distance;
 
         // update tables if new distance lower than existing
         if (calculatedDistanceToStart < distanceFromStart[neighbour.vertex]) {
           distanceFromStart[neighbour.vertex] = calculatedDistanceToStart;
-          prevVertexOf[neighbour.vertex] = current.vertex; // show new route via the current node to this neighbour
+          prevVertexOf[neighbour.vertex] = node.vertex; // show new route via the current node to this neighbour
           Q.enque({
             vertex: neighbour.vertex,
             distanceFromStart: calculatedDistanceToStart
@@ -95,7 +95,7 @@ class WGraph {
     }
 
     // not found
-    return path;
+    return result;
   }
 
   BFS(entry) {
