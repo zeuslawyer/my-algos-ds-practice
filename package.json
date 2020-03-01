@@ -10,5 +10,8 @@
   },
   "scripts": {
     "test": "mocha -w"
+  },
+  "dependencies": {
+    "underscore": "^1.9.2"
   }
 }
