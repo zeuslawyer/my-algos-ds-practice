@@ -6,16 +6,16 @@ function orangesRotting(grid) {
 
   const FRESH = 1;
   const ROTTEN = 2;
-  const EMPTY = 0;
   let minutes = 0;
   let totalFresh = 0;
   let totalRotten = 0;
   let Q = [];
 
   for (let i = 0; i < grid.length; i++) {
-    for (let j = 0; j < grid.length; j++) {
+    for (let j = 0; j < grid[0].length; j++) {
       if (grid[i][j] === ROTTEN) {
-        Q.unshift([i, j]);
+        totalRotten += 1;
+        Q.unshift([i, j]); // enque
       }
 
       if (grid[i][j] === FRESH) {
@@ -24,24 +24,27 @@ function orangesRotting(grid) {
     }
   }
 
-  if(totalFresh === 0) return minutes // none fresh to start so nothing to do
+  if (totalFresh === 0) return minutes; // none fresh to start so nothing to do
+  if (totalRotten === 0) return -1; // none rotten
 
   while (Q.length > 0 && totalFresh > 0) {
     let len = Q.length;
     for (let i = 0; i < len; i++) {
-      let current = Q.pop();
+      let current = Q.pop(); // dequeue
       let neighbours = getValidNeighbours(current[0], current[1], grid);
+      
       neighbours.forEach(n => {
         const [r, c] = n;
         grid[r][c] = ROTTEN;
-        Q.unshift(n);
+        Q.unshift(n); // enqueue
         totalFresh -= 1;
       });
     }
+    // level has been processed
     minutes += 1;
   }
 
-  return totalFresh === 0? minutes : -1
+  return totalFresh === 0 ? minutes : -1;
 }
 
 function getValidNeighbours(row, col, grid) {
@@ -74,10 +77,14 @@ const input = [
 const output = 4;
 
 const ans = orangesRotting(input);
-const ans2 = orangesRotting([[2,1,1],[0,1,1],[1,0,1]])
-const ans3 = orangesRotting([[0,2]])
+const ans2 = orangesRotting([
+  [2, 1, 1],
+  [0, 1, 1],
+  [1, 0, 1]
+]);
 
-console.log(ans);
-console.log(ans2);
-console.log(ans3);
+const ans3 = orangesRotting([[0, 2]]);
 
+console.log(ans); // 4
+console.log(ans2); //-1
+console.log(ans3); //0
