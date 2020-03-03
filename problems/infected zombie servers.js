@@ -9,21 +9,23 @@
 
 function minimumHours(rows, columns, grid) {
   let hours = 0;
-
+  let totalFree = 0;
   let Q = [];
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < columns; c++) {
       if (grid[r][c] === 1) {
         // only commence bfs if server has file
         Q.unshift([r, c]);
+      } else {
+        totalFree += 1;
       }
     }
   }
 
   // how many servers are actually available?
-  let totalServers = rows * columns - Q.length;
+  // let totalServers = rows * columns - Q.length;
 
-  while (Q.length > 0 && totalServers > 0) {
+  while (Q.length > 0 && totalFree > 0) { //(...&& totalServers > 0)
     const len = Q.length;
     for (let i = 0; i < len; i++) {
       let server = Q.pop();
@@ -32,7 +34,7 @@ function minimumHours(rows, columns, grid) {
         Q.unshift(n);
         const [r, c] = n;
         grid[r][c] = 1; // mark as with file
-        totalServers -= 1;
+        totalFree -= 1; // totalServers -= 1
       });
     }
 

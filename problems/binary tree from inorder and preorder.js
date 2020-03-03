@@ -20,9 +20,9 @@ function TreeNode(val) {
 }
 var buildTree = function(preOrder, inOrder) {
   function helper(start, end) {
-    if (start > end) return null;
+    if (start > end) return ;
 
-    let val = preOrder.shift();
+    let val = preOrder.shift(); // remove first (root)
     let valIdx = inOrder.indexOf(val);
     const tree = new TreeNode(val);
     console.log(val, start, end);
