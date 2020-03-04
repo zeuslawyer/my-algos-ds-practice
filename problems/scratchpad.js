@@ -1,24 +1,39 @@
-function generalizedGCD(num, arr)
-{
-    let sorted = arr.sort((a,b)=>a-b)
-    let smallest = sorted[0]
-    
-    while (smallest > 1){
-        for(let i = 0; i< arr.length; i++){
-            let dig = sorted[i]
-            // console.log(dig, smallest)
-            if (dig%smallest !==0) {
-                break;
-            } 
-            else if (i===arr.length-1) {
-                return smallest
-            }
-        }
-         smallest--
+var topKFrequent = function(words, k) {
+    let hash ={}
+    for (let word of words){
+        hash[word] = hash[word] + 1 || 1
     }
-    return smallest
     
-}
+    let pq = []
+    for(const k in hash){
+        pq.push([k, hash[k]])
+    }
+    
+    pq.sort((a,b)=>{
+        if(a[1]===b[1]){ // same freq
+           return b[0].localeCompare(a[0])
+        }
+        // else
+        return a[1]-b[1]}
+           )
+    
+    let res = []
+    while(k > 0){
+        let [word,_] = pq.pop()
+        res.push(word)
+        k--
+    }
+    
+    return res
 
-let a = generalizedGCD(5, [12,18,24])
-console.log(a)
+};
+
+
+
+
+
+let a = topKFrequent(["i", "love", "leetcode", "i", "love", "coding"],2)
+console.log(a) // ["i","love"]
+
+// let t = [[ 'i', 2 ], [ 'love', 2 ]]
+// console.log("love".localeCompare("i")) .
