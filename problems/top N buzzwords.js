@@ -1,3 +1,5 @@
+// amazon interview question:  https://leetcode.com/discuss/interview-question/460127/
+
 let toys = ['elmo', 'elsa', 'legos', 'drone', 'tablet', 'warcraft'];
 let quotes = [
   "Elmo is the hottest of the season! Elmo will be on every kid's wishlist!",
@@ -31,7 +33,7 @@ function topNBuzzWords(numToys, topToys, toys, numQuotes, quotes) {
       }
     }
   }
-  console.log(hash);
+  console.log('Hash', hash);
   let result = Object.keys(hash).sort((a, b) => {
     if (hash[a] === hash[b]) {
       return a.localeCompare(b); // ascending order
