@@ -78,17 +78,19 @@ function minCost(N, edges, repairCosts){
     var edge = sortedEdges.pop();// smallest first
     const[u,v] = edge
 
-    var t1 = set.filter(s=>s.includes(u))
-    var t2 = set.filter(s=>s.includes(v))
+    var t1 = set.find(s=>s.includes(u))
+    var t2 = set.find(s=>s.includes(v))
 
     if(t1 === t2) continue // in the same set
 
     if (t1 !== t2) {
-        set = _.without(set, t1[0], t2[0]);
-        set.push(_.union(t1[0], t2[0]));
+      set.push(_.union(t1, t2));
+        set = _.without(set, t1, t2);
         mst.push(edge);
     }
 }
+// console.log(set) // set is completely unioned
+// console.log(mst)
 
 return mst.reduce((prev, curr)=>{
   return prev + curr[2]

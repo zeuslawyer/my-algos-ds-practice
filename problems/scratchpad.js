@@ -1,52 +1,103 @@
-let toys = ['elmo', 'elsa', 'legos', 'drone', 'tablet', 'warcraft'];
-let quotes = [
-  "Elmo is the hottest of the season! Elmo will be on every kid's wishlist!",
-  'The new Elmo dolls are super high quality',
-  'Expect the Elsa dolls to be very popular this year, Elsa!',
-  "Elsa and Elmo are the toys I'll be buying for my kids, Elsa is good",
-  'For parents of older kids, look into buying them a drone',
-  'Warcraft is slowly rising in popularity ahead of the holiday season'
-];
+var _ = require("underscore");
 
-/**
- * numToys, an integer representing the number of toys
- * topToys, an integer representing the number of top toys your algorithm needs to return;
- * toys, a list of strings representing the toys,
- * numQuotes, an integer representing the number of quotes about toys;
- * quotes, a list of strings that consists of space-sperated words representing articles about toys
- */
-function topNBuzzWords(numToys, topToys, toys, numQuotes, quotes) {
-  let hash = {};
-  for (let toy of toys) {
-    hash[toy.toLowerCase()] = 0; // word count in quotes
+function minCost(N, edges, edgesToRepair) {
+  let set = [];
+  const mst = [];
+  let c = 1;
+  while (c <= N) {
+    set.push([c]);
+    c++;
   }
 
-  for (let sentence of quotes) {
-    let words = sentence.split(' ');
-    for (let word of words) {
-      word = word.replace('!', '').toLowerCase();
-      // look for word in hash, and updates its values
-      if (word in hash) {
-        hash[word] = hash[word] + 1;
-      }
-    }
-  }
-  console.log(hash);
-  let result = Object.keys(hash).sort((a, b) => {
-    if (hash[a] === hash[b]) {
-      return a.localeCompare(b); // ascending order
-    }
+  edges = edges.map(e => {
+    const [u, v] = e;
+    let withCost = edgesToRepair.find(a => {
+      let [au, av, ac] = a;
+      return au === u && av === v;
+    });
+    if (!withCost) return [u, v, 0];
     // else
-    return hash[b] - hash[a]; // descending order
+    return [u, v, withCost[2]];
   });
 
-  // meet condition - only include toys mentioned in quotes if topToys > numToys
-  return topToys > numToys
-    ? result.filter(res => hash[res] > 0)
-    : result.slice(0, topToys);
+  let sorted = edges.sort((a, b) => b[2] - a[2]); // desc
+
+  while (set.length > 1) {
+    // start with smallest
+    let current = sorted.pop();
+    let [u, v, c] = current;
+
+    // find
+    let subsetU = set.find(a => a.includes(u));
+    let subsetV = set.find(a => a.includes(v));
+
+    // union
+    if (subsetU !== subsetV) {
+      let u = _.union(subsetU, subsetV);
+      set.push(u);
+      set = _.without(set, subsetU, subsetV);
+      mst.push(current);
+    }
+  }
+
+  // console.log(set) // set is completely unioned
+  // console.log(mst) // mst
+
+  return mst.reduce((accum, curr) => {
+    return accum + curr[2];
+  }, 0);
 }
 
-const ans = topNBuzzWords(toys.length, 12, toys, quotes.length, quotes);
-console.log(ans);
-
-// hash[word.toLowerCase()] = [w, q, b];
+console.log(
+  minCost(
+    5,
+    [
+      [1, 2],
+      [2, 3],
+      [3, 4],
+      [4, 5],
+      [1, 5]
+    ],
+    [
+      [1, 2, 12],
+      [3, 4, 30],
+      [1, 5, 8]
+    ]
+  )
+); // 20
+console.log(
+  minCost(
+    6,
+    [
+      [1, 2],
+      [2, 3],
+      [4, 5],
+      [3, 5],
+      [1, 6],
+      [2, 4]
+    ],
+    [
+      [1, 6, 410],
+      [2, 4, 800]
+    ]
+  )
+); // 410
+console.log(
+  minCost(
+    6,
+    [
+      [1, 2],
+      [2, 3],
+      [4, 5],
+      [5, 6],
+      [1, 5],
+      [2, 4],
+      [3, 4]
+    ],
+    [
+      [1, 5, 110],
+      [2, 4, 84],
+      [3, 4, 79]
+    ]
+  )
+); //79
