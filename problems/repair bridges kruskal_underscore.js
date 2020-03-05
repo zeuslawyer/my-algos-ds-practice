@@ -7,6 +7,12 @@
 // https://www.tutorialspoint.com/Kruskal-s-algorithm-in-Javascript
 
 
+// PREREQS:
+// 1) https://www.techiedelight.com/disjoint-set-data-structure-union-find-algorithm/
+// 2) https://www.techiedelight.com/union-find-algorithm-cycle-detection-graph/
+// 3) https://www.techiedelight.com/kruskals-algorithm-for-finding-minimum-spanning-tree/
+
+
 
 var _ = require('underscore');
 
