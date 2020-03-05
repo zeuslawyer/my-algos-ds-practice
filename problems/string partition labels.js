@@ -22,6 +22,11 @@ var partitionLabels = function(S) {
   let i = 0
   while(i<len){
     let lastInd = lastIndexes[S[i]]
+    if(i===lastInd){ // edge case, this elem has only 1 mention, so 1 elem long
+      sizes.push(1)
+      i++
+      continue
+    }
     let j = i+1
 
     while(j < lastInd){
@@ -38,7 +43,8 @@ var partitionLabels = function(S) {
 };
 
 
-
-const S= "ababcbacadefegdehijhklij"
-const a = partitionLabels(S)
-console.log(a) // [9,7,8]
+const S= "ababcbacadefegdehijhklij"// [9,7,8]
+const S2 = "caedbdedda" // [1,9]
+const S3 = "ababcbac" // [8]
+const a = partitionLabels(S2)
+console.log(a) 
