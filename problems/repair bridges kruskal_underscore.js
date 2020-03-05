@@ -3,7 +3,7 @@
 // See http://en.wikipedia.org/wiki/Kruskal's_algorithm
 // and http://programmingpraxis.com/2010/04/06/minimum-spanning-tree-kruskals-algorithm/
 
-// https://gist.github.com/jresendiz27/01caad02d82e9f6d93e9
+
 // https://www.tutorialspoint.com/Kruskal-s-algorithm-in-Javascript
 
 
@@ -16,6 +16,8 @@
 
 var _ = require('underscore');
 
+
+// https://gist.github.com/jresendiz27/01caad02d82e9f6d93e9
 var nodes = ["A", "B", "C", "D", "E", "F", "G"];
 var edges = [
     ["A", "B", 7], ["A", "D", 5],
@@ -25,7 +27,6 @@ var edges = [
     ["E", "F", 8], ["E", "G", 9],
     ["F", "G", 11]
 ];
-
 
 function kruskal(nodes, edges) {
     var mst = [];
@@ -54,7 +55,7 @@ function kruskal(nodes, edges) {
 
 
 
-
+// https://leetcode.com/discuss/interview-question/357310
 function minCost(N, edges, repairCosts){
   const mst = []
   let set = []
