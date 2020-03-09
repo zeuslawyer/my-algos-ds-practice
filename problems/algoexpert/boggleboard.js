@@ -22,6 +22,14 @@ const input = [
   ['x', 'x', 'x', 'x', 'x', 'x', 'x']
 ];
 
+/**
+ *
+ * time complexity : trie = O(words * lenOfMaxWord). nested for loops = O(MN). DFS recursion - 8 neighbours for
+ *  each letter in word so lenOfMaxWord ^^ 8.  So total is O(MN * lenOfMaxWord ^^ 8 + (words * lenOfMaxWord))
+ *
+ * space complexity:  trie = O(words * lenOfMaxWord). visite matrix = NM.  so total = O(NM + (words * lenOfMaxWord))
+ *
+ */
 function boggleBoard(board, words) {
   // step 1: build trie with all the words
   const trie = new Trie();
@@ -29,11 +37,11 @@ function boggleBoard(board, words) {
     trie.add(word);
   }
 
-  // step 2:  iterate over the board
-  // let visited =  Array.from(board, ()=> new Array(board.length).fill(false))
   let visited = board.map(row => row.map(val => false));
-  let foundWords = {};
+  // let visited =  Array.from(board, ()=> new Array(board.length).fill(false))
+  let foundWords = {}; // this will produce the returned results
 
+  // step 2:  iterate over the board
   for (let r = 0; r < board.length; r++) {
     for (let c = 0; c < board[0].length; c++) {
       visit(r, c, trie.root, board, visited, foundWords);
