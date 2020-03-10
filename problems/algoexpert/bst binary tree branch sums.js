@@ -23,14 +23,16 @@ var hasPathSum = function(root, sum) {
 
 
 function dfs(node, total, sums){
-  
+  if(!node) return
+
+  // else add node
   total+=node.val
   if(!node.left && !node.right){ // leaf node,  we are done
       sums.push(total)
       return
   }
-  if(node.left) dfs(node.left, total, sums)
-  if(node.right) dfs(node.right, total, sums)
+  dfs(node.left, total, sums)
+  dfs(node.right, total, sums)
 
 }
 
