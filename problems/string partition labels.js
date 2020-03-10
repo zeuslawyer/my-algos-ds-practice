@@ -34,7 +34,7 @@ var partitionLabels = function(S) {
       j++
     }
 
-    // youve found a cluster,push size to sizes then update i
+    // j === last index, youve found a cluster,push size to sizes then update i
     sizes.push(j-i+1)
     i = j + 1
 
