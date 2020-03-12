@@ -32,4 +32,3 @@ var maxDepthDFS = function(root, depth = 0) {
 
   return Math.max(left, right);
 };
-
