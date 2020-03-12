@@ -13,6 +13,8 @@ const matrix = [
  *  incrementing the current river size if the neighbour is unvisited AND is == 1 (river), then get its neighbours and add to Q
  */
 
+ // BFS solution
+
 function riverSizes(matrix) {
   let res = [];
   let visited = matrix.map(row => row.map(cell => false));
@@ -32,6 +34,7 @@ function riverSizes(matrix) {
 
 console.log(riverSizes(matrix));
 
+// BFS implementation
 function visit(rowIndex, colIndex, matrix, visited, res) {
   // track current river size if current node is start of river
   let currentRiverSize = 0;

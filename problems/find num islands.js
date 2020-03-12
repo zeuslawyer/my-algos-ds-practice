@@ -21,6 +21,8 @@ const grid = [
 ];
 // ans 3
 
+
+// DFS recursive implementation
 var numIslandsDFS = function(grid) {
   if (!grid.length) return 0;
 
@@ -43,6 +45,8 @@ var numIslandsDFS = function(grid) {
   return islandCount;
 };
 
+
+// BFS iterative implementation
 var numIslandsBFS = function(grid) {
   let rows = grid.length;
   let cols = grid[0].length;
@@ -63,8 +67,8 @@ var numIslandsBFS = function(grid) {
   return islandCount;
 };
 
-console.log('DFS', numIslandsDFS(grid));
-console.log('BFS', numIslandsBFS(grid));
+console.log("DFS", numIslandsDFS(grid));
+console.log("BFS", numIslandsBFS(grid));
 
 function traverseIslandDFS(row, col, grid, visited) {
   visited[row][col] = true;
