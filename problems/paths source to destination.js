@@ -8,19 +8,19 @@
 const input = [[4, 3, 1], [3, 2, 4], [3], [4], []];
 
 function getPaths(graph) {
-  let startNode = 0;
+  let startNodeIdx = 0;
   let allPaths = [];
-  let path = [startNode]; // all paths will start here
+  let path = [startNodeIdx]; // all paths will start here
 
-  dfs(startNode, graph, path, allPaths);
+  dfs(startNodeIdx, graph, path, allPaths);
 
   return allPaths;
 }
 
-function dfs(node, graph, path, allPaths) {
+function dfs(nodeIdx, graph, path, allPaths) {
   let endNode = graph.length - 1;
 
-  if (node === endNode) {
+  if (nodeIdx === endNode) {
     // base case. found the target.
     let finalPath = [...path]; // make a copy of the path so far as path itself may get added to in iterations.
     allPaths.push(finalPath);
@@ -28,7 +28,7 @@ function dfs(node, graph, path, allPaths) {
   }
 
   // else, get neighbours and recurse on them
-  let neighbours = graph[node];
+  let neighbours = graph[nodeIdx];
   neighbours.forEach(n => {
     // add it to the current path
     path.push(n);
