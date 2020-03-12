@@ -2,8 +2,9 @@ inp1 = [2, 3, -2, 4]  # ans 6
 
 # great explanation:  https://leetcode.com/problems/maximum-product-subarray/discuss/416395/JavaScript-Solution-w-Explanation
 
-# The tricky part of this problem is that negative numbers exist in the input array. This causes situations where the smallest 
+# The tricky part of this problem is that negative numbers exist in the input array. This causes situations where the smallest
 # previous product (a negative number) can become the largest product if the next number in line is also a negative number.
+
 
 def kadanesMaxProd(arr):
     maxSoFar = arr[0]

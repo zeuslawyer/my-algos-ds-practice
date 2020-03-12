@@ -18,4 +18,5 @@ def kadanes(arr):
 
 # ans = kadanes([-99, 5])
 ans = kadanes(inp1)
-print(ans)
+ans2 = kadanes([3,4,-6,7,8])
+print(ans, ans2)

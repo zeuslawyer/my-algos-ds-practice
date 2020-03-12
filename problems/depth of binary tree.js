@@ -24,23 +24,22 @@ var maxDepth = function(root) {
   return getDepth(root);
 };
 
-
 // BFS
 var $maxDepth = function(root) {
-  height = 0
-if(!root) return height;
+  height = 0;
+  if (!root) return height;
 
- Q=[root]
- 
- while(Q.length > 0) {
-     let len = Q.length;
-     for(let i = 0; i< len; i++){
-         let curr = Q.pop()
-         curr.left && Q.unshift(curr.left || null)
-         curr.right && Q.unshift(curr.right || null)
-     }
-     height +=1
- }
+  Q = [root];
 
- return height
+  while (Q.length > 0) {
+    let len = Q.length;
+    for (let i = 0; i < len; i++) {
+      let curr = Q.pop();
+      curr.left && Q.unshift(curr.left || null);
+      curr.right && Q.unshift(curr.right || null);
+    }
+    height += 1;
+  }
+
+  return height;
 };
