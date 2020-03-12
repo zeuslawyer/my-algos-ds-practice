@@ -13,7 +13,7 @@ const matrix = [
  *  incrementing the current river size if the neighbour is unvisited AND is == 1 (river), then get its neighbours and add to Q
  */
 
- // BFS solution
+// BFS solution
 
 function riverSizes(matrix) {
   let res = [];
