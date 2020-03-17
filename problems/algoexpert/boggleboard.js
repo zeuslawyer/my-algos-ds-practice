@@ -10,7 +10,7 @@ const words = [
   'REPEATED',
   'NOTRE-PEATED'
 ];
-const output = ['this', 'is', 'a', 'simple', 'boggle', 'board', 'NOTRE-PEATED'];
+const output = ['this', 'is', 'a', 'simple', 'boggle', 'board'];
 
 const input = [
   ['t', 'h', 'i', 's', 'i', 's', 'a'],
@@ -51,13 +51,14 @@ function boggleBoard(board, words) {
   return Object.keys(foundWords);
 }
 
-// step 3  visit neighbours, and after visiting, reset visited to false
+// step 3  DFS visit neighbours, and after visiting, reset visited to false
 function visit(row, col, trieNode, board, visited, foundWords) {
   if (visited[row][col]) return; // do not execute if this is visited
 
   let char = board[row][col];
-  if (!(char in trieNode)) return; // letter is not in current level of the tree
+  if (!(char in trieNode)) return; // letter is not in current level of the tree so done with dfs
 
+  // else process current letter & check if its a full word match
   visited[row][col] = true;
   trieNode = trieNode[char]; // update level in trie
   let endSymbol = '*';
@@ -66,6 +67,7 @@ function visit(row, col, trieNode, board, visited, foundWords) {
     foundWords[trieNode[endSymbol]] = true;
   } // if the whole word is found, add to result list
 
+  // then process neighbours
   let neighbours = getNeighbours(row, col, board);
   neighbours.forEach(n => {
     let [r, c] = n;
@@ -159,4 +161,4 @@ class Trie {
 // console.log(t.find('zubin'));
 
 let run = boggleBoard(input, words);
-console.log(run); // ['this', 'is', 'a', 'simple', 'boggle', 'board', 'NOTRE-PEATED'];
+console.log(run); // ['this', 'is', 'a', 'simple', 'boggle', 'board'];

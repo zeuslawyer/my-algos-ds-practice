@@ -29,21 +29,21 @@ var edges = [
 
 function kruskal(nodes, edges) {
   var mst = [];
-  var forest = nodes.map(n => [n]);
+  var disjointSet = nodes.map(n => [n]);
 
-  // desc
+  // desc, so you can pop from smallest to largest
   var sortedEdges = edges.sort((a, b) => b[2] - a[2]);
 
-  while (forest.length > 1) {
+  while (disjointSet.length > 1) {
     var edge = sortedEdges.pop(); // smallest first
     const [u, v] = edge;
 
-    var t1 = forest.filter(tree => tree.includes(u));
-    var t2 = forest.filter(tree => tree.includes(v));
+    var t1 = disjointSet.filter(tree => tree.includes(u));
+    var t2 = disjointSet.filter(tree => tree.includes(v));
 
     if (t1 != t2) {
-      forest = _.without(forest, t1[0], t2[0]);
-      forest.push(_.union(t1[0], t2[0]));
+      disjointSet = _.without(disjointSet, t1[0], t2[0]);
+      disjointSet.push(_.union(t1[0], t2[0]));
       mst.push(edge);
     }
   }
@@ -71,12 +71,12 @@ function minCost(N, edges, repairCosts) {
     // else
     return [u, v, 0];
   });
-  // desc
+  // desc, so that pop off smallest to largest
   var sortedEdges = edges.sort((a, b) => b[2] - a[2]);
 
   // console.log(sortedEdges)
 
-  while (disjointSet.length > 1) {
+  while (disjointSet.length !== 1) {
     var edge = sortedEdges.pop(); // smallest first
     const [u, v] = edge;
 
@@ -86,7 +86,7 @@ function minCost(N, edges, repairCosts) {
 
     if (setU === setV) continue; // in the same set
 
-    // union operation
+    // union if not already in same set
     if (setU !== setV) {
       disjointSet.push(_.union(setU, setV));
       disjointSet = _.without(disjointSet, setU, setV);
@@ -94,7 +94,7 @@ function minCost(N, edges, repairCosts) {
     }
   }
   // console.log(set) // set is completely unioned
-  // console.log(mst)
+  console.log(mst)
 
   return mst.reduce((prev, curr) => {
     return prev + curr[2];
