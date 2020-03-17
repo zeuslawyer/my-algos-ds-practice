@@ -5,7 +5,7 @@ var longestPalindrome = function(str) {
 
   for (let i = 1; i < str.length; i++) {
     let oddPal = getLongestPalFrom(str, i - 1, i + 1);
-    let evenPal = getLongestPalFrom(str, i - 1, i);
+    let evenPal = getLongestPalFrom(str, i, i + 1);
     let longer = oddPal.length > evenPal.length ? oddPal : evenPal;
 
     longestPal = longestPal.length > longer.length ? longestPal : longer;
@@ -32,3 +32,6 @@ function getLongestPalFrom(str, leftInd, rightInd) {
 let res = longestPalindrome(str);
 
 console.log('answer:  ', res);
+
+let b = longestPalindrome('z234a5abbba54a32z'); //5abbba5
+console.log(b);

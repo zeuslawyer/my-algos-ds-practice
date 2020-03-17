@@ -1,29 +1,34 @@
-var BSTIterator = function(root) {
-  if (!root) return null;
+function longestPalindromicSubstring(str) {
+  let answer = str[0];
 
-  this.root = root;
-};
+  for (let i = 0; i < str.length; i++) {
+    let oddPal = getLongestPalFrom(str, i - 1, i + 1);
+    let evenPal = getLongestPalFrom(str, i - 1, i);
 
-/**
- * @return the next smallest number
- * @return {number}
- */
-BSTIterator.prototype.next = function() {
-  let next = this.root.left;
-  this.root = next;
-  return next;
-};
+    let longer = evenPal.length > oddPal.length ? evenPal : oddPal;
+    answer = longer.length > answer.length ? longer : answer;
+  }
 
-/**
- * @return whether we have a next smallest number
- * @return {boolean}
- */
-BSTIterator.prototype.hasNext = function() {
-  return !!this.root.left;
-};
+  return answer;
+}
 
-var obj = new BSTIterator(100);
-// var param_1 = obj.next()
-//  var param_2 = obj.hasNext()
+function getLongestPalFrom(str, leftInd, rightInd) {
+  // look for left and right indexes of longest substring
+  while (leftInd >= 0 && rightInd < str.length) {
+    if (str[leftInd] !== str[rightInd]) break;
 
-console.log(obj);
+    // else
+    leftInd--;
+    rightInd++;
+  }
+
+  let pal = str.slice(leftInd + 1, rightInd);
+  return pal;
+}
+
+let a = longestPalindromicSubstring('abaxyzzyxf'); //xyzzyx
+
+let b = longestPalindromicSubstring('z234a5abbba54a32z'); //5abbba5
+console.log(b);
+console.log(longestPalindromicSubstring('aaaaa'));
+console.log(a);
