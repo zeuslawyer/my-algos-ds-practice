@@ -15,10 +15,12 @@ var prisonAfterNDays = function(cells, N) {
     if (exists[cellStr]) {
       // get its index in hash, and adjust for zero basing
       let cellStates = Object.keys(exists);
-      let idx = cellStates.indexOf(cellStr);
-      const targetIdx = N % (cellStates.length - idx);
+      let location = cellStates.indexOf(cellStr);
+      let cycleDistance = cellStates.length - location;
+      const next = N % cycleDistance;
+      console.log('cell states length ', cellStates.length, location, next);
 
-      return convertStringToArr(cellStates[targetIdx + idx]);
+      return convertStringToArr(cellStates[next]);
     }
     // else
 
@@ -31,7 +33,6 @@ var prisonAfterNDays = function(cells, N) {
         newStr += '0';
       }
     }
-    if (cellStr[0] === '1') console.log(cellStr, newStr);
 
     cellStr = newStr;
     c++;
@@ -52,7 +53,6 @@ const input = [0, 1, 0, 1, 1, 0, 0, 1];
 const N = 7;
 
 let a = prisonAfterNDays(input, N); // [0,0,1,1,0,0,0,0]
-
 let b = prisonAfterNDays([1, 0, 0, 1, 0, 0, 1, 0], 1000000000); // [0,0,1,1,1,1,1,0]
 console.log(a);
 console.log(b);
@@ -86,4 +86,4 @@ const cells = [0, 1, 0, 1, 1, 0, 0, 1];
 // const a = prisonAfterNDays(cells, 7) // [0,0,1,1,0,0,0,0]
 // console.log(a)
 
-console.log($$prisonAfterNDays([1, 0, 0, 1, 0, 0, 1, 0], 1000000000)); // [0,0,1,1,1,1,1,0]))
+// console.log($$prisonAfterNDays([1, 0, 0, 1, 0, 0, 1, 0], 1000000000)); // [0,0,1,1,1,1,1,0]))
