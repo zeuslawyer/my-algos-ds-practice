@@ -8,12 +8,10 @@
  */
 var numIslands = function(grid) {
   let numIslands = 0;
-  let Q = [];
   for (let i = 0; i < grid.length; i++) {
     for (let j = 0; j < grid[0].length; j++) {
       if (grid[i][j] === "1") {
         numIslands++;
-        console.log("incremented");
         bfs(i, j, grid);
       }
     }
