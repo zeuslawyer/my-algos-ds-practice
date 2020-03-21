@@ -1,21 +1,5 @@
 // https://leetcode.com/problems/search-suggestions-system/discuss/498865/JavaScript-Solution-Trie-and-Sort
 
-class Trie {
-  constructor() {
-    this.root = {};
-  }
-
-  add(word) {
-    let node = this.root;
-    for (let char of word) {
-      if (!(char in node)) node[char] = {};
-      node = node[char];
-      if (!node.suggestion) node.suggestion = [];
-      if (node.suggestion.length < 3) node.suggestion.push(word);
-    }
-  }
-}
-
 /**
  * @param {string[]} products
  * @param {string} searchWord
@@ -28,15 +12,12 @@ var suggestedProducts = function(products, searchWord) {
   let res = [];
 
   // build the trie
-  // let trie = new Trie();
   let trie = {};
 
   for (const product of products) {
-    // trie.add(product);
-
     let node = trie;
     for (const char of product) {
-      if (!(char in node)) node[char] = {};
+      if (!node[char]) node[char] = {};
       node = node[char];
       if (!node.suggestion) node.suggestion = [];
       if (node.suggestion.length < 3) node.suggestion.push(product);
@@ -50,7 +31,7 @@ var suggestedProducts = function(products, searchWord) {
     root = root[char];
 
     if (!root) {
-      // char not found, so rest of word wont be available
+      // char not found, so rest of word wont be found,  so move to end of for loop
       while (i < searchWord.length) {
         res.push([]);
         i++;

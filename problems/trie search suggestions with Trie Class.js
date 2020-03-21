@@ -1,5 +1,13 @@
 // https://leetcode.com/problems/search-suggestions-system/discuss/498865/JavaScript-Solution-Trie-and-Sort
 
+/**
+ * @param {string[]} products
+ * @param {string} searchWord
+ * @return {string[][]}
+ */
+
+// NOTE:  method 1 - Trie
+
 class Trie {
   constructor() {
     this.root = {};
@@ -16,41 +24,25 @@ class Trie {
   }
 }
 
-/**
- * @param {string[]} products
- * @param {string} searchWord
- * @return {string[][]}
- */
-
-// NOTE:  method 1 - Trie
 var suggestedProducts = function(products, searchWord) {
   products.sort();
   let res = [];
 
   // build the trie
-  // let trie = new Trie();
-  let trie = {};
+  let trie = new Trie();
 
   for (const product of products) {
-    // trie.add(product);
-
-    let node = trie;
-    for (const char of product) {
-      if (!(char in node)) node[char] = {};
-      node = node[char];
-      if (!node.suggestion) node.suggestion = [];
-      if (node.suggestion.length < 3) node.suggestion.push(product);
-    }
+    trie.add(product);
   }
 
   // traverse the input word
-  let root = trie;
+  let root = trie.root;
   for (let i = 0; i < searchWord.length; i++) {
     let char = searchWord[i];
     root = root[char];
 
     if (!root) {
-      // char not found, so rest of word wont be available
+      // char not found, so rest of word wont be found, so move to end of for loop
       while (i < searchWord.length) {
         res.push([]);
         i++;
@@ -95,3 +87,6 @@ let a = suggestedProducts(products, searchWord);
 console.log('TRIE', a);
 let b = $suggestedProducts(products, searchWord);
 console.log('\n sort and filter...', b);
+
+let c = suggestedProducts(['havana'], 'tatiana');
+console.log('\nNo match in search', c); // [[],[],[],[],[],[],[]]
