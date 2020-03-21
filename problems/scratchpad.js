@@ -1,40 +1,51 @@
-function binarySearch(arr, target) {
-  if (target > arr[arr.length - 1] || target < arr[0]) return -1;
-  let start = 0;
-  let end = arr.length - 1;
-  let mid;
+// https://leetcode.com/problems/search-suggestions-system/discuss/498865/JavaScript-Solution-Trie-and-Sort
 
-  while (start <= end) {
-    mid = Math.floor((start + end) / 2);
-    if (target === arr[mid]) {
-      return mid;
-    } else if (target < arr[mid]) {
-      end = mid - 1;
-    } else if (target > arr[mid]) {
-      start = mid + 1;
+/**
+ * @param {string[]} products
+ * @param {string} searchWord
+ * @return {string[][]}
+ */
+
+var suggestedProducts = function(products, searchWord) {
+  products.sort();
+  let res = [];
+
+  // build the trie
+  let trie = {};
+  for (const product of products) {
+    let node = trie;
+    for (const char of product) {
+      if (!node[char]) node[char] = {};
+      node = node[char];
+      if (!node.suggestions) node.suggestions = [];
+      if (node.suggestions.length < 3) node.suggestions.push(product);
     }
   }
 
-  return -1;
-}
+  console.log(trie);
 
-// recursive
-function $binarySearch(arr, target) {
-  if (target < arr[0] || target > arr[arr.length - 1]) {
-    return -1;
+  // traverse the input word
+  let node = trie;
+  for (const char of searchWord) {
+    node = node[char];
+    let suggestions = node.suggestions;
+    res.push(suggestions || []);
   }
 
-  function find(arr, min, max) {
-    if (min > max) return -1;
-    let mid = Math.floor((min + max) / 2);
-    if (target === arr[mid]) {
-      return mid;
-    } else if (target < arr[mid]) {
-      return find(arr, min, mid - 1);
-    } else {
-      return find(arr, mid + 1, max);
-    }
-  }
+  return res;
+};
 
-  return find(arr, 0, arr.length - 1);
-}
+const products = ['moneypot', 'monitor', 'mobile', 'mouse', 'mousepad'];
+const searchWord = 'mouse';
+/**
+ * Output: [
+["mobile","moneypot","monitor"],
+["mobile","moneypot","monitor"],
+["mouse","mousepad"],
+["mouse","mousepad"],
+["mouse","mousepad"]
+]
+ */
+
+let a = suggestedProducts(products, searchWord);
+console.log(a);

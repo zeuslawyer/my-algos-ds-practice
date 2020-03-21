@@ -25,7 +25,8 @@ function minimumHours(rows, columns, grid) {
   // how many servers are actually available?
   // let totalServers = rows * columns - Q.length;
 
-  while (Q.length > 0 && totalFree > 0) { //(...&& totalServers > 0)
+  while (Q.length > 0 && totalFree > 0) {
+    //(...&& totalServers > 0)
     const len = Q.length;
     for (let i = 0; i < len; i++) {
       let server = Q.pop();
