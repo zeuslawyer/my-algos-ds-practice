@@ -6,30 +6,55 @@
  * @return {string[][]}
  */
 
+// NOTE:  method 1 - Trie
 var suggestedProducts = function(products, searchWord) {
   products.sort();
   let res = [];
 
   // build the trie
   let trie = {};
+
   for (const product of products) {
     let node = trie;
     for (const char of product) {
       if (!node[char]) node[char] = {};
       node = node[char];
-      if (!node.suggestions) node.suggestions = [];
-      if (node.suggestions.length < 3) node.suggestions.push(product);
+      if (!node.suggestion) node.suggestion = [];
+      if (node.suggestion.length < 3) node.suggestion.push(product);
     }
   }
 
-  console.log(trie);
-
   // traverse the input word
-  let node = trie;
-  for (const char of searchWord) {
-    node = node[char];
-    let suggestions = node.suggestions;
-    res.push(suggestions || []);
+  let root = trie;
+  for (let i = 0; i < searchWord.length; i++) {
+    let char = searchWord[i];
+    root = root[char];
+
+    if (!root) {
+      // char not found, so rest of word wont be available
+      while (i < searchWord.length) {
+        res.push([]);
+        i++;
+      }
+      break; // exit for loop as word over
+    }
+
+    // else
+    res.push(root.suggestion);
+  }
+
+  return res;
+};
+
+// NOTE:  method 2, filtering
+
+var $suggestedProducts = function(products, searchWord) {
+  products.sort();
+  const res = [];
+
+  for (let i = 0; i < searchWord.length; i++) {
+    products = products.filter(p => p[i] === searchWord[i]); // if chars are a match, filter into products
+    res.push(products.slice(0, 3));
   }
 
   return res;
@@ -48,4 +73,6 @@ const searchWord = 'mouse';
  */
 
 let a = suggestedProducts(products, searchWord);
-console.log(a);
+console.log('TRIE', a);
+let b = $suggestedProducts(products, searchWord);
+console.log('\n sort and filter...', b);
