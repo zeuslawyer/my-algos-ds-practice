@@ -6,9 +6,9 @@ const uGraphNoCycle = [[1], [0, 2, 3], [1, 4, 5], [1], [2], [2]];
  * DFS
  * trick - for every node U, if it has a niehgbour V such that V has already been visited
  * then it is a cycle UNLESS V is the parent of U
- * @param {Array} where index represents node, and its elements denote the adjacency list
+ * @param {Array} - where index represents node, and its elements denote the adjacency list
  */
-function DFSdetectCycleUndirectedGraph(graph) {
+function BFSdetectCycleUndirectedGraph(graph) {
   const visited = {};
   const cycle = true;
 
@@ -32,7 +32,7 @@ function DFSdetectCycleUndirectedGraph(graph) {
   return visit(0, null);
 }
 
-let a = DFSdetectCycleUndirectedGraph(uGraphCycle);
-let b = DFSdetectCycleUndirectedGraph(uGraphNoCycle);
+let a = BFSdetectCycleUndirectedGraph(uGraphCycle);
+let b = BFSdetectCycleUndirectedGraph(uGraphNoCycle);
 console.log('Answer for DFS with cyclical graph :', a);
 console.log('Answer for DFS with NO cyclical graph :', b);

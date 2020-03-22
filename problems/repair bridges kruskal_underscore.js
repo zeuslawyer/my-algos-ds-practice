@@ -57,6 +57,7 @@ function minCost(N, edges, repairCosts) {
   const mst = [];
   let disjointSet = [];
   for (let i = 1; i <= N; i++) {
+    // disjointSet[i] = [i];
     disjointSet.push([i]);
   }
 
@@ -94,7 +95,7 @@ function minCost(N, edges, repairCosts) {
     }
   }
   // console.log(set) // set is completely unioned
-  console.log(mst)
+  console.log(mst);
 
   return mst.reduce((prev, curr) => {
     return prev + curr[2];

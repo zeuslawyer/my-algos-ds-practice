@@ -43,6 +43,6 @@ var maxSubArray = function(nums) {
 
 let n = maxSubArray([3, 1, -1, 4]); // 7
 let u = maxSubArray([-2, -3, -4, -1]); // -1
-let v = maxSubArray([10, -3, 5]);
+let v = maxSubArray([10, -3, 5]); // 12
 
 console.log(n, u, v);
