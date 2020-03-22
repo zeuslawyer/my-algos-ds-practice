@@ -22,6 +22,20 @@ var maxDepth = function(root) {
   return depth;
 };
 
+// NOTE: DFS - works on min depth and max depth
+var maxDepth = function(root, depth = 0) {
+  if (!root) return depth;
+  depth++;
+  if (root.left && root.right) {
+    let left = maxDepth(root.left, depth);
+    let right = maxDepth(root.right, depth);
+    return Math.max(left, right);
+  }
+
+  if (!root.left) return maxDepth(root.right, depth);
+  if (!root.right) return maxDepth(root.left, depth);
+};
+
 // NOTE: DFS
 var maxDepthDFS = function(root, depth = 0) {
   if (!root) return depth;
