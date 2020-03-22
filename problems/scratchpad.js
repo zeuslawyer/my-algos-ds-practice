@@ -1,8 +1,7 @@
-// https://leetcode.com/problems/search-suggestions-system/discuss/498865/JavaScript-Solution-Trie-and-Sort
-
 class Trie {
   constructor() {
     this.root = {};
+    this.EndSymbol = '*';
   }
 
   add(word) {
@@ -10,88 +9,44 @@ class Trie {
     for (let char of word) {
       if (!(char in node)) node[char] = {};
       node = node[char];
-      if (!node.suggestion) node.suggestion = [];
-      if (node.suggestion.length < 3) node.suggestion.push(word);
     }
+    // end of word
+    node[this.EndSymbol] = word;
+  }
+
+  find(word) {
+    let node = this.root;
+    for (const char of word) {
+      if (!(char in node)) return false;
+      // else
+      node = node[char];
+    }
+    return node[this.EndSymbol] === word;
   }
 }
 
-/**
- * @param {string[]} products
- * @param {string} searchWord
- * @return {string[][]}
- */
+// const input = 'this is a big string';
+// const targets = ['this', 'yo', 'is', 'a', 'bigger', 'string', 'kappa'];  // [ true, false, true, true, false, true, false ]
+const input = 'Mary goes to the shopping center every week.';
+const targets = [
+  'to',
+  'Mary',
+  'centers',
+  'shop',
+  'shopping',
+  'string',
+  'kappa'
+]; // [ true, true, false, true, true, false, false ]
 
-// NOTE:  method 1 - Trie
-var suggestedProducts = function(products, searchWord) {
-  products.sort();
-  let res = [];
+const trie = new Trie();
+let inputs = input.split(' ');
+for (const word of inputs) {
+  trie.add(word);
+}
+console.log(inputs);
+for (let i = 0; i < targets.length; i++) {
+  let bool = trie.find(targets[i]);
+  targets[i] = bool;
+}
 
-  // build the trie
-  // let trie = new Trie();
-  let trie = {};
-
-  for (const product of products) {
-    // trie.add(product);
-
-    let node = trie;
-    for (const char of product) {
-      if (!(char in node)) node[char] = {};
-      node = node[char];
-      if (!node.suggestion) node.suggestion = [];
-      if (node.suggestion.length < 3) node.suggestion.push(product);
-    }
-  }
-
-  // traverse the input word
-  let root = trie;
-  for (let i = 0; i < searchWord.length; i++) {
-    let char = searchWord[i];
-    root = root[char];
-
-    if (!root) {
-      // char not found, so rest of word wont be available
-      while (i < searchWord.length) {
-        res.push([]);
-        i++;
-      }
-      break; // exit for loop as word over
-    }
-
-    // else
-    res.push(root.suggestion);
-  }
-
-  return res;
-};
-
-// NOTE:  method 2, filtering
-
-var $suggestedProducts = function(products, searchWord) {
-  products.sort();
-  const res = [];
-
-  for (let i = 0; i < searchWord.length; i++) {
-    products = products.filter(p => p[i] === searchWord[i]); // if chars are a match, filter into products
-    res.push(products.slice(0, 3));
-  }
-
-  return res;
-};
-
-const products = ['moneypot', 'monitor', 'mobile', 'mouse', 'mousepad'];
-const searchWord = 'mouse';
-/**
- * Output: [
-["mobile","moneypot","monitor"],
-["mobile","moneypot","monitor"],
-["mouse","mousepad"],
-["mouse","mousepad"],
-["mouse","mousepad"]
-]
- */
-
-let a = suggestedProducts(products, searchWord);
-console.log('TRIE', a);
-let b = $suggestedProducts(products, searchWord);
-console.log('\n sort and filter...', b);
+console.log(targets);

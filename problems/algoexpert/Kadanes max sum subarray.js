@@ -15,7 +15,7 @@
  */
 
 // time complexity O(N)
-function maxSubArray(arr) {
+function $maxSubArray(arr) {
   let maxSumInArrSoFar = arr[0];
   let maxSum = arr[0];
 
@@ -29,7 +29,20 @@ function maxSubArray(arr) {
   return maxSum;
 }
 
+var maxSubArray = function(nums) {
+  let maxSoFar = nums[0];
+  let max = nums[0];
+
+  for (let i = 1; i < nums.length; i++) {
+    let current = nums[i];
+    maxSoFar = Math.max(current, current + maxSoFar);
+    max = Math.max(max, maxSoFar);
+  }
+  return max;
+};
+
 let n = maxSubArray([3, 1, -1, 4]); // 7
 let u = maxSubArray([-2, -3, -4, -1]); // -1
+let v = maxSubArray([10, -3, 5]);
 
-console.log(n, u);
+console.log(n, u, v);

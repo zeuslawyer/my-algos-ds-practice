@@ -1,3 +1,6 @@
+//  https://leetcode.com/problems/word-search-ii/
+// https://leetcode.com/problems/word-search/
+
 const words = [
   'this',
   'is',
@@ -63,7 +66,6 @@ function visit(row, col, trieNode, board, visited, foundWords) {
   trieNode = trieNode[char]; // update level in trie
   let endSymbol = '*';
   if (endSymbol in trieNode) {
-    console.log('FOUND IT', endSymbol, trieNode[endSymbol]);
     foundWords[trieNode[endSymbol]] = true;
   } // if the whole word is found, add to result list
 
