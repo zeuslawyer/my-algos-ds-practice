@@ -22,7 +22,7 @@ class $Trie {
 
       node = node[char];
     }
-    // string matched without return false
+    // sub-string matched without returning false
     return true;
   }
 }
