@@ -6,7 +6,7 @@ function qsort(arr) {
 }
 
 function helper(arr, start, end) {
-  if (start >= end) return; // base case: out of bounds or single element
+  if (start >= end) return; // base case: out of bounds or arr size = 1
 
   let pivotInd = start;
   let leftInd = start + 1;
@@ -25,9 +25,10 @@ function helper(arr, start, end) {
   // swap pivot with right Ind so pivot is in its final, sorted position. two sub arrays on either side
   swap(arr, pivotInd, rightInd);
 
-  // repeat recursively, shorter sub array first,then longer sub array
+  // repeat recursively, shorter sub array first,then longer sub array.
+  // exclude the pivot index in the sub arrays
   let leftLength = rightInd - 1 - start;
-  let rightArrayLen = end - 1 - rightInd;
+  let rightArrayLen = end - (rightInd + 1);
   let leftIsShorter = leftLength < rightArrayLen;
 
   if (leftIsShorter) {

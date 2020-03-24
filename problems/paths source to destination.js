@@ -24,6 +24,7 @@ function dfs(nodeIdx, graph, path, allPaths) {
     // base case. found the target.
     let finalPath = [...path]; // make a copy of the path so far as path itself may get added to in iterations.
     allPaths.push(finalPath);
+    console.log('just pushed final path', finalPath);
     return;
   }
 
@@ -32,8 +33,10 @@ function dfs(nodeIdx, graph, path, allPaths) {
   neighbours.forEach(n => {
     // add it to the current path
     path.push(n);
+    console.log('just pushed', n, 'to', path);
     dfs(n, graph, path, allPaths); // recurse
-    path.pop(); // weird : but after all the recursion, pop off the last added n (!?)
+    var p = path.pop(); // weird:  every time we push final path and return we want to backtrack and pop off nodes so we start path again at 0
+    console.log('just popped', p);
   });
 }
 
