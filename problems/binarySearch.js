@@ -20,7 +20,7 @@ const binarySearchRecursion = (target, arr, minInd = 0, maxInd = undefined) => {
   // edge case 2 :  maxIndex is less than minIndex
   if (maxInd < minInd) return -1;
 
-  const guessIndex = Math.floor((minInd + maxInd) / 2);
+  const guessIndex = minInd + Math.floor((maxInd - minInd) / 2);
 
   //found it
   if (target === arr[guessIndex]) return guessIndex;
@@ -42,7 +42,7 @@ const binarySearchIteration = (target, arr) => {
   if (target < arr[minInd] || target > arr[maxInd]) return -1;
 
   while (minInd <= maxInd) {
-    let guessIndex = Math.floor((minInd + maxInd) / 2);
+    let guessIndex = minInd + Math.floor((maxInd - minInd) / 2);
 
     // found it
     if (target === arr[guessIndex]) return guessIndex;
@@ -70,8 +70,5 @@ const _binarySearchIteration = (elem, arr) => {
   }
   return arr[middle] === elem ? middle : -1;
 };
-
-
-
 
 module.exports = { binarySearchRecursion, binarySearchIteration };
