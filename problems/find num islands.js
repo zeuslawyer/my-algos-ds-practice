@@ -65,9 +65,6 @@ var numIslandsBFS = function(grid) {
   return islandCount;
 };
 
-// console.log("DFS", numIslandsDFS(grid));
-console.log("BFS", numIslandsBFS(grid));
-
 function traverseIslandDFS(row, col, grid, visited) {
   visited[row][col] = true;
 
@@ -131,3 +128,6 @@ function findValidNeighbours(row, col, grid, visited) {
 
   return neighbours;
 }
+
+console.log('DFS', numIslandsDFS(grid));
+console.log('BFS', numIslandsBFS(grid));
