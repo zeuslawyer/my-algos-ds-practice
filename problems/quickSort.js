@@ -26,7 +26,7 @@ function getPivotInd(arr, start = 0, end = arr.length - 1) {
 
   // swap start with pivotIndex
   swap(arr, pivotInd, start);
-  console.log('pivot index is ', pivotInd)
+  console.log('pivot index is ', pivotInd);
   return pivotInd;
 }
 
@@ -34,6 +34,5 @@ function swap(arr, ind1, ind2) {
   return ([arr[ind1], arr[ind2]] = [arr[ind2], arr[ind1]]);
 }
 
-
-let a = qsort([8,5,2,9,5,6,3])
-console.log(a)
+let a = qsort([8, 5, 2, 9, 5, 6, 3]);
+console.log(a);

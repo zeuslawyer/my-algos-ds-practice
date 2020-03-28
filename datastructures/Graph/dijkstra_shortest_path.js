@@ -11,6 +11,7 @@ class PQ {
   }
   enque(node) {
     this.nodes.push(node);
+    // sort ascending
     this.nodes.sort((a, b) => a.distanceFromStart - b.distanceFromStart); // distance from start
     return this;
   }
@@ -49,47 +50,48 @@ class WGraph {
   shortestPath(start, end) {
     let distanceFromStart = {};
     let Q = new PQ(); // priority queue
-    let prevVertexOf = {};
+    let parentOf = {};
     let result = [];
 
     // initialise the tables with the vertices as keys
     for (let vertex in this.adjacencyMap) {
       distanceFromStart[vertex] = vertex === start ? 0 : Infinity; // only entry has known distance to itself = 0
       Q.enque({ vertex: vertex, distanceFromStart: distanceFromStart[vertex] }); // distance here is distance from start
-      prevVertexOf[vertex] = null; // set each of these to null
+      parentOf[vertex] = null; // set each of these to null
     }
 
     // visit each from Q. Always pops minimum distance
     while (Q.nodes.length > 0) {
-      let node = Q.deque();
+      let current = Q.deque();
 
       // handle found
-      if (end === node.vertex) {
-          // and to path, in proper sequence
-          result.unshift(end)
-          let prev = prevVertexOf[end]
+      if (end === current.vertex) {
+        // and to path, in proper sequence
+        result.unshift(end);
+        let parent = parentOf[end];
 
-          while(prev){
-            result.unshift(prev) // insert into start of array, so that it builds path in order
-            prev = prevVertexOf[prev]
-          }
-  
+        while (parent) {
+          result.unshift(parent); // insert into start of array, so that it builds path in order
+          parent = parentOf[parent];
+        }
+
         return result;
       }
 
       // visit each neighbour and update tables
-      let neighbours = this.adjacencyMap[node.vertex];
+      let neighbours = this.adjacencyMap[current.vertex];
       neighbours.forEach(neighbour => {
-        let calculatedDistanceToStart = node.distanceFromStart + neighbour.distance;
+        let newDistanceFromStart =
+          current.distanceFromStart + neighbour.distance;
 
         // update tables if new distance lower than existing
-        if (calculatedDistanceToStart < distanceFromStart[neighbour.vertex]) {
-          distanceFromStart[neighbour.vertex] = calculatedDistanceToStart;
-          prevVertexOf[neighbour.vertex] = node.vertex; // show new route via the current node to this neighbour
-          Q.enque({
-            vertex: neighbour.vertex,
-            distanceFromStart: calculatedDistanceToStart
-          }); // put neighbour into queue, with an updated distance that is not Infinite
+        if (newDistanceFromStart < distanceFromStart[neighbour.vertex]) {
+          distanceFromStart[neighbour.vertex] = newDistanceFromStart;
+          parentOf[neighbour.vertex] = current.vertex; // show new route via the current node to this neighbour
+
+          // put neighbour back in queue, with an updated distance
+          neighbour.distanceFromStart = newDistanceFromStart;
+          Q.enque(neighbour);
         }
       });
     }
@@ -201,7 +203,7 @@ graph.addEdge('D', 'F', 1);
 graph.addEdge('E', 'F', 1);
 
 // console.log(graph.findEdges("F"))
-console.log(graph.shortestPath("A", "E")) // [ 'A', 'C', 'D', 'F', 'E' ]
+console.log(graph.shortestPath('A', 'E')); // [ 'A', 'C', 'D', 'F', 'E' ]
 // console.log(graph.DFS_recursive('B'));
 
 let graph2 = new WGraph();
@@ -219,6 +221,6 @@ graph2.addEdge('D', 'E');
 graph2.addEdge('D', 'F');
 graph2.addEdge('E', 'F');
 
-console.log(graph2.BFS('A'));  // [ 'A', 'B', 'C', 'D', 'E', 'F' ]
+console.log(graph2.BFS('A')); // [ 'A', 'B', 'C', 'D', 'E', 'F' ]
 // console.log(graph2.DFS_recursive('A')); // [ 'A', 'B', 'D', 'E', 'C', 'F' ]
 // console.log(graph2.DFS_stack('A')); // [ 'A', 'C', 'E', 'F', 'D', 'B' ]
