@@ -36,5 +36,5 @@ function BFSdetectCycleUndirectedGraph(graph) {
 
 let a = BFSdetectCycleUndirectedGraph(uGraphCycle);
 let b = BFSdetectCycleUndirectedGraph(uGraphNoCycle);
-console.log('Answer for DFS with cyclical graph :', a);
-console.log('Answer for DFS with NO cyclical graph :', b);
+console.log('Answer for BFS with cyclical graph :', a); // true
+console.log('Answer for BFS with NO cyclical graph :', b); // false

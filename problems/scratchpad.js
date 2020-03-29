@@ -1,63 +1,38 @@
-const _ = require('underscore');
+const uGraphCycle = [[1], [0, 2, 3], [1, 4, 5], [1], [2, 5], [2, 4]];
 
-const input = 6,
-  edges = [
-    [1, 2],
-    [2, 3],
-    [4, 5],
-    [3, 5],
-    [1, 6],
-    [2, 4]
-  ],
-  edgesToRepair = [
-    [1, 6, 410],
-    [2, 4, 800]
-  ];
+const uGraphNoCycle = [[1], [0, 2, 3], [1, 4, 5], [1], [2], [2]];
 
-function minCost(N, edges, costs) {
-  let disjSet = [];
-  const mst = [];
-  for (let i = 1; i <= N; i++) {
-    disjSet.push([i]);
-  }
+/**
+ * BFS
+ * trick - every node has one of three states - and if its "IN Q" then cycle exists
+ * then it is a cycle UNLESS V is the parent of U
+ * @param {Array} - where index represents node, and its elements denote the adjacency list
+ */
+function BFSdetectCycleUndirectedGraph(graph) {
+  let status = {};
+  const VISITED = 1;
+  const ENQUED = 2;
 
-  edges = edges.map((e, i) => {
-    let [u, v, c] = e;
-    let withCost = costs.find(item => {
-      return item[0] === u && item[1] === v;
+  const cycle = true;
+  let Q = [0];
+  status[0] = ENQUED;
+
+  while (Q.length > 0) {
+    let current = Q.pop();
+    status[current] = VISITED;
+    const neighbours = graph[current];
+    neighbours.forEach(n => {
+      if (status[n] === ENQUED) return cycle;
+
+      Q.unshift(n);
+      status[n] = ENQUED;
     });
-
-    if (!withCost) {
-      return [u, v, 0];
-    } else {
-      return [u, v, withCost[2]];
-    }
-  });
-
-  edges.sort((a, b) => b[2] - a[2]);
-
-  while (disjSet.length > 1) {
-    let edge = edges.pop();
-    const [u, v, c] = edge;
-
-    //find
-    let setWithU = disjSet.find(set => set.includes(u));
-    let setWithV = disjSet.find(set => set.includes(v));
-
-    // union
-    if (setWithU !== setWithV) {
-      const unioned = _.union(setWithU, setWithV);
-      disjSet.push(unioned);
-      disjSet = _.without(disjSet, setWithU, setWithV);
-      mst.push(edge);
-    }
   }
-  console.log('MST', mst);
 
-  let cost = 0;
-  mst.forEach(e => (cost += e[2]));
-  return cost;
+  return !cycle;
 }
 
-let a = minCost(input, edges, edgesToRepair);
-console.log('cost', a);
+let a = BFSdetectCycleUndirectedGraph(uGraphCycle);
+let b = BFSdetectCycleUndirectedGraph(uGraphNoCycle);
+console.log('Answer for DFS with cyclical graph :', a);
+console.log('Answer for DFS with NO cyclical graph :', b);
