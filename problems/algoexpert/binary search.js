@@ -38,3 +38,5 @@ function $binarySearch(arr, target) {
 
   return find(arr, 0, arr.length - 1);
 }
+
+console.log('???', binarySearch([13, 4, 5, -1], -1));

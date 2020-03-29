@@ -75,8 +75,6 @@ function traverseIslandDFS(row, col, grid, visited) {
       traverseIslandDFS(r, c, grid, visited);
     }
   });
-
-  return;
 }
 
 function traverseIslandsBFS(row, col, grid, visited) {
