@@ -24,7 +24,7 @@ function knapsackProblem(items, capacity) {
       } else {
         //  if W<=C then Math.max formula applies
         if (i === 0) {
-          grid[i][j] = 1; // first row can only be 1s where weight i< capacity limit
+          grid[i][j] = val; // first row can only be 1s where weight i< capacity limit
         } else {
           const maxValue = Math.max(
             // grid[prevrow][col] == excluding current item.
@@ -49,10 +49,11 @@ function knapsackProblem(items, capacity) {
   let selectedItemsIdx = [];
 
   // find items
-  while (col > 0 && row > 0) {
-    // col 0 is all 0s and row must b > 0 to allow decrements
+  while (col > 0 && row >= 0) {
+    // col 0 is all 0s and row must b >= 0 to allow decrements
+    // but if row === 0, move to else statement directly
     // case 1 : value is == previous rows val, move one row up because current row is not included in final container as taken value from previous row
-    if (grid[row][col] === grid[row - 1][col]) {
+    if (row > 0 && grid[row][col] === grid[row - 1][col]) {
       row -= 1;
     } else {
       // this is an included item
@@ -76,8 +77,7 @@ const items = [
   [5, 6],
   [6, 7]
 ];
-const capacity = 10;
-// [10,[1,3]]
+const capacity = 10; // [10,[1,3]]
 
 const _items = [
   [2, 1],
