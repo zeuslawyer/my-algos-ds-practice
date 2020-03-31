@@ -20,7 +20,7 @@ function TreeNode(val) {
 
 var buildTree = function(inOrder, postOrder) {
   function helper(start, end) {
-    if (start > end || postorder.length === 0) return null;
+    if (start > end || postorder.length < 0) return null;
 
     const val = postOrder.pop(); // remove the root
     console.log(val, start, end);

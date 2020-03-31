@@ -29,7 +29,7 @@ as the lowest node in T that has both p and q as descendants (where we allow a n
  */
 var lowestCommonAncestor = function(root, p, q) {
   if (!root) return null;
-  if (root.val === p || root.val === q) return root;
+  if (root.val === p.val || root.val === q.val) return root;
 
   const thisNode = root;
   const left = lowestCommonAncestor(thisNode.left, p, q);
