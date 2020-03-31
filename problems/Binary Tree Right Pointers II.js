@@ -1,5 +1,4 @@
 // https://leetcode.com/problems/populating-next-right-pointers-in-each-node-ii/
-
 /**
  * // Definition for a Node.
  * function Node(val, left, right, next) {
@@ -16,7 +15,7 @@
 var connect = function(root) {
   if (!root) return null;
 
-  const Q = [root];
+  const Q = [root]; // NOTE:  nodes can be null value, which is still a value unlike undefined
 
   while (Q.length > 0) {
     let level = [];
@@ -27,18 +26,20 @@ var connect = function(root) {
     }
 
     for (let i = 0; i < level.length; i++) {
-      let curr = level[i];
-      if (curr === null) continue;
+      let current = level[i];
+      if (current === null) continue; // move to next node
 
-      let nextInd = i + 1;
-      // find the next index
-      while (level[nextInd] === null) {
-        nextInd += 1;
+      // find next index that is not null.
+      let nextIdx = i + 1;
+      while (level[nextIdx] === null) {
+        nextIdx++;
       }
+      // out of bounds or next node found
+      current.next = level[nextIdx] || null;
 
-      curr.next = level[nextInd] || null;
-      Q.unshift(curr.left);
-      Q.unshift(curr.right);
+      // add both children nodes even if null
+      Q.unshift(current.left);
+      Q.unshift(current.right);
     }
   }
 

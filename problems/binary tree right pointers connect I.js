@@ -1,7 +1,6 @@
 // https://leetcode.com/problems/populating-next-right-pointers-in-each-node/submissions/
 // https://leetcode.com/problems/populating-next-right-pointers-in-each-node/discuss/420632/JavaScript-BFS-and-DFS-Solution
 
-
 /**
  * // Definition for a Node.
  * function Node(val, left, right, next) {
@@ -16,29 +15,29 @@
  * @return {Node}
  */
 var connect = function(root) {
-  if (root === null) return root;
-   
-   return bfs(root)
+  if (!root) return null;
+  let Q = [root];
+
+  while (Q.length > 0) {
+    let len = Q.length;
+    let level = [];
+
+    for (let i = 0; i < len; i++) {
+      level.push(Q.pop());
+    }
+
+    for (let i = 0; i < len; i++) {
+      let current = level[i];
+      let next = level[i + 1] || null;
+
+      current.next = next;
+
+      if (current.left) {
+        Q.unshift(current.left);
+        Q.unshift(current.right);
+      }
+    }
+  }
+
+  return root;
 };
-
-function bfs(node) {
-   let Q = [node]
-   
-   while(Q.length > 0){
-       let len = Q.length
-       let level = []
-       for(let i=0; i< len; i++){
-           level.push(Q.pop())
-       }
-       for(let i=0 ;i < level.length;i++){
-           let curr = level[i]
-           curr.next = level[i+1] || null // set next pointer to next item in the same level of the tree
-
-           if(curr.left){ // perfect tree, so only proceed if there is a left child
-               Q.unshift(curr.left)
-               Q.unshift(curr.right)
-           }
-       }
-   }
-   return node
-}

@@ -3,6 +3,8 @@ function heapSort(array) {
   for (let endIdx = array.length - 1; endIdx > 0; endIdx--) {
     // swap first and last index in unsorted heap
     swap(0, endIdx, array);
+
+    // heapify  the heap minus the item insert at endIndex
     sinkDown(0, endIdx - 1, array);
   }
 
