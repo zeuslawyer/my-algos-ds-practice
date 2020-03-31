@@ -21,11 +21,12 @@ function sinkDown(currentIdx, lastIdx, array) {
   let childOneIdx = 2 * currentIdx + 1;
 
   while (childOneIdx <= lastIdx) {
-    let childTwoIdx = 2 * currentIdx + 2;
-    // let childTwoIdx = childOneIdx + 1;
+    // let childTwoIdx = 2 * currentIdx + 2;
+    let childTwoIdx = childOneIdx + 1;
+    if (childTwoIdx > lastIdx) childTwoIdx = -1;
 
     let idxToSwap;
-    if (array[childTwoIdx] && array[childTwoIdx] > array[childOneIdx]) {
+    if (childTwoIdx !== -1 && array[childTwoIdx] > array[childOneIdx]) {
       idxToSwap = childTwoIdx;
     } else {
       idxToSwap = childOneIdx;
@@ -47,5 +48,5 @@ function swap(first, second, arr) {
   arr[second] = temp;
 }
 
-let sorted = heapSort([1, 2, 3]);
+let sorted = heapSort([3, 2, 1]);
 console.log(sorted);
