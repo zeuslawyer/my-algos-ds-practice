@@ -1,124 +1,89 @@
-// Do not edit the class below except for the insertKeyValuePair,
-// getValueFromKey, and getMostRecentKey methods. Feel free
-// to add new properties and methods to the class.
-class LRUCache {
-  constructor(maxSize) {
-    this.maxSize = maxSize || 1;
-    this.currentSize = 0;
-    this.cache = {};
-    this.data = new DLL();
-  }
+// https://www.youtube.com/watch?v=TzoDDOj60zE
+// https://leetcode.com/problems/rotting-oranges/
 
-  insertKeyValuePair(key, value) {
-    if (key in this.cache) {
-      this.cache[key].value = value;
-      this.data.moveToTail(this.cache[key]);
-    } else {
-      const node = new DLLNode(key, value);
+function orangesRotting(grid) {
+  if (!grid || grid[0].length === 0) return -1;
+  const FRESH = 1;
+  const ROTTEN = 2;
 
-      if (this.currentSize < this.maxSize) {
-        this.data.insert(node);
-        this.currentSize++;
-      } else {
-        // at capacity
-        let removed = this.data.removeHead();
-        // evict
-        delete this.cache[removed.key];
-        // insert
-        this.data.insert(node);
+  const Q = [];
+  let freshcount = 0;
+  let rottencount = 0;
+
+  for (let i = 0; i < grid.length; i++) {
+    for (let j = 0; j < grid[0].length; j++) {
+      if (grid[i][j] === ROTTEN) {
+        Q.unshift([i, j]);
+        rottencount++;
       }
-      this.cache[key] = node;
+      if (grid[i][j] === FRESH) freshcount++;
     }
   }
 
-  getValueFromKey(key) {
-    if (!(key in this.cache)) return null;
+  let time = 0;
+  if (freshcount === 0) return time;
+  if (rottencount === 0) return -1;
 
-    const node = this.cache[key];
-    this.data.moveToTail(node);
-    return node.value;
+  console.log('Q', Q, freshcount);
+
+  while (Q.length > 0 && freshcount > 0) {
+    let len = Q.length;
+    for (let i = 0; i < len; i++) {
+      let current = Q.pop();
+      let neighbours = getNeighbours(current[0], current[1], grid);
+      neighbours.forEach(n => {
+        const [r, c] = n;
+        grid[r][c] = ROTTEN;
+        Q.unshift(n);
+        freshcount -= 1;
+      });
+    }
+    // level has been processed
+    time += 1;
   }
 
-  getMostRecentKey() {
-    // Write your code here.
-    return this.data.tail.key;
-  }
+  console.log('ANSWER>...', freshcount);
+  return freshcount === 0 ? time : -1;
 }
 
-class DLLNode {
-  constructor(key, value) {
-    this.key = key;
-    this.value = value;
-    this.prev = null;
-    this.next = null;
-  }
+function getNeighbours(row, col, grid) {
+  const neighbours = [];
+  const rowStart = 0;
+  const rowEnd = grid.length;
+  const colStart = 0;
+  const colEnd = grid[0].length;
+
+  // upper
+  if (row > rowStart && grid[row - 1][col] === 1)
+    neighbours.push([row - 1, col]);
+  // lower
+  if (row < rowEnd - 1 && grid[row + 1][col] === 1)
+    neighbours.push([row + 1, col]);
+  // left
+  if (col > colStart && grid[row][col - 1] === 1)
+    neighbours.push([row, col - 1]);
+  // right
+  if (col < colEnd - 1 && grid[row][col + 1] === 1)
+    neighbours.push([row, col + 1]);
+  return neighbours;
 }
 
-class DLL {
-  constructor() {
-    this.head = null;
-    this.tail = null;
-  }
+const input = [
+  [2, 1, 1],
+  [1, 1, 0],
+  [0, 1, 1]
+];
+const output = 4;
 
-  // always insert at tail
-  insert(node) {
-    if (!this.head) {
-      this.head = node;
-      this.tail = node;
-    } else {
-      let currentTail = this.tail;
-      currentTail.next = node;
-      node.prev = currentTail;
-      this.tail = node;
-    }
-  }
+const ans = orangesRotting(input);
+// const ans2 = orangesRotting([
+//   [2, 1, 1],
+//   [0, 1, 1],
+//   [1, 0, 1]
+// ]);
 
-  remove(node) {
-    if (node === this.tail || node === this.head) {
-      return this.removeHead();
-    }
-    // else
-    const prevNode = node.prev;
-    const nextNode = node.next;
+// const ans3 = orangesRotting([[0, 2]]);
 
-    prevNode.next = nextNode;
-    nextNode.prev = prevNode;
-
-    node.prev = null;
-    node.next = null;
-
-    return node;
-  }
-
-  removeHead() {
-    if (this.head === this.tail) {
-      this.tail = null;
-      let oldHead = this.head;
-      this.head = null;
-      return oldHead;
-    }
-    // else
-    let newHead = this.head.next;
-    let oldHead = this.head;
-    newHead.prev = null;
-    this.head = newHead;
-
-    oldHead.next = null;
-    return oldHead;
-  }
-
-  moveToTail(node) {
-    node = this.remove(node);
-    this.insert(node);
-  }
-}
-
-let cache = new LRUCache(3);
-cache.insertKeyValuePair('first', 'Zubin');
-cache.insertKeyValuePair('second', 'Maggie');
-cache.insertKeyValuePair('third', 'Rowie');
-cache.insertKeyValuePair('fourth', 'Somebody');
-cache.insertKeyValuePair('fifth', 'YooHOo');
-
-let t = cache.getValueFromKey('third');
-console.log(cache.getMostRecentKey());
+console.log(ans); // 4
+// console.log(ans2); //-1
+// console.log(ans3); //0
