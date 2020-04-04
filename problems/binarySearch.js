@@ -34,27 +34,27 @@ const binarySearchRecursion = (target, arr, minInd = 0, maxInd = undefined) => {
   return -1; // this is actually unreachable because of edge case 1
 };
 
-const binarySearchIteration = (target, arr) => {
-  let minInd = 0;
-  let maxInd = arr.length - 1;
+const binarySearchIteration = (arr, target) => {
+  let start = 0;
+  let end = arr.length - 1;
 
   // edge case 1 - target not in range
-  if (target < arr[minInd] || target > arr[maxInd]) return -1;
+  if (target < arr[start] || target > arr[end]) return -1;
 
-  while (minInd <= maxInd) {
-    let guessIndex = minInd + Math.floor((maxInd - minInd) / 2);
+  while (start <= end) {
+    let guessIndex = start + Math.floor((end - start) / 2);
 
     // found it
     if (target === arr[guessIndex]) return guessIndex;
 
     if (target > arr[guessIndex]) {
-      minInd = guessIndex + 1;
+      start = guessIndex + 1;
     } else {
-      maxInd = guessIndex - 1;
+      end = guessIndex - 1;
     }
   }
 
-  return -1; // this is actually unreachable because of edge case 1
+  return -1;
 };
 
 // colt steele
@@ -71,4 +71,4 @@ const _binarySearchIteration = (elem, arr) => {
   return arr[middle] === elem ? middle : -1;
 };
 
-module.exports = { binarySearchRecursion, binarySearchIteration };
+console.log(binarySearchIteration([1, 5, 23, 111], 111));

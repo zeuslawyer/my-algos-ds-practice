@@ -1,89 +1,37 @@
-// https://www.youtube.com/watch?v=TzoDDOj60zE
-// https://leetcode.com/problems/rotting-oranges/
+function _search(arr, target) {
+  if (!arr.length) return -1;
 
-function orangesRotting(grid) {
-  if (!grid || grid[0].length === 0) return -1;
-  const FRESH = 1;
-  const ROTTEN = 2;
+  let start = 0;
+  let end = arr.length - 1;
 
-  const Q = [];
-  let freshcount = 0;
-  let rottencount = 0;
+  while (start <= end) {
+    let mid = start + Math.floor((end - start) / 2);
 
-  for (let i = 0; i < grid.length; i++) {
-    for (let j = 0; j < grid[0].length; j++) {
-      if (grid[i][j] === ROTTEN) {
-        Q.unshift([i, j]);
-        rottencount++;
+    if (arr[mid] === target) return mid;
+
+    // step 1 look which side has no rotation (is not sorted) and check if target is in that range
+    // compare target with each side, and see if its in that
+
+    if (arr[start] <= arr[mid]) {
+      // lhs is sorted side
+      if (arr[start] <= target && target < arr[mid]) {
+        end = mid - 1;
+      } else {
+        start = mid + 1;
       }
-      if (grid[i][j] === FRESH) freshcount++;
+    } else {
+      // rhs is the sorted side
+      if (arr[mid] <= target && target <= arr[end]) {
+        start = mid + 1;
+      } else {
+        end = mid - 1;
+      }
     }
   }
-
-  let time = 0;
-  if (freshcount === 0) return time;
-  if (rottencount === 0) return -1;
-
-  console.log('Q', Q, freshcount);
-
-  while (Q.length > 0 && freshcount > 0) {
-    let len = Q.length;
-    for (let i = 0; i < len; i++) {
-      let current = Q.pop();
-      let neighbours = getNeighbours(current[0], current[1], grid);
-      neighbours.forEach(n => {
-        const [r, c] = n;
-        grid[r][c] = ROTTEN;
-        Q.unshift(n);
-        freshcount -= 1;
-      });
-    }
-    // level has been processed
-    time += 1;
-  }
-
-  console.log('ANSWER>...', freshcount);
-  return freshcount === 0 ? time : -1;
+  return -1;
 }
 
-function getNeighbours(row, col, grid) {
-  const neighbours = [];
-  const rowStart = 0;
-  const rowEnd = grid.length;
-  const colStart = 0;
-  const colEnd = grid[0].length;
+let a = _search([4, 5, 6, 7, 0, 1, 2], 0); //4
+let b = _search([4, 5, 6, 7, 0, 1, 2], 3); // -1
 
-  // upper
-  if (row > rowStart && grid[row - 1][col] === 1)
-    neighbours.push([row - 1, col]);
-  // lower
-  if (row < rowEnd - 1 && grid[row + 1][col] === 1)
-    neighbours.push([row + 1, col]);
-  // left
-  if (col > colStart && grid[row][col - 1] === 1)
-    neighbours.push([row, col - 1]);
-  // right
-  if (col < colEnd - 1 && grid[row][col + 1] === 1)
-    neighbours.push([row, col + 1]);
-  return neighbours;
-}
-
-const input = [
-  [2, 1, 1],
-  [1, 1, 0],
-  [0, 1, 1]
-];
-const output = 4;
-
-const ans = orangesRotting(input);
-// const ans2 = orangesRotting([
-//   [2, 1, 1],
-//   [0, 1, 1],
-//   [1, 0, 1]
-// ]);
-
-// const ans3 = orangesRotting([[0, 2]]);
-
-console.log(ans); // 4
-// console.log(ans2); //-1
-// console.log(ans3); //0
+console.log(a, b);
