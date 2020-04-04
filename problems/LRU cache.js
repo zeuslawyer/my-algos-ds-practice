@@ -59,7 +59,6 @@ var LRUCache = function(capacity) {
  * @return {number}
  */
 LRUCache.prototype.get = function(key) {
-  console.log('SNS', this.cache[key]);
   if (key in this.cache) {
     const res = this.cache[key];
     // move node to neck
@@ -113,5 +112,5 @@ LRUCache.prototype.put = function(key, value) {
 let t = new LRUCache(2);
 t.put(1, 1);
 t.put(2, 2);
-console.log(t.cache);
-// console.log(t.get(1));
+// console.log(t.cache);
+console.log(t.get(1));

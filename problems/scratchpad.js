@@ -1,37 +1,57 @@
-function _search(arr, target) {
-  if (!arr.length) return -1;
+function multiStringSearch(bigString, smallStrings) {
+  let trie = new suffixTrie(bigString);
 
-  let start = 0;
-  let end = arr.length - 1;
-
-  while (start <= end) {
-    let mid = start + Math.floor((end - start) / 2);
-
-    if (arr[mid] === target) return mid;
-
-    // step 1 look which side has no rotation (is not sorted) and check if target is in that range
-    // compare target with each side, and see if its in that
-
-    if (arr[start] <= arr[mid]) {
-      // lhs is sorted side
-      if (arr[start] <= target && target < arr[mid]) {
-        end = mid - 1;
-      } else {
-        start = mid + 1;
-      }
-    } else {
-      // rhs is the sorted side
-      if (arr[mid] <= target && target <= arr[end]) {
-        start = mid + 1;
-      } else {
-        end = mid - 1;
-      }
-    }
+  for (let i = 0; i < smallStrings.length; i++) {
+    smallStrings[i] = trie.contains(smallStrings[i]);
   }
-  return -1;
+  return smallStrings;
 }
 
-let a = _search([4, 5, 6, 7, 0, 1, 2], 0); //4
-let b = _search([4, 5, 6, 7, 0, 1, 2], 3); // -1
+class suffixTrie {
+  constructor(string) {
+    this.root = {};
+    this.constructSuffixTrie(string);
+  }
 
-console.log(a, b);
+  constructSuffixTrie(string) {
+    for (let i = 0; i < string.length; i++) {
+      let node = this.root;
+      this.insertSubStrings(i, string, node);
+    }
+  }
+
+  insertSubStrings(idx, string, node) {
+    // let node = this.root;
+
+    for (let i = idx; i < string.length; i++) {
+      let char = string[i];
+      if (!node[char]) node[char] = {};
+      node = node[char];
+    }
+    node.wordEnd = true;
+  }
+
+  contains(word) {
+    let node = this.root;
+    for (let i = 0; i < word.length; i++) {
+      let char = word[i];
+      if (!node[char]) return false;
+      node = node[char];
+    }
+    return true;
+  }
+}
+
+const input = 'Mary goes to the shopping center every week.';
+const targets = [
+  'to',
+  'Mary',
+  'centers',
+  'shop',
+  'shopping',
+  'string',
+  'kappa'
+]; // [ true, true, false, true, true, false, false ]
+
+let a = multiStringSearch(input, targets);
+console.log(' ANSWER', a);

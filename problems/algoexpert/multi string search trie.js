@@ -1,4 +1,4 @@
-class $Trie {
+class Trie {
   constructor() {
     this.root = {};
   }
@@ -28,7 +28,7 @@ class $Trie {
 }
 
 function multiStringSearch(bigString, smallStrings) {
-  const trie = new $Trie();
+  const trie = new Trie();
   trie.createSuffixTrie(bigString);
 
   return smallStrings.map(small => trie.contains(small));
