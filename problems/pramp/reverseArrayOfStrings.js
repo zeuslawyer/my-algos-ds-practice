@@ -11,9 +11,7 @@ function reverseWords(arr) {
   for (let i = 0; i < arr.length; i++) {
     // finding spaces, and a word startInd index is stored => lastInd of word
     if (arr[i] === '  ' || arr[i] === ' ') {
-      // console.log('found a space at',  i)
       if (wordsStartInd >= 0) {
-        // console.log('going to reverse starting from ',  wordsStartInd)
         reverseSegment(arr, wordsStartInd, i - 1);
         wordsStartInd = undefined;
       }
@@ -24,23 +22,11 @@ function reverseWords(arr) {
       }
     } else {
       if (wordsStartInd === undefined) {
-        // console.log('setting word start at',  i)
         wordsStartInd = i;
       }
     }
   }
 
-  return arr;
-}
-
-function reverseArr(arr) {
-  let mid = Math.floor(arr.length / 2);
-
-  for (let i = 0; i < mid; i++) {
-    let temp = arr[i];
-    arr[i] = arr[arr.length - 1 - i];
-    arr[arr.length - 1 - i] = temp;
-  }
   return arr;
 }
 
@@ -58,6 +44,18 @@ function reverseSegment(arr, startInd, lastInd) {
   }
 
   // console.log('returning', arr)
+  return arr;
+}
+
+// NOT USED
+function reverseArr(arr) {
+  let mid = Math.floor(arr.length / 2);
+
+  for (let i = 0; i < mid; i++) {
+    let temp = arr[i];
+    arr[i] = arr[arr.length - 1 - i];
+    arr[arr.length - 1 - i] = temp;
+  }
   return arr;
 }
 
@@ -90,4 +88,9 @@ let WORDARRAY = [
 
 let input2 = [' ', ' '];
 
-console.log(reverseWords(['a', ' ', ' ', 'b']));
+let a = reverseWords(['a', ' ', ' ', 'b']);
+let b = reverseWords(input2);
+let c = reverseWords(WORDARRAY);
+console.log(a);
+// console.log(b);
+// console.log(c);

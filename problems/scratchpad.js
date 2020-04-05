@@ -1,57 +1,69 @@
-function multiStringSearch(bigString, smallStrings) {
-  let trie = new suffixTrie(bigString);
+function reverseWords(arr) {
+  arr = reverse(arr);
 
-  for (let i = 0; i < smallStrings.length; i++) {
-    smallStrings[i] = trie.contains(smallStrings[i]);
+  for (let i = 0; i < arr.length; i++) {
+    let spaceIdx = i;
+
+    while (arr[spaceIdx] !== '  ' && spaceIdx < arr.length) {
+      spaceIdx++;
+    }
+
+    if (spaceIdx !== 0) {
+      let wordEnd = spaceIdx - 1;
+      reverse(arr, i, wordEnd);
+
+      i = spaceIdx; // for loop will add 1
+    }
   }
-  return smallStrings;
+
+  return arr;
 }
 
-class suffixTrie {
-  constructor(string) {
-    this.root = {};
-    this.constructSuffixTrie(string);
+function reverse(arr, start = 0, end) {
+  if (!end) end = arr.length - 1;
+  while (start < end) {
+    swap(arr, start, end);
+    start++;
+    end--;
   }
-
-  constructSuffixTrie(string) {
-    for (let i = 0; i < string.length; i++) {
-      let node = this.root;
-      this.insertSubStrings(i, string, node);
-    }
-  }
-
-  insertSubStrings(idx, string, node) {
-    // let node = this.root;
-
-    for (let i = idx; i < string.length; i++) {
-      let char = string[i];
-      if (!node[char]) node[char] = {};
-      node = node[char];
-    }
-    node.wordEnd = true;
-  }
-
-  contains(word) {
-    let node = this.root;
-    for (let i = 0; i < word.length; i++) {
-      let char = word[i];
-      if (!node[char]) return false;
-      node = node[char];
-    }
-    return true;
-  }
+  return arr;
 }
 
-const input = 'Mary goes to the shopping center every week.';
-const targets = [
-  'to',
-  'Mary',
-  'centers',
-  'shop',
-  'shopping',
-  'string',
-  'kappa'
-]; // [ true, true, false, true, true, false, false ]
+function swap(arr, start, end) {
+  let temp = arr[start];
+  arr[start] = arr[end];
+  arr[end] = temp;
+}
+let WORDARRAY = [
+  'p',
+  'e',
+  'r',
+  'f',
+  'e',
+  'c',
+  't',
+  '  ',
+  'm',
+  'a',
+  'k',
+  'e',
+  's',
+  '  ',
+  'p',
+  'r',
+  'a',
+  'c',
+  't',
+  'i',
+  'c',
+  'e'
+];
 
-let a = multiStringSearch(input, targets);
-console.log(' ANSWER', a);
+let input2 = ['  ', '  '];
+
+let a = reverseWords(['a', '  ', '  ', 'b']);
+let b = reverseWords(input2);
+let c = reverseWords(WORDARRAY);
+// console.log(a);
+// console.log(b);
+console.log(c);

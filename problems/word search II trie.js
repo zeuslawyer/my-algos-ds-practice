@@ -19,7 +19,7 @@ var findWords = function(board, words) {
   // build trie
   let trie = {};
   for (const word of words) {
-    let node = trie;
+    let node = trie; // for each word start at the root
     for (let i = 0; i < word.length; i++) {
       const char = word[i];
       if (!node[char]) node[char] = {};

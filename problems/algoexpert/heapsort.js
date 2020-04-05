@@ -51,4 +51,6 @@ function swap(first, second, arr) {
 }
 
 let sorted = heapSort([3, 2, 1]);
-console.log(sorted);
+
+let b = heapSort([7, 6, 5, 4, 3, 2, 1]);
+console.log(b);

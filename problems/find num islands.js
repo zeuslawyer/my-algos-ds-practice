@@ -44,6 +44,18 @@ var numIslandsDFS = function(grid) {
   return islandCount;
 };
 
+function traverseIslandDFS(row, col, grid, visited) {
+  visited[row][col] = true;
+
+  let neighbours = findValidNeighbours(row, col, grid, visited);
+  neighbours.forEach(neigh => {
+    let [r, c] = neigh;
+    if (!visited[r][c] && grid[r][c] === 1) {
+      traverseIslandDFS(r, c, grid, visited);
+    }
+  });
+}
+
 // BFS iterative implementation
 var numIslandsBFS = function(grid) {
   let rows = grid.length;
@@ -64,18 +76,6 @@ var numIslandsBFS = function(grid) {
 
   return islandCount;
 };
-
-function traverseIslandDFS(row, col, grid, visited) {
-  visited[row][col] = true;
-
-  let neighbours = findValidNeighbours(row, col, grid, visited);
-  neighbours.forEach(neigh => {
-    let [r, c] = neigh;
-    if (!visited[r][c] && grid[r][c] === 1) {
-      traverseIslandDFS(r, c, grid, visited);
-    }
-  });
-}
 
 function traverseIslandsBFS(row, col, grid, visited) {
   let Q = [[row, col]]; // unshift, pop
