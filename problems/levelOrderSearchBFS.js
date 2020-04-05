@@ -1,12 +1,12 @@
 // LEETCODE: https://leetcode.com/problems/binary-tree-level-order-traversal/
 // solution /: https://leetcode.com/problems/binary-tree-level-order-traversal/discuss/401728/Javascript-solution-using-BFS
 
-// Given a binary tree, return the level order traversal of its nodes' values. 
+// Given a binary tree, return the level order traversal of its nodes' values.
 //(ie, from left to right, level by level).
 
 // For example:
 // Given binary tree [3,9,20,null,null,15,7],
-// return 
+// return
 // [
 //   [3],
 //   [9,20],
@@ -24,7 +24,7 @@
  * @param {TreeNode} root
  * @return {number[][]}
  */
-var levelOrder = function(root) {
+var levelOrder = function (root) {
   if (!root) return [];
 
   const result = [];

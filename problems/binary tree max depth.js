@@ -1,7 +1,7 @@
 // https://leetcode.com/problems/maximum-depth-of-binary-tree/
 
 // NOTE: BFS
-var maxDepth = function(root) {
+var maxDepth = function (root) {
   let depth = 0;
   if (!root) return depth;
 
@@ -23,7 +23,7 @@ var maxDepth = function(root) {
 };
 
 // NOTE: DFS - works on min depth and max depth
-var maxDepth = function(root, depth = 0) {
+var maxDepth = function (root, depth = 0) {
   if (!root) return depth;
   depth++;
   if (root.left && root.right) {
@@ -37,7 +37,7 @@ var maxDepth = function(root, depth = 0) {
 };
 
 // NOTE: DFS
-var maxDepthDFS = function(root, depth = 0) {
+var maxDepthDFS = function (root, depth = 0) {
   if (!root) return depth;
 
   depth += 1;
