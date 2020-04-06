@@ -80,7 +80,7 @@ class WGraph {
 
       // visit each neighbour and update tables
       let neighbours = this.adjacencyMap[current.vertex];
-      neighbours.forEach(neighbour => {
+      neighbours.forEach((neighbour) => {
         let newDistanceFromStart =
           current.distanceFromStart + neighbour.distance;
 
@@ -89,9 +89,11 @@ class WGraph {
           distanceFromStart[neighbour.vertex] = newDistanceFromStart;
           parentOf[neighbour.vertex] = current.vertex; // show new route via the current node to this neighbour
 
-          // put neighbour back in queue, with an updated distance
-          neighbour.distanceFromStart = newDistanceFromStart;
-          Q.enque(neighbour);
+          // put neighbour back in queue, with an updated distance from start
+          Q.enque({
+            vertex: neighbour.vertex,
+            distanceFromStart: distanceFromStart[neighbour.vertex],
+          });
         }
       });
     }
@@ -117,7 +119,7 @@ class WGraph {
 
       // visit each neighbour
       let neighbours = this.adjacencyMap[vertex];
-      neighbours.forEach(neighbour => {
+      neighbours.forEach((neighbour) => {
         if (!traversed[neighbour.vertex]) {
           // add to queue if neighbour has not been visited
           q.push(neighbour.vertex);
@@ -144,7 +146,7 @@ class WGraph {
 
       // visit neighbours
       let neighbours = adjacencyMap[nodeName];
-      neighbours.forEach(neighbour => {
+      neighbours.forEach((neighbour) => {
         if (!visited[neighbour.vertex]) {
           visit(neighbour.vertex);
         }
@@ -162,7 +164,6 @@ class WGraph {
     let stack = [entry]; // pop, push
 
     while (stack.length > 0) {
-      console.log(stack);
       let current = stack.pop();
 
       // mark as visited
@@ -171,7 +172,7 @@ class WGraph {
 
       // visit each neighbour
       let neighbours = this.adjacencyMap[current];
-      neighbours.forEach(neighbour => {
+      neighbours.forEach((neighbour) => {
         if (!traversed[neighbour.vertex]) {
           // mark as visited
           traversed[neighbour.vertex] = true;
@@ -221,6 +222,6 @@ graph2.addEdge('D', 'E');
 graph2.addEdge('D', 'F');
 graph2.addEdge('E', 'F');
 
-console.log(graph2.BFS('A')); // [ 'A', 'B', 'C', 'D', 'E', 'F' ]
+// console.log(graph2.BFS('A')); // [ 'A', 'B', 'C', 'D', 'E', 'F' ]
 // console.log(graph2.DFS_recursive('A')); // [ 'A', 'B', 'D', 'E', 'C', 'F' ]
 // console.log(graph2.DFS_stack('A')); // [ 'A', 'C', 'E', 'F', 'D', 'B' ]

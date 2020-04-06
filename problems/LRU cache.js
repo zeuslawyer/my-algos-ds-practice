@@ -47,7 +47,7 @@ class DLL {
 /**
  * @param {number} capacity
  */
-var LRUCache = function(capacity) {
+var LRUCache = function (capacity) {
   this.capacity = capacity;
   this.size = 0;
   this.cache = {};
@@ -58,7 +58,7 @@ var LRUCache = function(capacity) {
  * @param {number} key
  * @return {number}
  */
-LRUCache.prototype.get = function(key) {
+LRUCache.prototype.get = function (key) {
   if (key in this.cache) {
     const res = this.cache[key];
     // move node to neck
@@ -75,7 +75,7 @@ LRUCache.prototype.get = function(key) {
  * @param {number} value
  * @return {void}
  */
-LRUCache.prototype.put = function(key, value) {
+LRUCache.prototype.put = function (key, value) {
   // if already in cache, update
   if (key in this.cache) {
     let node = this.cache[key];
