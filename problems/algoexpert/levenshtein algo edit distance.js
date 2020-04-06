@@ -22,7 +22,7 @@ function levenshteinDistance(str1, str2) {
   let cols = str2.length;
 
   let edits = Array.from(Array(rows), () => Array(cols));
-  edits[0][0] = 0;
+  // edits[0][0] = 0;
 
   // loop and seed initial values in row 0 and col 0
   for (let row = 0; row < rows; row++) {

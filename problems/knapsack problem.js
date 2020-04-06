@@ -10,7 +10,7 @@
  */
 function knapsackProblem(items, capacity) {
   // buid matrix, fill with zeros. Rows = capacity from 0 <=  capacity
-  let grid = items.map(row => new Array(capacity + 1).fill(0));
+  let grid = items.map((row) => new Array(capacity + 1).fill(0));
   // console.log(grid);
 
   for (let i = 0; i < items.length; i++) {
@@ -75,7 +75,7 @@ const items = [
   [1, 2],
   [4, 3],
   [5, 6],
-  [6, 7]
+  [6, 7],
 ];
 const capacity = 10; // [10,[1,3]]
 
@@ -84,7 +84,7 @@ const _items = [
   [70, 70],
   [30, 30],
   [69, 69],
-  [100, 100]
+  [100, 100],
 ];
 const _capacity = 100; // [101,[0,2,3]]
 
