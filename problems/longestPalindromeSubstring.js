@@ -1,6 +1,6 @@
 let str = 'abaxyzzyxf';
 
-var longestPalindrome = function(str) {
+var longestPalindrome = function (str) {
   let longestPal = str[0];
 
   for (let i = 1; i < str.length; i++) {
