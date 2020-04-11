@@ -6,7 +6,7 @@
  *
  * @param {*} items - array of Value, Weight  integers
  * @param {*} capacity max capacity of the container
- * @returns Array[total weight of selected items, Array[index of selected items]]
+ * @returns Array [total value of selected items, Array[index of selected items] ]
  */
 function knapsackProblem(items, capacity) {
   // buid matrix, fill with zeros. Rows = capacity from 0 <=  capacity
