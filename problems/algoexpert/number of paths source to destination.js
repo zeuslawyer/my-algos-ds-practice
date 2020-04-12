@@ -16,7 +16,7 @@ function numberOfPaths(graph) {
 
     // else recurse on each neighbours
     const neighbours = graph[startVert];
-    neighbours.forEach(v => {
+    neighbours.forEach((v) => {
       countPaths(v, graph);
     });
   }

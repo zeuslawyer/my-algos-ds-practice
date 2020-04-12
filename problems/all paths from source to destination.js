@@ -1,7 +1,6 @@
 // # given a DAG, return all possible paths from vertex 0 to vertex N-1.
 //The graph  is represented as an adjacency list
-// #  answer is 5:
-// # [[0,4],[0,3,4],[0,1,3,4],[0,1,2,3,4],[0,1,4]]
+// #  answer  [[0,4],[0,3,4],[0,1,3,4],[0,1,2,3,4],[0,1,4]]
 
 // https://leetcode.com/problems/all-paths-from-source-to-target/discuss/380900/JavaScript-DFS-Solution
 
@@ -30,7 +29,7 @@ function dfs(nodeIdx, graph, path, allPaths) {
 
   // else, get neighbours and recurse on them
   let neighbours = graph[nodeIdx];
-  neighbours.forEach(n => {
+  neighbours.forEach((n) => {
     // add it to the current path
     path.push(n);
     console.log('just pushed', n, 'to', path);
