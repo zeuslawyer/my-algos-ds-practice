@@ -6,6 +6,8 @@ const uGraphNoCycle = [[1], [0, 2, 3], [1, 4, 5], [1], [2], [2]];
  * BFS
  * trick - every node has one of three states - and if its "IN Q" then cycle exists
  * then it is a cycle UNLESS V is the parent of U
+ * ALTERNATIVELY Does this undirected graph have a cycle? Run BFS, keeping track of the number of times we're visiting each node.
+ * If we ever visit a node twice, then we have a cycle.
  * @param {Array} - where index represents node, and its elements denote the adjacency list
  */
 function BFSdetectCycleUndirectedGraph(graph) {

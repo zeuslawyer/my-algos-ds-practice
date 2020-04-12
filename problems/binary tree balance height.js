@@ -12,7 +12,7 @@
  * @param {TreeNode} root
  * @return {boolean}
  */
-var isBalanced = function(root) {
+var isBalanced = function (root) {
   if (!root) return true;
 
   let leftMax = checkSymmetry(root.left);
