@@ -2,7 +2,7 @@
 // is no greater than one.
 
 // so find the minHeight and the maxHeight of the tree
-// time complexity is (NLogN * 2) = O(NLogN)
+// time complexity is (N * 2) = O(N) as we iterative through every node with a DFS
 
 class BinaryTreeNode {
   constructor(value) {
@@ -63,6 +63,17 @@ function getMaxHeight(node, height = 0) {
 }
 
 // ITERATIVE (DFS STACK)
+/**
+ * We do a depth-first walk ↴ through our tree, keeping track of the depth as we go.
+ * When we find a leaf, we add its depth to an array of depths if we haven't seen that depth already.
+ * Each time we hit a leaf with a new depth, there are two ways that our tree might now be unbalanced:
+ *    - There are more than 2 different leaf depths
+ *    - There are exactly 2 leaf depths and they are more than 1 apart.
+ * Why are we doing a depth-first walk and not a breadth-first ↴ one?
+ * You could make a case for either. We chose depth-first because it reaches leaves faster,
+ * which allows us to short-circuit earlier in some cases.
+ */
+
 function $isBalanced(treeRoot) {
   // A tree with no nodes is superbalanced, since there are no leaves!
   if (!treeRoot) {
