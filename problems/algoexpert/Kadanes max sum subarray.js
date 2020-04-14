@@ -29,7 +29,7 @@ function $maxSubArray(arr) {
   return maxSum;
 }
 
-var maxSubArray = function(nums) {
+var maxSubArray = function (nums) {
   let maxSoFar = nums[0];
   let max = nums[0];
 
@@ -43,6 +43,7 @@ var maxSubArray = function(nums) {
 
 let n = maxSubArray([3, 1, -1, 4]); // 7
 let u = maxSubArray([-2, -3, -4, -1]); // -1
-let v = maxSubArray([10, -3, 5]); // 12
+// let v = maxSubArray([10, -3, 5]); // 12
+let v = maxSubArray([2, 3, 1, 2, 4, 3]); // 12
 
-console.log(n, u, v);
+console.log(v);

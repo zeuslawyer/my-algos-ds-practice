@@ -19,14 +19,11 @@ var minWindow = function (s, t) {
   let startIdx = 0;
   let endIdx = Infinity;
 
-  let window = [startIdx, endIdx];
-
   let leftIdx = 0;
   let rightIdx = 0;
 
   while (rightIdx < s.length) {
     let rightChar = s[rightIdx];
-    console.log('!!!', rightIdx);
 
     // irrelevant char, so continue while loop
     if (!(rightChar in stringMap)) {
@@ -42,14 +39,12 @@ var minWindow = function (s, t) {
 
     // keep narrowing window if the char totals are equal, as char totals indicates if all target chars are contained in the window
     while (targetCharTotal === stringCharTotal && leftIdx <= rightIdx) {
-      console.log('???', leftIdx, rightIdx);
       // get smaller window
-      // if (rightIdx - leftIdx < endIdx - startIdx) {
-      //   startIdx = leftIdx;
-      //   endIdx = rightIdx;
-      // }
+      if (rightIdx - leftIdx < endIdx - startIdx) {
+        startIdx = leftIdx;
+        endIdx = rightIdx;
+      }
 
-      window = getWindow(leftIdx, rightIdx, window[0], window[1]);
       let leftChar = s[leftIdx];
       // left char is not relevant, so continue inner while loop
       if (!(leftChar in stringMap)) {
@@ -67,18 +62,12 @@ var minWindow = function (s, t) {
 
     // increment main while loop
     rightIdx++;
-    console.log('window: ', window);
   }
 
   // use startIdx and endIdx to calculate substring
-  if (window[1] === Infinity) return '';
-  return s.slice(window[0], window[1] + 1);
+  if (endIdx === Infinity) return '';
+  return s.slice(startIdx, endIdx + 1);
 };
-
-const S = 'ADOBECODEBANC';
-const T = 'ABC';
-let a = minWindow(S, T); // BANC
-console.log(a);
 
 function getCounts(str) {
   const res = {};
@@ -99,6 +88,7 @@ function decrementCount(obj, char) {
   }
 }
 
-function getWindow(left, right, start, end) {
-  return right - left < end - start ? [left, right] : [start, end];
-}
+const S = 'ADOBECODEBANC';
+const T = 'ABC';
+let a = minWindow(S, T); // BANC
+console.log(a);
