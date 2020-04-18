@@ -7,85 +7,72 @@
  * @param {string} t
  * @return {string}
  */
-var minWindow = function (s, t) {
-  if (!s || !t || s.length < t.length) return '';
-  // setup with the target string
-  const stringMap = getCounts(t);
-  const stringCharTotal = Object.keys(stringMap).length;
+function minWindow(big, small) {
+  if (big.length < small.length) return '';
 
-  const targetMap = {}; // holds target string chars
-  let targetCharTotal = 0;
+  let windowStart = 0;
+  let windowEnd = Infinity;
 
-  let startIdx = 0;
-  let endIdx = Infinity;
+  // build reference data
+  const charCountInSmall = {};
+  for (const char of small) {
+    charCountInSmall[char] = charCountInSmall[char]
+      ? ++charCountInSmall[char]
+      : 1;
+  }
+  const numCharsInSmall = Object.keys(charCountInSmall).length;
 
-  let leftIdx = 0;
-  let rightIdx = 0;
+  // build window dynamic data
+  const charCountInWindow = {};
+  let numCharsInWindow = 0;
 
-  while (rightIdx < s.length) {
-    let rightChar = s[rightIdx];
+  let left = 0;
+  let right = 0;
 
-    // irrelevant char, so continue while loop
-    if (!(rightChar in stringMap)) {
-      rightIdx++;
+  while (right < big.length) {
+    let rightChar = big[right];
+    if (!(rightChar in charCountInSmall)) {
+      right++;
       continue;
     }
+    // else add to window counts
+    charCountInWindow[rightChar] = charCountInWindow[rightChar]
+      ? ++charCountInWindow[rightChar]
+      : 1;
 
-    // char is found in the string map
-    incrementCount(targetMap, rightChar);
-    if (targetMap[rightChar] === stringMap[rightChar]) {
-      targetCharTotal++;
+    if (charCountInWindow[rightChar] === charCountInSmall[rightChar]) {
+      numCharsInWindow++;
     }
 
-    // keep narrowing window if the char totals are equal, as char totals indicates if all target chars are contained in the window
-    while (targetCharTotal === stringCharTotal && leftIdx <= rightIdx) {
-      // get smaller window
-      if (rightIdx - leftIdx < endIdx - startIdx) {
-        startIdx = leftIdx;
-        endIdx = rightIdx;
+    // have a window with all chars accounted for
+    while (numCharsInWindow === numCharsInSmall && left <= right) {
+      // get window bounds
+      if (right - left < windowEnd - windowStart) {
+        windowStart = left;
+        windowEnd = right;
       }
 
-      let leftChar = s[leftIdx];
-      // left char is not relevant, so continue inner while loop
-      if (!(leftChar in stringMap)) {
-        leftIdx++;
+      let leftChar = big[left];
+      // check if relevant
+      if (!(leftChar in charCountInSmall)) {
+        left++;
         continue;
       }
-      // left char is relevant...check counts, and reduce overall count as window is now sliding past this char, and excluding it
-      if (targetMap[leftChar] === stringMap[leftChar]) {
-        targetCharTotal--;
+
+      // is relevant...
+      if (charCountInWindow[leftChar] === charCountInSmall[leftChar]) {
+        numCharsInWindow--; // decrement overall chars count only if they're all accounted for
       }
-      // always decrement the count map as left char being excluded
-      decrementCount(targetMap, leftChar);
-      leftIdx++; // increment inner while loop
+      charCountInWindow[leftChar]--;
+      left++;
     }
 
-    // increment main while loop
-    rightIdx++;
+    right++;
   }
 
-  // use startIdx and endIdx to calculate substring
-  if (endIdx === Infinity) return '';
-  return s.slice(startIdx, endIdx + 1);
-};
+  if (right === Infinity) return ''; // not found
 
-function getCounts(str) {
-  const res = {};
-  for (const char of str) {
-    res[char] = res[char] ? res[char] + 1 : 1;
-  }
-  return res;
-}
-
-function incrementCount(obj, char) {
-  obj[char] = (obj[char] || 0) + 1;
-}
-function decrementCount(obj, char) {
-  if (obj[char] < 1) {
-    throw new Error('COUNT MISMATCH!');
-  } else {
-    obj[char]--;
-  }
+  return big.slice(windowStart, windowEnd + 1);
 }
 
 const S = 'ADOBECODEBANC';

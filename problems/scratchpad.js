@@ -1,104 +1,72 @@
-/**
- * @param {number} capacity
- */
-var LRUCache = function (capacity) {
-  this.capacity = capacity;
-  this.data = new DLL();
-  this.size = 0;
-  this.cache = {};
-};
+function smallestSubstringContaining(big, small) {
+  if (big.length < small.length) return '';
 
-/**
- * @param {number} key
- * @return {number}
- */
-LRUCache.prototype.get = function (key) {
-  let node = this.cache[key];
-  if (node === undefined) return null;
+  let windowStart = 0;
+  let windowEnd = Infinity;
 
-  // else
-  this.data.remove(node);
-  this.data.insertAtTail(node);
-  return node;
-};
+  // build reference data
+  const charCountInSmall = {};
+  for (const char of small) {
+    charCountInSmall[char] = charCountInSmall[char]
+      ? ++charCountInSmall[char]
+      : 1;
+  }
+  const numCharsInSmall = Object.keys(charCountInSmall).length;
 
-/**
- * @param {number} key
- * @param {number} value
- * @return {void}
- */
-LRUCache.prototype.put = function (key, value) {
-  let node = this.cache[key];
-  if (node !== undefined) {
-    // node already exists
-    node.value = value; // update value
-    this.cache[key] = node; // update cache
-    this.data.remove(node); // move up in DLL
-    this.data.insertAtTail(node);
-  } else {
-    // data does not exist
-    node = new Node(key, value); // create node
-    this.cache[key] = node; // put in hash table
-    this.data.insertAtTail(node); // add to DLL
+  // build window dynamic data
+  const charCountInWindow = {};
+  let numCharsInWindow = 0;
 
-    this.size += 1; // handle capacity
-    if (this.size > this.capacity) {
-      let leastUsed = this.data.removeLeastUsed(); // remove least used from DLL
-      delete this.cache[leastUsed.key]; // delete from table
-      this.size -= 1;
+  let left = 0;
+  let right = 0;
+
+  while (right < big.length) {
+    let rightChar = big[right];
+    if (!(rightChar in charCountInSmall)) {
+      right++;
+      continue;
     }
-  }
-};
+    // else add to window counts
+    charCountInWindow[rightChar] = charCountInWindow[rightChar]
+      ? ++charCountInWindow[rightChar]
+      : 1;
 
-/**
- * Your LRUCache object will be instantiated and called as such:
- * var obj = new LRUCache(capacity)
- * var param_1 = obj.get(key)
- * obj.put(key,value)
- */
-class DLL {
-  constructor() {
-    this.head = new Node('Head', 'Bookend');
-    this.tail = new Node('Tail', 'Bookend');
-    this.head.next = this.tail;
-    this.tail.prev = this.head;
+    if (charCountInWindow[rightChar] === charCountInSmall[rightChar]) {
+      numCharsInWindow++;
+    }
+
+    // have a window with all chars accounted for
+    while (numCharsInWindow === numCharsInSmall && left <= right) {
+      // get window bounds
+      if (right - left < windowEnd - windowStart) {
+        windowStart = left;
+        windowEnd = right;
+      }
+
+      let leftChar = big[left];
+      // check if relevant
+      if (!(leftChar in charCountInSmall)) {
+        left++;
+        continue;
+      }
+
+      // is relevant...
+      if (charCountInWindow[leftChar] === charCountInSmall[leftChar]) {
+        numCharsInWindow--; // decrement overall chars count only if they're all accounted for
+      }
+      charCountInWindow[leftChar]--;
+      left++;
+    }
+
+    right++;
   }
 
-  insertAtTail(newNode) {
-    let currentNode = this.tail.prev;
-    currentNode.next = newNode;
-    newNode.next = this.tail;
-    newNode.prev = currentNode;
-    this.tail.prev = newNode;
-  }
+  if (right === Infinity) return ''; // not found
 
-  remove(node) {
-    let prev = node.prev;
-    let next = node.next;
-    prev.next = next;
-    next.prev = prev;
-    node.next = null;
-    node.prev = null;
-    return node;
-  }
-
-  removeLeastUsed() {
-    let leastUsed = this.head.next;
-    return this.remove(leastUsed);
-  }
+  return big.slice(windowStart, windowEnd + 1);
 }
 
-class Node {
-  constructor(key, value) {
-    this.key = key;
-    this.value = value;
-    this.next = null;
-    this.prev = null;
-  }
-}
-
-let t = new LRUCache(2);
-t.put(1, 1);
-t.put(2, 2);
-// console.log(t.cache);
-console.log(t.get(1));
+const S = 'ADOBECODEBANC';
+const T = 'ABC';
+let a = smallestSubstringContaining(S, T); // BANC
+console.log(a);
