@@ -7,28 +7,41 @@
  */
 var maxSlidingWindow = function (nums, k) {
   const res = [];
-  for (let i = 0; i < nums.length; i++) {
-    let windowStart = i;
-    let windowEnd = k - 1;
+  let left = 0;
+  let right = 0;
+  let currMaxInWindow = -Infinity;
 
-    const prevMax = res[res.length - 1] || -Infinity;
-    let maxInWindow = getMaxInWindow(windowStart, windowEnd, prevMax, nums);
-    res.push(maxInWindow);
+  for (right; right < k; right++) {
+    if (nums[right] > currMaxInWindow) currMaxInWindow = nums[right];
+  }
+  res.push(currMaxInWindow);
+
+  while (right < nums.length) {
+    ++left; // maintain window size
+    console.log('right is', right, 'left is', left);
+    if (right - left > 2) throw new Error('Window size exceeded');
+
+    const newMaxInWindow = getMaxInWindow(left, right, nums, currMaxInWindow);
+    // update lastmax
+    currMaxInWindow = Math.max(currMaxInWindow, newMaxInWindow);
+    res.push(currMaxInWindow);
+    right++;
   }
 
   return res;
 };
 
-function getMaxInWindow(start, end, prevMax, arr) {
-  if (start <= prevMax && end <= prevMax) {
-    console.log(' no change in max, its still', prevMax);
+function getMaxInWindow(start, end, arr, prevMax) {
+  if (arr[start] < prevMax && arr[end] < prevMax) {
+    console.log('prev max not changed: ', prevMax);
     return prevMax;
   }
 
-  let maybeMax = Math.max(arr[start], arr[end]);
-  let newMax = Math.max(prevMax, maybeMax);
-  console.log('prev: ', prevMax, ' and  new:', newMax);
-  return newMax;
+  // else
+  let higherOfTheNewNums = Math.max(arr[start], arr[end]);
+  let maxInWindow = Math.max(prevMax, higherOfTheNewNums);
+  console.log('new max is', maxInWindow, 'prev max is ', prevMax);
+  return maxInWindow;
 }
 
 const nums = [1, 3, -1, -3, 5, 3, 6, 7];
