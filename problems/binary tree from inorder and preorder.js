@@ -1,4 +1,4 @@
-// https://leetcode.com/problems/construct-binary-tree-from-$preorder-and-$inorder-traversal/
+// https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/
 
 /**
  * Definition for a binary tree node.
@@ -18,9 +18,9 @@ function TreeNode(val) {
   this.left = this.right = null;
   return this;
 }
-var buildTree = function(preOrder, inOrder) {
+var buildTree = function (preOrder, inOrder) {
   function helper(start, end) {
-    if (start > end || preOrder.length === 0) return;
+    if (start > end || preOrder.length === 0) return null;
 
     let val = preOrder.shift(); // remove first (root)
     let valIdx = inOrder.indexOf(val);
