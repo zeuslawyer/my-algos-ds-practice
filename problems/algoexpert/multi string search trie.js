@@ -31,22 +31,8 @@ function multiStringSearch(bigString, smallStrings) {
   const trie = new Trie();
   trie.createSuffixTrie(bigString);
 
-  return smallStrings.map(small => trie.contains(small));
+  return smallStrings.map((small) => trie.contains(small));
 }
-
-const input = 'Mary goes to the shopping center every week.';
-const targets = [
-  'to',
-  'Mary',
-  'centers',
-  'shop',
-  'shopping',
-  'string',
-  'kappa'
-]; // [ true, true, false, true, true, false, false ]
-
-let a = multiStringSearch(input, targets);
-console.log(' ANSWER', a);
 
 // let test = new $Trie();
 // test.createSuffixTrie(input);

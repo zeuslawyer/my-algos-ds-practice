@@ -11,7 +11,7 @@ const words = [
   'board',
   'test',
   'REPEATED',
-  'NOTRE-PEATED'
+  'NOTRE-PEATED',
 ];
 const output = ['this', 'is', 'a', 'simple', 'boggle', 'board'];
 
@@ -22,7 +22,7 @@ const input = [
   ['x', 'o', 'g', 'g', 'l', 'x', 'o'],
   ['x', 'x', 'x', 'D', 'T', 'r', 'a'],
   ['R', 'E', 'P', 'E', 'A', 'd', 'x'],
-  ['x', 'x', 'x', 'x', 'x', 'x', 'x']
+  ['x', 'x', 'x', 'x', 'x', 'x', 'x'],
 ];
 
 /**
@@ -40,7 +40,7 @@ function boggleBoard(board, words) {
     trie.add(word);
   }
 
-  let visited = board.map(row => row.map(val => false));
+  let visited = board.map((row) => row.map((val) => false));
   // let visited =  Array.from(board, ()=> new Array(board.length).fill(false))
   let foundWords = {}; // this will produce the returned results
 
@@ -71,7 +71,7 @@ function visit(row, col, trieNode, board, visited, foundWords) {
 
   // then process neighbours
   let neighbours = getNeighbours(row, col, board);
-  neighbours.forEach(n => {
+  neighbours.forEach((n) => {
     let [r, c] = n;
     visit(r, c, trieNode, board, visited, foundWords);
   });
