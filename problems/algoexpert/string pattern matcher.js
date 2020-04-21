@@ -1,4 +1,4 @@
-const { assertArrayEquals } = require('../test/assertEquals');
+const { assertArrayEquals } = require('../../test/assertEquals');
 
 function patternMatcher(pattern, string) {
   if (string.length < pattern.length) return [];
