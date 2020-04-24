@@ -1,6 +1,7 @@
 // https://www.youtube.com/watch?v=VeJOswJTDos
 // https://www.youtube.com/watch?v=xdMyL--dOqE&feature=youtu.be
 // https://leetcode.com/problems/longest-consecutive-sequence
+// https://leetcode.com/problems/longest-consecutive-sequence/discuss/592056/99-time-100-space-solution-wvideo-whiteboard-explanation
 
 /**
  * @param {number[]} nums
