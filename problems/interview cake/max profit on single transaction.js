@@ -18,8 +18,9 @@ function getMaxProfit(stockPrices) {
     // calculate profit assuming you sold at this price
     const currentPrice = stockPrices[i];
     const profit = currentPrice - minPrice;
-    maxProfit = Math.max(profit, maxProfit);
 
+    // update maxProfit
+    maxProfit = Math.max(profit, maxProfit);
     // update minimum price for future sales
     minPrice = Math.min(currentPrice, minPrice);
   }
