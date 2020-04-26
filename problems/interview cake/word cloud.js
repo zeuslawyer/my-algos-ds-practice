@@ -10,6 +10,7 @@ class WordCloudData {
 
     let currentWordStartIndex = 0;
     let currentWordLength = 0;
+    const SPECIAL_CHARS = [' ', '\u2014', '.'];
 
     for (let i = 0; i < inputString.length; i++) {
       const character = inputString.charAt(i);
@@ -32,7 +33,8 @@ class WordCloudData {
       //   // so we add it to our map and reset our current word
       // } else
 
-      if (character === ' ' || character === '\u2014') {
+      if (SPECIAL_CHARS.includes(character)) {
+        // if (character === ' ' || character === '\u2014') {
         if (currentWordLength > 0) {
           const word = inputString.slice(
             currentWordStartIndex,
@@ -40,20 +42,6 @@ class WordCloudData {
           );
           this.addWordToMap(word);
           currentWordLength = 0;
-        }
-
-        // We want to make sure we split on ellipses so if we get two periods in
-        // a row we add the current word to our map and reset our current word
-      } else if (character === '.') {
-        if (inputString.charAt(i + 1) === '.') {
-          if (currentWordLength > 0) {
-            const word = inputString.slice(
-              currentWordStartIndex,
-              currentWordStartIndex + currentWordLength
-            );
-            this.addWordToMap(word);
-            currentWordLength = 0;
-          }
         }
 
         // If the character is a letter or an apostrophe, we add it to our current word
