@@ -97,16 +97,17 @@ function $isBalanced(treeRoot) {
       // We only care if it's a new depth
       if (depths.indexOf(depth) < 0) {
         depths.push(depth);
+      }
 
-        // Two ways we might now have an unbalanced tree:
-        //   1) More than 2 different leaf depths
-        //   2) 2 leaf depths that are more than 1 apart
-        if (
-          depths.length > 2 ||
-          (depths.length === 2 && Math.abs(depths[0] - depths[1]) > 1)
-        ) {
-          return false;
-        }
+      // check depths
+      // Two ways we might now have an unbalanced tree:
+      //   1) More than 2 different leaf depths
+      //   2) 2 leaf depths that are more than 1 apart
+      if (
+        depths.length > 2 ||
+        (depths.length === 2 && Math.abs(depths[0] - depths[1]) > 1)
+      ) {
+        return false;
       }
     } else {
       // Case: this isn't a leaf - keep stepping down

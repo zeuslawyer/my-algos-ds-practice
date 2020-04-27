@@ -24,7 +24,7 @@ var minDepth = function (root, depth = 0) {
   if (!root.right) return minDepth(root.left, depth);
 };
 
-// NOTE:  ALTERNATIVE, using a depths array
+// NOTE:  ALTERNATIVE, recursive using a depths array
 // https://leetcode.com/problems/minimum-depth-of-binary-tree/submissions/
 
 /**

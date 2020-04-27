@@ -8,21 +8,21 @@ const input = [[4, 3, 1], [3, 2, 4], [3], [4], []];
 
 function getPaths(graph) {
   let startNodeIdx = 0;
-  let allPaths = [];
+  let result = [];
   let path = [startNodeIdx]; // all paths will start here
 
-  dfs(startNodeIdx, graph, path, allPaths);
+  dfs(startNodeIdx, graph, path, result);
 
-  return allPaths;
+  return result;
 }
 
-function dfs(nodeIdx, graph, path, allPaths) {
+function dfs(nodeIdx, graph, path, result) {
   let endNode = graph.length - 1;
 
   if (nodeIdx === endNode) {
     // base case. found the target.
     let finalPath = [...path]; // make a copy of the path so far as path itself may get added to in iterations.
-    allPaths.push(finalPath);
+    result.push(finalPath);
     console.log('just pushed final path', finalPath);
     return;
   }
@@ -32,10 +32,8 @@ function dfs(nodeIdx, graph, path, allPaths) {
   neighbours.forEach((n) => {
     // add it to the current path
     path.push(n);
-    console.log('just pushed', n, 'to', path);
-    dfs(n, graph, path, allPaths); // recurse
+    dfs(n, graph, path, result); // recurse
     var p = path.pop(); // weird:  every time we push final path and return we want to backtrack and pop off nodes so we start path again at 0
-    console.log('just popped', p);
   });
 }
 
