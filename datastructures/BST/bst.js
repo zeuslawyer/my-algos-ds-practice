@@ -60,9 +60,9 @@ class BST {
     // helper
     function insertIntoBST(newNode, current) {
       // if equal do nothing
-      if (newNode.data === current.data) {
-        return this;
-      }
+      // if (newNode.data === current.data) {
+      //   return this;
+      // }
 
       // traverse right
       if (newNode.data > current.data) {
@@ -220,7 +220,7 @@ module.exports = { BST };
 
 let tree = new BST();
 let data = [0, -5, 5, -3, 3, 6, -6];
-data.forEach(num => tree.insert(num));
+data.forEach((num) => tree.insert(num));
 // console.log('tree', tree.root);
 
 // tree.insert(0).insert(-5).insert(5).insert(-3).insert(3).insert(6).insert(-6)

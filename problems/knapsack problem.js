@@ -11,6 +11,7 @@
 function knapsackProblem(items, capacity) {
   // buid matrix, fill with zeros. Rows = capacity from 0 <=  capacity
   let grid = items.map((row) => new Array(capacity + 1).fill(0));
+  // const grid = Array.from(items).map((row) => new Array(capacity + 1).fill(0));
   // console.log(grid);
 
   for (let i = 0; i < items.length; i++) {
@@ -39,35 +40,31 @@ function knapsackProblem(items, capacity) {
     }
   }
 
-  // console.log('\n grid populated', grid, '\n');
+  const maxValue = grid[grid.length - 1][capacity];
+  const result = [maxValue];
 
   let row = grid.length - 1;
   let col = grid[0].length - 1;
-  let result = [];
-  result[0] = grid[row][col];
-  let selectedItems = [];
-  let selectedItemsIdx = [];
 
-  // find items
-  while (col > 0 && row >= 0) {
-    // col 0 is all 0s and row must b >= 0 to allow decrements
-    // but if row === 0, move to else statement directly
-    // case 1 : value is == previous rows val, move one row up because current row is not included in final container as taken value from previous row
-    if (row > 0 && grid[row][col] === grid[row - 1][col]) {
-      row -= 1;
-    } else {
-      // this is an included item
-      selectedItemsIdx.push(row);
-      selectedItems.push(items[row]);
+  const selectedItemsIdxs = [];
+  while (row >= 0) {
+    // item at this row is included if its grid value !== prev row
+    const currentMaxVal = grid[row][col];
+    const prevMaxVal = row > 0 ? grid[row - 1][col] : 0;
+    if (currentMaxVal !== prevMaxVal) {
+      // this item is included
+      selectedItemsIdxs.push(row);
       const [_, weight] = items[row];
-      // move up one row, and adjust for capacity remaining now that this item is included
+
       row -= 1;
       col -= weight;
+    } else {
+      // current item excluded so move to previous
+      row -= 1;
     }
   }
+  result[1] = selectedItemsIdxs.reverse();
 
-  result.push(selectedItemsIdx.reverse());
-  // console.log('results', result, selectedItems);
   return result;
 }
 

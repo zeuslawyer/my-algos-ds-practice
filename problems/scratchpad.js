@@ -1,78 +1,79 @@
-const { assertArrayEquals } = require('../test/assertEquals');
+function knapsackProblem(items, capacity) {
+  // const grid = items.map((item) => new Array(capacity + 1).fill(0));
+  const grid = Array.from(items).map((row) => new Array(capacity + 1).fill(0));
 
-function patternMatcher(pattern, string) {
-  if (string.length < pattern.length) return [];
+  const result = [];
+  const picked = [];
 
-  // convert pattern to arr
-  let patternArr;
-  let patternInverted = false;
-  if (pattern[0] === 'x') {
-    patternArr = pattern.split('');
-  } else {
-    patternArr = invertPattern(pattern);
-    patternInverted = true;
-  }
-
-  // build pattern count
-  let counts = { x: 0, y: 0 };
-  const firstPosOfY = patternArr.indexOf('y');
-  for (const char of patternArr) counts[char] += 1;
-  const len = string.length;
-  // formula:  counts[x] * lenOfX + counts[y] * lenOfY = len
-
-  if (counts['y'] > 0) {
-    // test all lengths of x, starting at 1
-    for (let i = 1; i < len; i++) {
-      let lenOfX = i;
-      let lenOfY = (len - counts['x'] * lenOfX) / counts['y'];
-      // ensure that lenOfY is not 0 or decimal
-      if (lenOfY <= 0 || lenOfY % 1 !== 0) {
-        continue;
-      }
-
-      let idxY = lenOfX * firstPosOfY;
-
-      const x = string.slice(0, lenOfX);
-      const y = string.slice(idxY, idxY + lenOfY);
-      const testStr = patternArr.map((char) => (char === 'x' ? x : y));
-      // matches
-
-      if (testStr.join('') === string) {
-        if (patternInverted) return [y, x];
-        else return [x, y];
-      }
-    }
-  } else {
-    // y <= 0, so the entire string is a combo of x's
-    let lenOfX = len / counts['x'];
-    if (lenOfX % 1 === 0) {
-      // check if decimal
-      const x = string.slice(0, lenOfX);
-      const testStr = patternArr.map((char) => x);
-      if (testStr.join('') === string) {
-        if (patternInverted) return ['', x];
-        else return [x, ''];
+  for (let i = 0; i < grid.length; i++) {
+    const [val, weight] = items[i];
+    for (let j = 1; j < capacity + 1; j++) {
+      const currentCap = j;
+      if (weight > currentCap) {
+        // exclude
+        grid[i][j] = i > 0 ? grid[i - 1][j] : 0;
+      } else {
+        if (i === 0) {
+          grid[i][j] = val; // current value
+        } else {
+          const maxValue = Math.max(
+            val + grid[i - 1][currentCap - weight],
+            grid[i - 1][currentCap]
+          );
+          grid[i][j] = maxValue;
+        }
       }
     }
   }
 
-  // didnt find pattern match
-  return [];
+  const maxValue = grid[grid.length - 1][capacity];
+  result[0] = maxValue;
+
+  let row = grid.length - 1;
+  let col = grid[0].length - 1;
+
+  const selectedItemsIdxs = [];
+  while (row >= 0) {
+    // item at this row is included if its grid value !== prev row
+    const currentMaxVal = grid[row][col];
+    const prevMaxVal = row > 0 ? grid[row - 1][col] : 0;
+    if (currentMaxVal !== prevMaxVal) {
+      // this item is included
+      selectedItemsIdxs.push(row);
+      const [_, weight] = items[row];
+
+      row -= 1;
+      col -= weight;
+    } else {
+      // current item excluded so move to previous
+      row -= 1;
+      console.log('row', row, col);
+    }
+  }
+  result[1] = selectedItemsIdxs.reverse();
+
+  return result;
 }
 
-/**
- *
- * @param {string} pattern
- */
-function invertPattern(pattern) {
-  // convert x to y and vice versa
-  return pattern.split('').map((char) => (char === 'y' ? 'x' : 'y'));
-}
+const items = [
+  [1, 2],
+  [4, 3],
+  [5, 6],
+  [6, 7],
+];
+const capacity = 10; // [10,[1,3]]
 
-let pattern = 'xxyxxy';
-let string = 'gogopowerrangergogopowerranger';
+const _items = [
+  [2, 1],
+  [70, 70],
+  [30, 30],
+  [69, 69],
+  [100, 100],
+];
+const _capacity = 100; // [101,[0,2,3]]
 
-const t = patternMatcher(pattern, string);
-console.log(t);
+let a = knapsackProblem(items, capacity);
+console.log(a);
 
-assertArrayEquals(t, ['go', 'powerranger'], 'match test?');
+let b = knapsackProblem(_items, _capacity);
+console.log(b);

@@ -11,7 +11,7 @@
  * @param {TreeNode} root
  * @return {boolean}
  */
-var isValidBST = function(root) {
+var isValidBST = function (root) {
   return validateTree(root);
 };
 
