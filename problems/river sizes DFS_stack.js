@@ -24,16 +24,14 @@ function traverseDFS(row, col, grid, visited, sizes) {
 
   while (stack.length > 0) {
     let [r, c] = stack.pop();
-    if (!visited[r][c]) {
-      visited[r][c] = true;
-      length++;
+    visited[r][c] = true;
+    length++;
 
-      let neighbours = findValidNeighbours(r, c, grid, visited);
-      neighbours.forEach((n) => {
-        let [r, c] = n;
-        stack.push([r, c]);
-      });
-    }
+    let neighbours = findValidNeighbours(r, c, grid, visited);
+    neighbours.forEach((n) => {
+      let [r, c] = n;
+      stack.push([r, c]);
+    });
   }
 
   if (length > 0) sizes.push(length);

@@ -16,9 +16,9 @@ function riverSizesBFS(grid) {
 
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
-      if (!visited[row][col] && grid[row][col] === 1) {
+      if (grid[row][col] === 1) {
         // river starts
-        traverseBFS(row, col, grid, visited, sizes);
+        if (!visited[row][col]) traverseBFS(row, col, grid, visited, sizes);
       }
     }
   }
@@ -26,24 +26,21 @@ function riverSizesBFS(grid) {
   return sizes;
 }
 
-console.log(riverSizesBFS(g1).sort((a, b) => a - b));
-
 function traverseBFS(row, col, grid, visited, sizes) {
   let length = 0;
   let Q = [[row, col]];
 
   while (Q.length > 0) {
     let [r, c] = Q.pop();
-    if (!visited[r][c]) {
-      visited[r][c] = true;
-      length++;
-      let neighbours = findValidNeighbours(r, c, grid, visited);
 
-      neighbours.forEach((n) => {
-        let [r, c] = n;
-        Q.unshift([r, c]);
-      });
-    }
+    visited[r][c] = true;
+    length++;
+    let neighbours = findValidNeighbours(r, c, grid, visited);
+
+    neighbours.forEach((n) => {
+      let [r, c] = n;
+      Q.unshift([r, c]);
+    });
   }
 
   // Q empty
@@ -85,3 +82,5 @@ function findValidNeighbours(row, col, grid, visited) {
 
   return neighbours;
 }
+
+console.log(riverSizesBFS(g1).sort((a, b) => a - b));
