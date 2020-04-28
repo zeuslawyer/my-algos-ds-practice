@@ -10,9 +10,7 @@ function riverSizesBFS(grid) {
   if (!grid || grid.length === 0) return 0;
 
   let sizes = [];
-  let visited = Array.from(Array(grid.length), () =>
-    Array(grid[0].length).fill(false)
-  );
+  let visited = Array.from(grid, () => Array(grid[0].length).fill(false));
   let rows = grid.length;
   let cols = grid[0].length;
 
