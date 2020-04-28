@@ -11,18 +11,24 @@ function assertArrayEquals(a, b, desc) {
     console.log(`${desc} ... FAIL: ${a} length != ${b} length`);
     return;
   }
-
+  const x = JSON.stringify(a);
+  const y = JSON.stringify(b);
   const len = a.length;
 
-  for (let i = 0; i < len; i++) {
-    let x = a[i];
-    let y = b[i];
-    if (x === y) {
-      console.log(`${desc} at index ${i} ... PASS`);
-    } else {
-      console.log(`${desc}  at index ${i}... FAIL: ${x} != ${y}`);
-    }
+  if (x === y) {
+    console.log(`${desc}  ... PASS`);
+  } else {
+    console.log(`${desc} ... FAIL: ${x} != ${y}`);
   }
 }
 
-module.exports = { assertEquals, assertArrayEquals };
+function assertThrowsError(func, desc) {
+  try {
+    func();
+    console.log(`${desc} ... FAIL`);
+  } catch (e) {
+    console.log(`${desc} ... PASS`);
+  }
+}
+
+module.exports = { assertEquals, assertArrayEquals, assertThrowsError };

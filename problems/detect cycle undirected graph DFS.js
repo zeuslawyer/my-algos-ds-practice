@@ -10,7 +10,6 @@ const uGraphNoCycle = [[1], [0, 2, 3], [1, 4, 5], [1], [2], [2]];
  */
 function BFSdetectCycleUndirectedGraph(graph) {
   const visited = {};
-  const cycle = true;
 
   function visit(curr, parent) {
     visited[curr] = true;
@@ -20,13 +19,13 @@ function BFSdetectCycleUndirectedGraph(graph) {
       let n = neighbours[i];
       // check main condition
       if (visited[n] && n !== parent) {
-        return cycle;
+        return true;
       }
       if (!visited[n]) return visit(n, curr);
     }
 
     // after dfs if not returned cycle
-    return !cycle;
+    return false;
   }
 
   return visit(0, null);

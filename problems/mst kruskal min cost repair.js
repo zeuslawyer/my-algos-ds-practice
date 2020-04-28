@@ -9,30 +9,29 @@ const edges = [
   [2, 3],
   [3, 4],
   [4, 5],
-  [1, 5]
+  [1, 5],
 ];
 const edgesToRepair = [
   [1, 2, 12],
   [3, 4, 30],
-  [1, 5, 8]
+  [1, 5, 8],
 ];
 
 function minCost(N, edges, edgesToRepair) {
   const mst = [];
-  edges = edges.map(edge => {
+  edges = edges.map((edge) => {
     const withCost = edgesToRepair.find(
-      e => e[0] === edge[0] && e[1] === edge[1]
+      (e) => e[0] === edge[0] && e[1] === edge[1]
     );
     if (withCost) {
       edge.push(withCost[2]);
-      return edge;
     } else {
       edge.push(0);
-      return edge;
     }
+    return edge;
   });
 
-  // make PQ
+  // make PQ by simulating a min heap
   edges.sort((a, b) => b[2] - a[2]);
 
   let disjointSet = [];
@@ -43,10 +42,11 @@ function minCost(N, edges, edgesToRepair) {
     let edge = edges.pop();
 
     // find
-    let setU = disjointSet.find(set => set.includes(edge[0]));
-    let setV = disjointSet.find(set => set.includes(edge[1]));
+    let setU = disjointSet.find((set) => set.includes(edge[0]));
+    let setV = disjointSet.find((set) => set.includes(edge[1]));
 
-    // union
+    // union, ONLY if the sets subsets are not the same.
+    // that edge becomes part of the MST. if subset is the same, then we have visited this pair of nodes before and there is a cycle
     if (setU != setV) {
       let union = _.union(setU, setV);
       disjointSet.push(union);
@@ -56,12 +56,16 @@ function minCost(N, edges, edgesToRepair) {
   }
 
   let total = 0;
-  mst.forEach(e => {
-    total += e[2];
-  });
-
   console.log(disjointSet);
-  return total;
+  console.log(mst);
+
+  // mst.forEach((e) => {
+  //   total += e[2];
+  // });
+  // return total;
+  return mst.reduce((sum, edge) => {
+    return (sum += edge[2]);
+  }, total);
 }
 
 let a = minCost(n, edges, edgesToRepair);

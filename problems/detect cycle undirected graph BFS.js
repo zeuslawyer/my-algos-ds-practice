@@ -13,7 +13,6 @@ const uGraphNoCycle = [[1], [0, 2, 3], [1, 4, 5], [1], [2], [2]];
 function BFSdetectCycleUndirectedGraph(graph) {
   let InQ = 'In Queue';
   let VISITED = 'VISITED';
-  const cycle = true;
 
   let status = {};
   let Q = [0];
@@ -25,7 +24,7 @@ function BFSdetectCycleUndirectedGraph(graph) {
     let neighbours = graph[node];
     for (let i = 0; i < neighbours.length; i++) {
       let n = neighbours[i];
-      if (status[n] === InQ) return cycle;
+      if (status[n] === InQ) return true; // cycle!
       if (status[n] !== VISITED) {
         Q.unshift(n);
         status[n] = InQ;
@@ -33,7 +32,7 @@ function BFSdetectCycleUndirectedGraph(graph) {
     }
   }
 
-  return !cycle;
+  return false;
 }
 
 let a = BFSdetectCycleUndirectedGraph(uGraphCycle);

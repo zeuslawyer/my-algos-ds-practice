@@ -44,7 +44,7 @@ function courseTaker(numCourses, prereqs) {
 
     // get neighbours and decrement their incoming links count
     let neighbours = graph[currentCourse];
-    neighbours.forEach(neighbour => {
+    neighbours.forEach((neighbour) => {
       inDegrees[neighbour]--;
       if (inDegrees[neighbour] === 0) {
         Q.unshift(neighbour);
@@ -62,12 +62,12 @@ let result = courseTaker(4, [
   [0, 2],
   [1, 3],
   [2, 3],
-  [2, 4]
+  [2, 4],
 ]);
 
 let fail = courseTaker(2, [
   [0, 1],
-  [1, 0]
+  [1, 0],
 ]);
 
 console.log(result);

@@ -5,7 +5,7 @@ function topologicalSort(jobs, deps) {
   let Q = []; // unshift, pop
 
   // instantiate graph and depCounts
-  jobs.forEach(job => {
+  jobs.forEach((job) => {
     graph[job] = [];
     depCounts[job] = 0;
   });
@@ -27,7 +27,7 @@ function topologicalSort(jobs, deps) {
     sorted.push(currentJob);
 
     let neighbours = graph[currentJob];
-    neighbours.forEach(n => {
+    neighbours.forEach((n) => {
       depCounts[n]--; // decrement its indegrees by 1
       if (depCounts[n] === 0) Q.unshift(n); // if now 0, add to Q
     });
