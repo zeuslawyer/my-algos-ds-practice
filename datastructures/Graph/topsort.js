@@ -1,5 +1,7 @@
 // REFERENCE:  https://www.tutorialspoint.com/Topological-sorting-using-Javascript-DFS
 
+// NOTE: Topsort is ONLY possible in a DAG.  has to be directed.  has to be acyclical.
+
 // directed graph
 class DiGraph {
   constructor() {
@@ -32,7 +34,7 @@ class DiGraph {
 
       // visit neighbours
       let neighbours = adjList[vertex];
-      neighbours.forEach(neighbour => {
+      neighbours.forEach((neighbour) => {
         if (!visited[neighbour]) {
           visit(neighbour);
         }
@@ -57,7 +59,7 @@ class DiGraph {
 
       // visit neighbours
       let kids = adjList[n];
-      kids.forEach(neigh => {
+      kids.forEach((neigh) => {
         if (!visited[neigh]) {
           visit(neigh);
         } else {
@@ -104,7 +106,7 @@ class DiGraph {
       sorted.push(currentNode);
 
       let neighbours = this.adjList[currentNode];
-      neighbours.forEach(neighbour => {
+      neighbours.forEach((neighbour) => {
         // decrement its incoming links, and if it has no more incoming links add to Q
         incomingLinksCount[neighbour]--;
         if (incomingLinksCount[neighbour] === 0) Q.unshift(neighbour);
@@ -127,7 +129,7 @@ class DiGraph {
       !incomingCounts[node] ? (incomingCounts[node] = 0) : null;
 
       let neighbours = this.adjList[node];
-      neighbours.forEach(n => {
+      neighbours.forEach((n) => {
         if (!incomingCounts[n]) incomingCounts[n] = 0;
         incomingCounts[n]++;
       });
@@ -171,4 +173,3 @@ dgCyc.addDirectedEdge('D', 'B');
 
 // console.log(dgCyc.topSort());
 // console.log(dg.kahnsTopSort());
-

@@ -8,7 +8,9 @@
 //              To take course 1 you should have finished course 0, and to take course 0 you should
 //              also have finished course 1. So it is impossible.
 
-// basically a circular detection problem in a directed graph - NOTE:  use Kahn's algorithm (BFS) to get the top sort + check circularity
+// basically a circular detection problem in a directed graph
+//- NOTE:  use Kahn's algorithm (BFS) to get the top sort + check circularity
+// NOTE: Topsort is ONLY possible in a DAG.  has to be directed.  has to be acyclical.
 
 // REFERENCE:  https://www.youtube.com/watch?v=u4v_kvOfumU
 
