@@ -6,7 +6,7 @@
  * @param {character[][]} grid
  * @return {number}
  */
-var numIslands = function(grid) {
+var numIslands = function (grid) {
   let numIslands = 0;
   for (let i = 0; i < grid.length; i++) {
     for (let j = 0; j < grid[0].length; j++) {
@@ -32,7 +32,7 @@ function bfs(i, j, grid) {
     if (grid[r][c] === '1') {
       grid[r][c] = '0';
       const neighbours = getValidNeighbours(r, c, grid);
-      neighbours.forEach(n => {
+      neighbours.forEach((n) => {
         const [i, j] = n;
         Q.unshift(n);
       });
@@ -67,10 +67,10 @@ var grid = [
   ['1', '1', '1', '1', '0'],
   ['1', '1', '0', '1', '0'],
   ['1', '1', '0', '0', '0'],
-  ['0', '0', '0', '0', '0']
+  ['0', '0', '0', '0', '0'],
 ]; // ans 1
 
-grid = grid.map(r => r.map(c => c.toString())); // conver integers to string
+grid = grid.map((r) => r.map((c) => c.toString())); // conver integers to string
 console.log(grid);
 
 let a = numIslands(grid);

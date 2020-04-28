@@ -3,26 +3,26 @@ const grid2 = [
   [1, 1, 0, 0, 0],
   [0, 0, 1, 0, 0],
   [0, 0, 1, 0, 0],
-  [0, 0, 0, 1, 1]
+  [0, 0, 0, 1, 1],
 ]; // ans 3 islands
 
 const grid1 = [
   [1, 1, 1, 1, 0],
   [1, 1, 0, 1, 0],
   [1, 1, 0, 0, 0],
-  [0, 0, 0, 0, 0]
+  [0, 0, 0, 0, 0],
 ]; // ans 1
 
 const grid = [
   [1, 1, 0, 0, 0],
   [1, 1, 0, 0, 0],
   [0, 0, 1, 0, 0],
-  [0, 0, 0, 1, 1]
+  [0, 0, 0, 1, 1],
 ];
 // ans 3
 
 // DFS recursive implementation
-var numIslandsDFS = function(grid) {
+var numIslandsDFS = function (grid) {
   if (!grid.length) return 0;
 
   let rows = grid.length;
@@ -48,7 +48,7 @@ function traverseIslandDFS(row, col, grid, visited) {
   visited[row][col] = true;
 
   let neighbours = findValidNeighbours(row, col, grid, visited);
-  neighbours.forEach(neigh => {
+  neighbours.forEach((neigh) => {
     let [r, c] = neigh;
     if (!visited[r][c] && grid[r][c] === 1) {
       traverseIslandDFS(r, c, grid, visited);
@@ -57,7 +57,7 @@ function traverseIslandDFS(row, col, grid, visited) {
 }
 
 // BFS iterative implementation
-var numIslandsBFS = function(grid) {
+var numIslandsBFS = function (grid) {
   let rows = grid.length;
   let cols = grid[0].length;
 
@@ -86,7 +86,7 @@ function traverseIslandsBFS(row, col, grid, visited) {
       visited[r][c] = true;
 
       let neighbours = findValidNeighbours(r, c, grid, visited);
-      neighbours.forEach(n => {
+      neighbours.forEach((n) => {
         let [nr, nc] = n;
         if (!visited[nr][nc]) {
           Q.unshift(n);

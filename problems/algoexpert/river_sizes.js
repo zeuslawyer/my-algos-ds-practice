@@ -3,7 +3,7 @@ const matrix = [
   [1, 0, 1, 0, 0],
   [0, 0, 1, 0, 1],
   [1, 0, 1, 0, 1],
-  [1, 0, 1, 1, 0]
+  [1, 0, 1, 1, 0],
 ]; // [ 2, 1, 5, 2, 2 ]
 
 /**
@@ -17,7 +17,7 @@ const matrix = [
 
 function riverSizes(matrix) {
   let res = [];
-  let visited = matrix.map(row => row.map(cell => false));
+  let visited = matrix.map((row) => row.map((cell) => false));
   // let visited =  new Array(matrix.length).fill(new Array (matrix[0].length).fill(false))
 
   // iterate over the matrix
@@ -55,7 +55,7 @@ function visit(rowIndex, colIndex, matrix, visited, res) {
         currentRiverSize++;
         // add neighbours to Q
         let neighbours = getNeighbours(r, c, matrix, visited);
-        neighbours.forEach(neighbour => {
+        neighbours.forEach((neighbour) => {
           Q.unshift(neighbour);
         });
       }

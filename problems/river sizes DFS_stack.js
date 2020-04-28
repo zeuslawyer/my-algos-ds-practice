@@ -17,6 +17,7 @@ function riverSizes(grid) {
   return sizes;
 }
 
+// NOTE:  done with a stack, not recursion
 function traverseDFS(row, col, grid, visited, sizes) {
   length = 0;
   let stack = [[row, col]];
@@ -28,7 +29,7 @@ function traverseDFS(row, col, grid, visited, sizes) {
       length++;
 
       let neighbours = findValidNeighbours(r, c, grid, visited);
-      neighbours.forEach(n => {
+      neighbours.forEach((n) => {
         let [r, c] = n;
         stack.push([r, c]);
       });
@@ -81,6 +82,6 @@ let g1 = [
   [1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0],
   [0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1],
   [1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0],
-  [1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1]
+  [1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1],
 ]; // ans sorted [ 1, 1, 2, 2, 5, 21 ]
 console.log(riverSizes(g1).sort((a, b) => a - b));
