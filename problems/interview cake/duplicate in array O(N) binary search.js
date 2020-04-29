@@ -1,7 +1,7 @@
 /**
  * We have an array of integers, where:
     the integers are in the range 1..n1..n
-    The array has a length of n+1n+1
+    The array has a length of n+1
  * array has at least one integer which appears at least twice. But it may have several duplicates,
  *  and each duplicate may appear more than twice.
  * Write a function which finds an integer that appears more than once in our array. 
@@ -15,9 +15,9 @@ function findRepeat(numbers) {
   // SUB RANGES instead of sub arrays! we compute which subrange has duplicates (len > range)
   // by calculating the range of UNIQUES it can have and comparing that with the length of that subarray
 
-  // iterate over the range of  nums - we know thats 1 to N, and len of arr > N but last num is within range 1-N
+  // iterate over the RANGE of  nums - we know thats 1 to N, and len of arr > N but last num is within range 1-N
   let floor = 1;
-  let ceiling = numbers.length - 1;
+  let ceiling = numbers.length - 1; // because array length N+1
 
   // iterate over the range of the values in the array
   while (floor < ceiling) {
@@ -31,16 +31,17 @@ function findRepeat(numbers) {
     let higherRangeStart = rangeMid + 1;
     let higherRangeEnd = ceiling;
 
-    // calculate range of uniques possible in sub range
-    let numUniquesInLower = lowerRangeEnd - lowerRangeStart + 1;
-
-    // count how many numbers in the input list fall within that range
+    // start with lower range
+    // count how many numbers in the input list fall within the lower range's bounds
     let totalNumsInRange = 0;
     for (const num of numbers) {
       if (num >= lowerRangeStart && num <= lowerRangeEnd) totalNumsInRange += 1;
     }
 
-    // if count is > range of uniques in the sub range then this has duplicates!
+    // calculate range of uniques possible in sub range -> would be the length of the array if there were ZERO duplicates
+    let numUniquesInLower = lowerRangeEnd - lowerRangeStart + 1;
+
+    // compare count and the range of uniques in the lower sub range - if count > uniques then this has duplicates!
     if (totalNumsInRange > numUniquesInLower) {
       floor = lowerRangeStart;
       ceiling = lowerRangeEnd;
