@@ -6,7 +6,7 @@ const k = 4;
  * @param {number} k
  * @return {number}
  */
-var findKthLargest = function(arr, k) {
+var findKthLargest = function (arr, k) {
   buildMaxHeap(arr);
   for (let i = arr.length - 1; i >= arr.length - k; i--) {
     swap(0, i, arr);
@@ -18,8 +18,8 @@ var findKthLargest = function(arr, k) {
 
 function buildMaxHeap(arr) {
   let lastParentIdx = Math.floor((arr.length - 2) / 2);
-  for (let i = lastParentIdx; i >= 0; i--) {
-    sinkDown(i, arr.length - 1, arr);
+  for (let parent = lastParentIdx; parent >= 0; parent--) {
+    sinkDown(parent, arr.length - 1, arr);
   }
 }
 
