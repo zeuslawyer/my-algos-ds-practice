@@ -1,5 +1,3 @@
-// https://www.youtube.com/watch?v=bGIF96KpYxI
-// https://www.youtube.com/watch?v=_Es-FEkjKmA
 // https://www.youtube.com/watch?v=Wmk_wsCnHCU
 
 // return true if the arr provided represents any root to leaf path
