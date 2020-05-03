@@ -14,7 +14,6 @@ const matrix = [
  */
 
 // BFS solution
-
 function riverSizes(matrix) {
   let res = [];
   let visited = matrix.map((row) => row.map((cell) => false));
