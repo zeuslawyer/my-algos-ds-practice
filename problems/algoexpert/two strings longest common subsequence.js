@@ -17,7 +17,7 @@ function longestCommonSubsequence(str1, str2) {
 
   for (let i = 1; i < str2.length; i++) {
     for (let j = 1; j < str1.length; j++) {
-      // if same char, then concatenate
+      // if same char, then concatenate with string built up prior to current char
       if (str2[i] === str1[j]) {
         grid[i][j] = grid[i - 1][j - 1] + str2[i];
       } else {
