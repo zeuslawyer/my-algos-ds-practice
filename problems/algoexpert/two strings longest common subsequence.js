@@ -51,7 +51,6 @@ let test8 = longestCommonSubsequence(case8.str1, case8.str2);
 assertArrayEquals(test8, ['8', '4', '2'], 'AlgoExpert Test Case 8');
 
 // NOTE optimized O(NM) time and space - Solution 4
-
 function subsequence(str1, str2) {
   if (!str1.length || !str2.length) return [];
   str1 = ' ' + str1;
@@ -93,8 +92,8 @@ function buildSequence(grid, str) {
       col--;
       continue;
     } else {
-      // current letter from string 2 is in the answer
-      res.unshift(str[col]);
+      // current letter from the string that was passed in...col for str1, row for str2 in this case...
+      res.unshift(str[col]); //
       row--;
       col--;
     }
