@@ -1,28 +1,68 @@
-function longestCommonSubsequence(str1, str2) {
-  str1 = ' ' + str1;
-  str2 = ' ' + str2;
+/**
+ * @param {string} s
+ * @param {string} t
+ * @return {string}
+ */
+function minWindow(big, small) {
+  if (big.length < small.length) return '';
 
-  let grid = new Array(str2.length).fill(new Array(str1.length).fill(''));
-
-  for (let i = 1; i < str2.length; i++) {
-    for (let j = 1; j < str1.length; j++) {
-      // if same char, then concatenate
-      if (str2[i] === str1[j]) {
-        console.log('eq');
-        grid[i][j] = grid[i - 1][j - 1] + str1[j];
-      } else {
-        // remove last char from each string, one at a time, and get the longest substring
-        grid[i][j] =
-          grid[i - 1][j].length > grid[i][j - 1].length
-            ? grid[i - 1][j]
-            : grid[i][j - 1];
-      }
-    }
+  const smallCharCount = {};
+  for (const char of small) {
+    smallCharCount[char] = smallCharCount[char] + 1 || 1;
   }
-  let ans = grid[str2.length - 1][str1.length - 1];
-  ans = ans.split('');
-  console.log(grid, ans);
+  const numSmallUniqueChars = Object.keys(smallCharCount).length;
+
+  let windowStart = 0;
+  let windowEnd = Infinity;
+
+  const targetCharCount = {};
+  let numTargetUniqueChars = 0;
+
+  let left = 0;
+  let right = 0;
+
+  while (right < big.length) {
+    let rightChar = big[right];
+    if (!(rightChar in smallCharCount)) {
+      right++;
+      continue;
+    }
+    // else rightChar is in the target string
+    targetCharCount[rightChar] = targetCharCount[rightChar] + 1 || 1;
+    if (targetCharCount[rightChar] === smallCharCount[rightChar])
+      numTargetUniqueChars++;
+
+    while (numTargetUniqueChars === numSmallUniqueChars && left <= right) {
+      // resize window if current window is smaller
+      if (right - left < windowEnd - windowStart) {
+        windowStart = left;
+        windowEnd = right;
+      }
+
+      let leftChar = big[left];
+      if (!(leftChar in smallCharCount)) {
+        left++;
+        continue;
+      }
+
+      // else leftChar is in the target string, so adjust counts, and shrink window
+      if (targetCharCount[leftChar] === smallCharCount[leftChar]) {
+        numTargetUniqueChars--;
+      }
+      targetCharCount[leftChar] -= 1;
+      left++;
+    }
+
+    right++;
+  }
+
+  // window start and end are available
+  if (windowEnd === Infinity) return '';
+
+  return big.slice(windowStart, windowEnd + 1);
 }
 
-const case1 = { str1: 'ZXVVYZW', str2: 'XKYKZPW' }; // [x,y,z,w]
-let t = longestCommonSubsequence(case1.str1, case1.str2);
+const S = 'ABCDE';
+const T = 'DA';
+let a = minWindow(S, T); // BANC
+console.log(a);

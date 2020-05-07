@@ -2,13 +2,15 @@
 
 // https://leetcode.com/problems/minimum-window-substring/discuss/319210/JS-solution
 
+const { assertEquals } = require('../test/assertEquals');
 /**
  * @param {string} s
  * @param {string} t
  * @return {string}
  */
+
 function minWindow(big, small) {
-  if (big.length < small.length) return '';
+  if (!big || !small || big.length < small.length) return '';
 
   let windowStart = 0;
   let windowEnd = Infinity;
@@ -70,12 +72,17 @@ function minWindow(big, small) {
     right++;
   }
 
-  if (right === Infinity) return ''; // not found
+  if (windowEnd === Infinity) return ''; // not found
 
   return big.slice(windowStart, windowEnd + 1);
 }
 
 const S = 'ADOBECODEBANC';
 const T = 'ABC';
-let a = minWindow(S, T); // BANC
-console.log(a);
+
+assertEquals(minWindow(S, T), 'BANC', 'base test case:');
+assertEquals(
+  minWindow('abcdefghijklmnopqrstuvwxyz', 'aajjttwwxxzz'),
+  '',
+  ' Algoexpert test case 4:'
+);

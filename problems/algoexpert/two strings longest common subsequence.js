@@ -15,6 +15,7 @@ function longestCommonSubsequence(str1, str2) {
     () => new Array(str1.length).fill('') // empty strings
   );
 
+  // set string2 as the rows
   for (let i = 1; i < str2.length; i++) {
     for (let j = 1; j < str1.length; j++) {
       // if same char, then concatenate with string built up prior to current char
@@ -75,7 +76,7 @@ function subsequence(str1, str2) {
   return buildSequence(grid, str1);
 }
 
-// pass it string 1
+// depending on which string is passed in, return values are calculated by row (str2) or col(str1)
 function buildSequence(grid, str) {
   let row = grid.length - 1;
   let col = grid[0].length - 1;
