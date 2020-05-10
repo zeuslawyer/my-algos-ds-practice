@@ -45,16 +45,16 @@ var numOfMinutes = function (n, headID, managers, informTime) {
   // BFS
   const Q = [head];
   while (Q.length > 0) {
-    let [emp, empTotalTime] = Q.pop();
+    let [emp, totalTimeUntilEmp] = Q.pop();
 
     // update max time with the greater of last stored and current emp's total
-    maxTime = Math.max(maxTime, empTotalTime);
+    maxTime = Math.max(maxTime, totalTimeUntilEmp);
 
     // add emp's subordinates to Q
     const subords = directReportsOf[emp];
 
     subords.forEach((minion) => {
-      let pair = [minion, informTime[minion] + empTotalTime];
+      let pair = [minion, informTime[minion] + totalTimeUntilEmp];
       Q.unshift(pair);
     });
   }

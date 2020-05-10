@@ -45,3 +45,9 @@ function assertEquals(a, b, desc) {
     console.log(`${desc} ... FAIL: ${a} != ${b}`);
   }
 }
+
+assertEquals(
+  lengthOfLongestSubstring('clementisacap'),
+  'mentisac',
+  'Algo expert base case'
+);
