@@ -23,27 +23,25 @@ function getPath(graph, start, end) {
   if (!(end in graph) || !(start in graph))
     throw new Error('start or end point missing in graph');
 
+  const prevNodeOf = {};
+  prevNodeOf[start] = null;
+
   const Q = new Queue();
   Q.enqueue(start);
-
-  // const visited = {}
-
-  const prevNodeMap = {};
-  prevNodeMap[start] = null;
 
   while (Q.size > 0) {
     const node = Q.dequeue();
     // visited[node] = true
 
     if (node === end) {
-      return constructPath(prevNodeMap, end);
+      return constructPath(prevNodeOf, end);
     }
 
     // else
     const neighbours = graph[node];
     neighbours.forEach((n) => {
-      if (!(n in prevNodeMap)) {
-        prevNodeMap[n] = node;
+      if (!(n in prevNodeOf)) {
+        prevNodeOf[n] = node;
         Q.enqueue(n);
       }
     });
