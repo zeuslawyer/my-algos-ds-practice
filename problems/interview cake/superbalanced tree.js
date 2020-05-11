@@ -22,7 +22,40 @@ class BinaryTreeNode {
   }
 }
 
-// RECURSIVE
+// RECURSIVE DFS, but single O(N) space and time complexity
+function isBalanced(root) {
+  if (!root) return false;
+
+  const leafDepths = [];
+  return traverse(root, 0, leafDepths);
+}
+
+function traverse(root, height = 0, leafDepths) {
+  if (!root) return true;
+  height += 1;
+
+  // if leaf, add to depths and check conditions
+  if (!root.left && !root.right) {
+    if (leafDepths.indexOf(height) === -1) {
+      leafDepths.push(height);
+      if (
+        leafDepths.length > 2 ||
+        (leafDepths.length === 2 && Math.abs(leafDepths[0] - leafDepths[1]) > 1)
+      ) {
+        return false;
+      }
+    }
+    // height already recorded
+    return true;
+  }
+
+  return (
+    traverse(root.left, height, leafDepths) &&
+    traverse(root.right, height, leafDepths)
+  );
+}
+
+// RECURSIVE but TWICE   2x O(N) space and time, calculating min height and max height
 function isBalanced(root) {
   if (!root) return true;
 
@@ -73,7 +106,7 @@ function getMaxHeight(node, height = 0) {
  * You could make a case for either. We chose depth-first because it reaches leaves faster,
  * which allows us to short-circuit earlier in some cases.
  */
-
+// O(N) space (stack) and time (visit each node once ) complexity
 function $isBalanced(treeRoot) {
   // A tree with no nodes is superbalanced, since there are no leaves!
   if (!treeRoot) {
