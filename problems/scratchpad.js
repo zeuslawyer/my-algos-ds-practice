@@ -1,3 +1,7 @@
+// https://leetcode.com/problems/maximum-binary-tree/submissions/
+
+const { AssertArrayEquals } = require('.');
+
 function TreeNode(val, left, right) {
   this.val = val === undefined ? 0 : val;
   this.left = left === undefined ? null : left;
@@ -26,3 +30,4 @@ function helper(arr, start, end) {
 }
 
 const d = constructMaximumBinaryTree([3, 2, 1, 6, 0, 5]);
+const func = constructMaximumBinaryTree;
