@@ -12,7 +12,7 @@ function longestSubstringWithoutDuplication(str) {
   const lastSeenAt = {};
 
   let startIdx = 0;
-  let longest = [0, 0]; // start and end idx
+  let longest = [startIdx, 0]; // start and end idx
 
   for (let i = 0; i < str.length; i++) {
     const char = str[i];
