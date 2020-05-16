@@ -8,8 +8,8 @@ function qsort(arr) {
 function helper(arr, start, end) {
   if (start >= end) return; // base case: out of bounds or arr size = 1
 
-  let pivotInd = start;
-  let leftInd = start + 1;
+  let pivotInd = start; // always first elem
+  let leftInd = start + 1; // always one after first elem
   let rightInd = end;
 
   while (leftInd <= rightInd) {
@@ -26,7 +26,7 @@ function helper(arr, start, end) {
   swap(arr, pivotInd, rightInd);
 
   // repeat recursively, shorter sub array first,then longer sub array.
-  // exclude the pivot index in the sub arrays
+  // exclude the pivot index in the sub arrays as thats in final place already
   let leftLength = rightInd - 1 - start;
   let rightArrayLen = end - (rightInd + 1);
   let leftIsShorter = leftLength < rightArrayLen;

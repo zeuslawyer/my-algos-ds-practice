@@ -18,7 +18,7 @@ function TreeNode(val) {
   return this;
 }
 
-var buildTree = function(inOrder, postOrder) {
+var buildTree = function (inOrder, postOrder) {
   function helper(start, end) {
     if (start > end || postorder.length < 0) return null;
 

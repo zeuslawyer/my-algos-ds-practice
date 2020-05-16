@@ -1,4 +1,5 @@
 // https://leetcode.com/problems/single-element-in-a-sorted-array/
+// https://www.youtube.com/watch?v=SDRJE7OQpwU&feature=youtu.be
 var singleNonDuplicate = function (arr) {
   if (arr.length === 0) return null;
   if (arr.length === 1) return arr[0];
