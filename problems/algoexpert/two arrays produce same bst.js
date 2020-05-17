@@ -1,8 +1,18 @@
-// Time: O(n^2) as each subtree is produced by iterating over all nodes except root
-// Space: O(H) new array is produced for each sub tree, and # of subtrees = height
+/**
+ * 
+  An array of integers is said to represent the Binary Search Tree (BST)
+  obtained by inserting each integer in the array, from left to right, into the
+  BST.
 
+  Write a function that takes in two arrays of integers and determines whether
+  these arrays represent the same BST. 
+  
+  Note that you're NOT  allowed to construct any BSTs in your code.
+ */
 const { assertArrayEquals } = require('../../test/assertEquals');
 
+// Time: O(n^2) as each subtree is produced by iterating over all nodes except root
+// Space: O(H) new array is produced for each sub tree, and # of subtrees = height
 function sameBsts(arrOne, arrTwo) {
   // edge cases
   if (arrOne.length !== arrTwo.length) return false;
