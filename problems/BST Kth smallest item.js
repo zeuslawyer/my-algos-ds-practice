@@ -12,7 +12,7 @@
  * @param {number} k
  * @return {number}
  */
-var kthSmallest = function(root, k) {
+var kthSmallest = function (root, k) {
   if (!root) return null;
 
   let sorted = [];
@@ -26,3 +26,4 @@ function dfsInOrder(node, sorted) {
   sorted.push(node.val);
   dfsInOrder(node.right, sorted);
 }
+g;
