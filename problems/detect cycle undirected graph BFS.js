@@ -11,31 +11,38 @@ const uGraphNoCycle = [[1], [0, 2, 3], [1, 4, 5], [1], [2], [2]];
  * @param {Array} - where index represents node, and its elements denote the adjacency list
  */
 function BFSdetectCycleUndirectedGraph(graph) {
-  let InQ = 'In Queue';
-  let VISITED = 'VISITED';
+    let inQ = "In Queue";
+    let VISITED = "VISITED";
 
-  let status = {};
-  let Q = [0];
-  status[0] = InQ;
+    let status = {};
+    let Q = [0];
+    status[0] = inQ;
 
-  while (Q.length > 0) {
-    let node = Q.pop();
-    status[node] = VISITED;
-    let neighbours = graph[node];
-    for (let i = 0; i < neighbours.length; i++) {
-      let n = neighbours[i];
-      if (status[n] === InQ) return true; // cycle!
-      if (status[n] !== VISITED) {
-        Q.unshift(n);
-        status[n] = InQ;
-      }
+    while (Q.length > 0) {
+        let node = Q.pop();
+        status[node] = VISITED;
+        let neighbours = graph[node];
+        for (let i = 0; i < neighbours.length; i++) {
+            let n = neighbours[i];
+            if (status[n] === inQ) return true; // cycle!
+            if (status[n] !== VISITED) {
+                Q.unshift(n);
+                status[n] = inQ;
+            }
+        }
     }
-  }
 
-  return false;
+    return false;
 }
 
 let a = BFSdetectCycleUndirectedGraph(uGraphCycle);
 let b = BFSdetectCycleUndirectedGraph(uGraphNoCycle);
-console.log('Answer for BFS with cyclical graph :', a); // true
-console.log('Answer for BFS with NO cyclical graph :', b); // false
+
+console.log(
+    "Answer for BFS with cyclical graph :",
+    a === true ? "PASS" : "FAIL"
+); // true
+console.log(
+    "Answer for BFS with NO cyclical graph :",
+    b === false ? " PASS" : "FAIL"
+); // false

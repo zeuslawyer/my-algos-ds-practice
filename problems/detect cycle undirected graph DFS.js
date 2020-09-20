@@ -9,29 +9,29 @@ const uGraphNoCycle = [[1], [0, 2, 3], [1, 4, 5], [1], [2], [2]];
  * @param {Array} - where index represents node, and its elements denote the adjacency list
  */
 function BFSdetectCycleUndirectedGraph(graph) {
-  const visited = {};
+    const visited = {};
 
-  function visit(curr, parent) {
-    visited[curr] = true;
+    function visit(curr, parent) {
+        visited[curr] = true;
 
-    let neighbours = graph[curr];
-    for (let i = 0; i < neighbours.length; i++) {
-      let n = neighbours[i];
-      // check main condition
-      if (visited[n] && n !== parent) {
-        return true;
-      }
-      if (!visited[n]) return visit(n, curr);
+        let neighbours = graph[curr];
+        for (let i = 0; i < neighbours.length; i++) {
+            let n = neighbours[i];
+            // check main condition
+            if (visited[n] && n !== parent) {
+                return true;
+            }
+            if (!visited[n]) return visit(n, curr);
+        }
+
+        // after dfs if not returned cycle
+        return false;
     }
 
-    // after dfs if not returned cycle
-    return false;
-  }
-
-  return visit(0, null);
+    return visit(0, null);
 }
 
 let a = BFSdetectCycleUndirectedGraph(uGraphCycle);
 let b = BFSdetectCycleUndirectedGraph(uGraphNoCycle);
-console.log('Answer for DFS with cyclical graph :', a);
-console.log('Answer for DFS with NO cyclical graph :', b);
+console.log("Answer for DFS with cyclical graph :", a);
+console.log("Answer for DFS with NO cyclical graph :", b);
