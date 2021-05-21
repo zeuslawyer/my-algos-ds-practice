@@ -28,7 +28,7 @@ class MinBinaryHeap {
     // min heap so bubble up lesser value as long as index > 0
     while (
       insertedNodeInd > 0 &&
-      insertedNode.priority < this.nodes[parentInd].priority
+      this.nodes[insertedNodeInd].priority < this.nodes[parentInd].priority
     ) {
       this.swap_Nodes(insertedNodeInd, parentInd);
 
