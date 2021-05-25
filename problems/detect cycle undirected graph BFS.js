@@ -2,6 +2,8 @@ const uGraphCycle = [[1], [0, 2, 3], [1, 4, 5], [1], [2, 5], [2, 4]];
 
 const uGraphNoCycle = [[1], [0, 2, 3], [1, 4, 5], [1], [2], [2]];
 
+// Jenny videos https://www.youtube.com/watch?v=vXrv3kruvwE
+
 /**
  * BFS
  * trick - every node has one of three states - and if its "IN Q" then cycle exists
