@@ -5,6 +5,7 @@
 // the first index in the array that is equal to the value at that index. In
 // other words, your function should return the minimum index where index == array[index]
 
+// O(n!*n) time and O(n!*n) space
 function indexEqualsValue(arr) {
     // Write your code here.
     let start = 0;
