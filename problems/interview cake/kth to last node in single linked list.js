@@ -32,11 +32,11 @@ function kthToLastNode(k, head) {
     let left = head;
     let right = head;
 
-    for (let p = 1; p < k; p++) {
+    for (let p = 0; p < k; p++) {
         right = right.next;
     }
 
-    while (right.next) {
+    while (right) {
         left = left.next;
         right = right.next;
     }
