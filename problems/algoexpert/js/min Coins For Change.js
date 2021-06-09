@@ -1,4 +1,6 @@
 // LEETCODE:  https://leetcode.com/problems/coin-change
+// https://www.algoexpert.io/questions/Min%20Number%20Of%20Coins%20For%20Change
+// https://drive.google.com/file/d/1fCoPJXWZrVg9fwCc11tBENIPKE54AOH8/view?usp=sharing
 
 const { assertEquals } = require("../../test/assertEquals");
 
@@ -8,26 +10,29 @@ const { assertEquals } = require("../../test/assertEquals");
  * @return {number}
  */
 var coinChange = function (coins, target) {
-  if (coins.length === 0) return -1;
+  if(coins.length === 0) return 0;
 
-  // create data structure that maps target amounts to minCoins Needed
-  let minCoinsToTargetRange = new Array(target + 1).fill(Infinity);
-  minCoinsToTargetRange[0] = 0; // min ways to get to a target amount of 0
+  const minWaysToMake = new Array(target + 1).fill(Infinity);
+  minWaysToMake[0] = 0; // base case
 
-  for (const coin of coins) {
-    // since the target must be greater than coin, initialise target amount to coin and move towards actual target
-    for (let targ = coin; targ <= target; targ++) {
-      const shortfall = targ - coin;
-      minCoinsToTargetRange[targ] = Math.min(
-        minCoinsToTargetRange[shortfall] + 1, // <-- this is the the min if we include the current denom coin and then add the shortfall
-        minCoinsToTargetRange[targ] // <-- this is the previously calculated min if we exclude the current demon coin
-      );
+  for (const coin of coins){
+    for(let targ = 0; targ < minWaysToMake.length; targ++){
+      if(coin<=targ){
+        const waysToMakeTarg = minWaysToMake[targ]
+        const waysToMakeShortfall = minWaysToMake[targ-coin]
+        currentCoinMinQty = 1;
+  
+        // update ways to make the target if current coin is included
+        minWaysToMake[targ] = Math.min(waysToMakeTarg, currentCoinMinQty + waysToMakeShortfall)
+      }
     }
   }
 
-  return minCoinsToTargetRange[target] === Infinity
-    ? -1
-    : minCoinsToTargetRange[target];
+  // handle infinity case
+  if (minWaysToMake[target] === Infinity) return -1
+  // else
+  return minWaysToMake[target]
+
 };
 
 let ans = coinChange([1, 5, 10], 7); // 3
