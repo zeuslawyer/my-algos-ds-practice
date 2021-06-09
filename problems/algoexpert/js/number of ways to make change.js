@@ -1,4 +1,6 @@
-const { assertEquals } = require("../../test/assertEquals");
+  const { assertEquals } = require("../../test/assertEquals");
+
+  // REFERENCE: jenny: https://www.youtube.com/watch?v=L27_JpN6Z1Q full DP table
 
 // O(n ∗ m) time and O(n)O(n) additional space
 function numberOfWaysToMakeChange(target, wallet) {
