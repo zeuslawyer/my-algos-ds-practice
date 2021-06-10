@@ -18,12 +18,12 @@ var coinChange = function (coins, target) {
   for (const coin of coins){
     for(let targ = 0; targ < minWaysToMake.length; targ++){
       if(coin<=targ){
-        const waysToMakeTarg = minWaysToMake[targ]
+        const minWaysToMakeTarg = minWaysToMake[targ]
         const waysToMakeShortfall = minWaysToMake[targ-coin]
         currentCoinMinQty = 1;
   
         // update ways to make the target if current coin is included
-        minWaysToMake[targ] = Math.min(waysToMakeTarg, currentCoinMinQty + waysToMakeShortfall)
+        minWaysToMake[targ] = Math.min(minWaysToMakeTarg, currentCoinMinQty + waysToMakeShortfall)
       }
     }
   }

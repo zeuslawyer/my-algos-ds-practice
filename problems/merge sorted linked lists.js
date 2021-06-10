@@ -19,7 +19,7 @@ var mergeTwoLists = function(l1, l2) {
             pointer.next = l2
             l2 = l2.next
         }
-        // move pointer 
+        // move pointer to point to newly appended node
         pointer = pointer.next;
     }
     
